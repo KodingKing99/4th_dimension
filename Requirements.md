@@ -1,4 +1,5 @@
 Requirements: \
+\
 Must: \
 -There needs to be 5 different actors, players, managers, drink masters, owners, sponsors\
 -Owners decide who is the manager, Owner gets the money. Can manage User permissions (players, managers, drink meisters, sponsors).\
@@ -18,6 +19,7 @@ Must: \
 -Sponsor: Q. for Dan: Do you want sponsors to have advertising space. Tournament name has sponsor in it.\ 
 -Money management system, player pays into owners account (restaurant account). Sponsor account contains prize, moved to winning players on tournament end.\
 -Individual players get notified when it’s their time to play.\
+\
 Should:\
 -Refunds: Managers can decide to refund people. History of purchases. Table in the database. Refund function that takes a Player id and Order number id, delete Order from database, add funds to Player account.\
 -Tournament has banner ads for sponsors\
@@ -35,5 +37,6 @@ Could:\
 -Self ads that advertise our drinks and food\
 -Users have multiple roles\
 -Teams - team tourneys, individual tourneys\
+\
 Won’t:\
--Fail\
+-Fail

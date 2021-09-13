@@ -1,4 +1,4 @@
-Requirements:
+Requirements: </br>
 Must: 
 -There needs to be 5 different actors, players, managers, drink masters, owners, sponsors
 -Owners decide who is the manager, Owner gets the money. Can manage User permissions (players, managers, drink meisters, sponsors).

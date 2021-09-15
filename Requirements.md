@@ -17,7 +17,7 @@ Must: \
 -Contact info page\
 -Calendar page that displays upcoming tournaments.\
 -Sponsor: Q. for Dan: Do you want sponsors to have advertising space. Tournament name has sponsor in it.\ 
--Money management system, player pays into owners account (restaurant account). Sponsor account contains prize, moved to winning players on tournament end.\
+-Money management system, player pays into owners account (restaurant account). Sponsor account contains prize, moved to winning players on tournament end. \
 -Individual players get notified when it’s their time to play.\
 \
 Should:\

@@ -4,9 +4,11 @@ Create a Web app to manage and track Golf tournaments as well as features to man
 ## Workspace Layout
 The folder src will contain all the source files for this web app. Inside src we will have web-app folder for the web app source code. We will also have another folder called backend. In this folder it will have our server code or the back end code. 
 ```
-└── src/
-    ├── web-app
-    └── backend
+└──root
+    ├── src/
+        ├── web-app
+        └── backend
+    └── Requirements
 ```
 ## Version-control Procedures
 

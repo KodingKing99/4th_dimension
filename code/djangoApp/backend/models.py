@@ -27,6 +27,9 @@ class Menu(models.Model):
     class Meta:
         db_table = 'Menu'
 
+    def __str__(self):
+        return self.itemname
+
 
 class Tournamentparticipant(models.Model):
     userid = models.IntegerField(db_column='userId')  # Field name made lowercase.
@@ -47,16 +50,23 @@ class Tournament(models.Model):
     class Meta:
         db_table = 'Tournaments'
 
+    def __str__(self):
+        return "Tournament on " + str(self.tournamentdate)
+
 
 class Transactionhistory(models.Model):
     transactionid = models.AutoField(db_column='transactionId', primary_key=True)  # Field name made lowercase.
     transactionprice = models.DecimalField(db_column='transactionPrice', max_digits=5, decimal_places=2)  # Field name made lowercase.
     transactionbuyer = models.IntegerField(db_column='transactionBuyer')  # Field name made lowercase.
     transactiondrinkmeister = models.IntegerField(db_column='transactionDrinkMeister', blank=True, null=True)  # Field name made lowercase.
+    transactiondate = models.DateTimeField(db_column='TransactionDate')
 
     class Meta:
         db_table = 'TransactionHistory'
-        verbose_name_plural = "Transactionhistories"
+        verbose_name_plural = "Transactionhistory"
+
+    def __str__(self):
+        return "Transaction made at " + str(self.transactiondate)
 
 
 class User(models.Model):
@@ -70,3 +80,7 @@ class User(models.Model):
 
     class Meta:
         db_table = 'Users'
+
+    def __str__(self):
+        return self.userfirstname + " " + self.userlastname + " (UID: " + str(self.userid) + ")"
+

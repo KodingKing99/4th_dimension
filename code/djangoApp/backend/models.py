@@ -15,7 +15,6 @@ class Advertisement(models.Model):
     addescription = models.CharField(db_column='adDescription', max_length=500, blank=True, null=True)  # Field name made lowercase.
 
     class Meta:
-        managed = False
         db_table = 'Advertisements'
 
 
@@ -26,7 +25,6 @@ class Menu(models.Model):
     itemprice = models.DecimalField(db_column='itemPrice', max_digits=5, decimal_places=2, blank=True, null=True)  # Field name made lowercase.
 
     class Meta:
-        managed = False
         db_table = 'Menu'
 
 
@@ -36,7 +34,6 @@ class Tournamentparticipant(models.Model):
     userscore = models.IntegerField(db_column='userScore', blank=True, null=True)  # Field name made lowercase.
 
     class Meta:
-        managed = False
         db_table = 'TournamentParticipants'
 
 
@@ -48,7 +45,6 @@ class Tournament(models.Model):
     tournamentholecount = models.IntegerField(db_column='tournamentHoleCount', blank=True, null=True)  # Field name made lowercase.
 
     class Meta:
-        managed = False
         db_table = 'Tournaments'
 
 
@@ -59,14 +55,13 @@ class Transactionhistory(models.Model):
     transactiondrinkmeister = models.IntegerField(db_column='transactionDrinkMeister', blank=True, null=True)  # Field name made lowercase.
 
     class Meta:
-        managed = False
         db_table = 'TransactionHistory'
         verbose_name_plural = "Transactionhistories"
 
 
 class User(models.Model):
     userid = models.AutoField(db_column='userId', primary_key=True)  # Field name made lowercase.
-    useremail = models.CharField(db_column='userEmail', unique=True, max_length=320)  # Field name made lowercase.
+    useremail = models.CharField(db_column='userEmail', unique=True, max_length=225)  # Field name made lowercase.
     userfirstname = models.CharField(db_column='userFirstName', max_length=45)  # Field name made lowercase.
     userlastname = models.CharField(db_column='userLastName', max_length=45, blank=True, null=True)  # Field name made lowercase.
     userpassword = models.CharField(db_column='userPassword', max_length=128)  # Field name made lowercase.
@@ -74,5 +69,4 @@ class User(models.Model):
     userrole = models.IntegerField(db_column='userRole')  # Field name made lowercase.
 
     class Meta:
-        managed = False
         db_table = 'Users'

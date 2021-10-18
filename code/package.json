@@ -4,8 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "webpack --mode development ./djangoApp/frontend/src/index.js --output-path ./djangoApp/frontend/static/frontend/main.js",
-    "build": "webpack --mode production ./djangoApp/frontend/src/index.js --output-path ./djangoApp/frontend/static/frontend/main.js"
+    "dev": "webpack --mode development ./djangoApp/frontend/src/index.js --output-path ./djangoApp/frontend/static/frontend/",
+    "build": "webpack --mode production ./djangoApp/frontend/src/index.js --output-path ./djangoApp/frontend/static/frontend/"
   },
   "keywords": [],
   "author": "",

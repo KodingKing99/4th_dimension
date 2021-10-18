@@ -1,5 +1,6 @@
 import React from "react";
 import ReactDOM from 'react-dom';
+import Login from './Login.js'
 // import {Router} from 'react-router-dom';
 // const App = (props) => {
 //     return (
@@ -8,7 +9,9 @@ import ReactDOM from 'react-dom';
 // }
 class App extends React.Component{
     render(){
-        return <div>Hello!</div>
+        return (
+            <Login />
+        )
     }
 }
 ReactDOM.render(<App/>, document.getElementById('app'))

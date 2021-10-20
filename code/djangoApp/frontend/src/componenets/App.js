@@ -1,12 +1,28 @@
 import React from "react";
 import ReactDOM from 'react-dom';
 import {BrowserRouter as Router, Route, Switch} from 'react-router-dom';
-import Home from './Home';
-
+import Home from './Home/Home';
+import Navbar from './Navbar/Navbar';
+// import BottomAppBar from './BottomAppBar';
 function App() {
   return (
       <div>
-          <Home/>
+          <Router>
+                <div className="App">
+                    
+                    <Switch >
+                        <Route exact path="/">
+                            <Home/>
+                        </Route>
+                    </Switch>
+                    {/* <Home/> */}
+                    <Navbar/>
+                    {/* <BottomAppBar/> */}
+                </div>
+            </Router>
+                
+           
+          
       </div>
   );
 }

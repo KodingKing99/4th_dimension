@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "webpack --mode development ./djangoApp/frontend/src/index.js --output-path ./djangoApp/frontend/static/frontend/",
+    "dev": "webpack --mode development --watch ./djangoApp/frontend/src/index.js --output-path ./djangoApp/frontend/static/frontend/",
     "build": "webpack --mode production ./djangoApp/frontend/src/index.js --output-path ./djangoApp/frontend/static/frontend/"
   },
   "keywords": [],
@@ -20,6 +20,8 @@
     "webpack-cli": "^4.9.0"
   },
   "dependencies": {
+    "@material-ui/icons": "^4.11.2",
+    "@mui/material": "^5.0.4",
     "prop-types": "^15.7.2",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",

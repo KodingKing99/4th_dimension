@@ -1,9 +1,15 @@
 import React from "react";
+import { useSelector } from "react-redux";
 // import './Home.css'
 const Home = (props) => {
+    const fullName = useSelector((state) => state.user.fullName);
+    // console.log(fullName);
+    // const fullName = "Nick Sorenson"
+    console.log("Hello!")
     return ( 
         <div className="homeTop" style={{marginTop: '100px'}}>
-            <h1>Hello World! Welcome to the 4D Putt Putt Home page</h1>
+            <h1>Hello { fullName }! Welcome to the 4D Putt Putt Home page</h1>
+            {/* <h1>Hellllllllllllloooooooooooo?</h1> */}
             <h2>About Us</h2>
             <div className="homeBody">
                 <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed enim quam, egestas dictum cursus nec, sodales in ante. Nunc enim ante, rhoncus sed arcu sed, pharetra congue massa. Maecenas a mauris quis mi laoreet convallis. Nunc at lacus diam. Phasellus eget suscipit lorem. Aliquam massa metus, semper non erat et, ultricies eleifend orci. Vivamus sagittis consectetur sapien at facilisis. In fermentum nunc ut rutrum fermentum. Phasellus ex nulla, rhoncus non enim eget, porta congue eros. Sed sed tristique massa. Maecenas sem magna, congue non blandit ac, pellentesque eget dolor. Donec facilisis sapien ullamcorper tincidunt pulvinar. Curabitur tincidunt eu velit a ultrices. Proin risus odio, convallis vitae risus malesuada, euismod ultricies dolor. Curabitur mollis, sapien vel tincidunt hendrerit, metus nibh iaculis arcu, at tempus tortor enim et nibh.</p>

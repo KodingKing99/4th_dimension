@@ -3,13 +3,14 @@ import ReactDOM from 'react-dom';
 import {BrowserRouter as Router, Route, Switch} from 'react-router-dom';
 import Home from './Home/Home';
 import Navbar from './Navbar/Navbar';
+import {store} from '../redux/store';
+import {Provider} from 'react-redux'
 // import BottomAppBar from './BottomAppBar';
 function App() {
   return (
       <div>
           <Router>
                 <div className="App">
-                    
                     <Switch >
                         <Route exact path="/">
                             <Home/>
@@ -17,34 +18,10 @@ function App() {
                     </Switch>
                     {/* <Home/> */}
                     <Navbar/>
-                    {/* <BottomAppBar/> */}
                 </div>
             </Router>
-                
-           
-          
+             {/* <Home/> */}
       </div>
   );
 }
-ReactDOM.render(<App/>, document.getElementById('app'))
-      
-    // <Router>    
-    //   <div className="App">
-    //     <div className="content">
-    //       <Switch>
-    //         <Route exact path="/">
-    //           <Home/>
-    //         </Route>
-    //         {/* <Route path="/create">
-    //           <Create/>
-    //         </Route>
-    //         <Route path="/blogs/:id">
-    //           <BlogDetails/>
-    //         </Route> 
-    //         <Route path="*">
-    //           <NotFound/>
-    //         </Route> */}
-    //       </Switch>
-    //     </div>
-    //   </div>
-    // </Router>
+ReactDOM.render(<Provider store={store}><App/></Provider>, document.getElementById('app'))

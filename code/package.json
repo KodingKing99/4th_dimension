@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "webpack --mode development ./djangoApp/frontend/src/index.js --output-path ./djangoApp/frontend/static/frontend/",
+    "dev": "webpack --mode development --watch ./djangoApp/frontend/src/index.js --output-path ./djangoApp/frontend/static/frontend/",
     "build": "webpack --mode production ./djangoApp/frontend/src/index.js --output-path ./djangoApp/frontend/static/frontend/"
   },
   "keywords": [],

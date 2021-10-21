@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "webpack --mode development ./djangoApp/frontend/src/index.js --output-path ./djangoApp/frontend/static/frontend/",
+    "dev": "webpack --mode development --watch ./djangoApp/frontend/src/index.js --output-path ./djangoApp/frontend/static/frontend/",
     "build": "webpack --mode production ./djangoApp/frontend/src/index.js --output-path ./djangoApp/frontend/static/frontend/"
   },
   "keywords": [],
@@ -20,9 +20,20 @@
     "webpack-cli": "^4.9.0"
   },
   "dependencies": {
+    "@emotion/react": "^11.5.0",
+    "@emotion/styled": "^11.3.0",
+    "@material-ui/core": "^4.12.3",
+    "@material-ui/icons": "^4.11.2",
+    "@mdi/font": "^6.3.95",
+    "@mdi/js": "^6.3.95",
+    "@mdi/react": "^1.5.0",
+    "@mui/icons-material": "^5.0.4",
+    "@mui/material": "^5.0.4",
+    "@reduxjs/toolkit": "^1.6.2",
     "prop-types": "^15.7.2",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
+    "react-redux": "^7.2.5",
     "react-router-dom": "^5.3.0"
   }
 }

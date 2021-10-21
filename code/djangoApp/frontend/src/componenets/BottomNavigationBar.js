@@ -26,10 +26,10 @@ export default function BottomNavigationBar({paths,role}) {
             console.log(paths[newValue])
           }}
         >
-          <BottomNavigationAction  to='/game' component={Link}  label="Game" icon={<SportsGolfIcon />} />
-          <BottomNavigationAction to='/drinks' component={Link} label="Drinks" icon={<Icon path={mdiBeerOutline} title="Drink" size={1} />}/>
-          <BottomNavigationAction to='/leaderboard' component={Link} label="Leaderboards" icon={<BarChartIcon />} />
-          <BottomNavigationAction to='/account' component={Link} label="Account" icon={<AccountCircleIcon />}></BottomNavigationAction>
+          <BottomNavigationAction  to='/#game' component={Link}  label="Game" icon={<SportsGolfIcon />} />
+          <BottomNavigationAction to='/#drinks' component={Link} label="Drinks" icon={<Icon path={mdiBeerOutline} title="Drink" size={1} />}/>
+          <BottomNavigationAction to='/#leaderboard' component={Link} label="Leaderboards" icon={<BarChartIcon />} />
+          <BottomNavigationAction to='/#account' component={Link} label="Account" icon={<AccountCircleIcon />}></BottomNavigationAction>
         
         </BottomNavigation>
     );
@@ -43,8 +43,8 @@ export default function BottomNavigationBar({paths,role}) {
           console.log(paths[newValue])
         }}
       >
-        <BottomNavigationAction  to='/drink-orders' component={Link}  label="Drink Orders" icon={<Icon path={mdiViewListOutline} />} />
-        <BottomNavigationAction to='/account' component={Link} label="Account" icon={<AccountCircleIcon />}></BottomNavigationAction>
+        <BottomNavigationAction  to='/#drink-orders' component={Link}  label="Drink Orders" icon={<Icon path={mdiViewListOutline} />} />
+        <BottomNavigationAction to='/#account' component={Link} label="Account" icon={<AccountCircleIcon />}></BottomNavigationAction>
       
       </BottomNavigation>)
   } else if(role=="manager"){
@@ -57,11 +57,11 @@ export default function BottomNavigationBar({paths,role}) {
           console.log(paths[newValue])
         }}
       >
-        <BottomNavigationAction  to='/manage-tournaments' component={Link}  label="Manage Tournaments" icon={<Icon path={mdiFamilyTree} />} />
-        <BottomNavigationAction to='/manage-drinks' component={Link} label="Manage Drinks" icon={<Icon path={mdiBeerOutline} title="Drink" size={1} />}/>
-        <BottomNavigationAction to='/manage-users' component={Link} label="Manage Users" icon={<PeopleIcon />} />
-        <BottomNavigationAction to='/manage-refunds' component={Link} label="Refunds" icon={<AccountBalanceWalletIcon />} />
-        <BottomNavigationAction to='/account' component={Link} label="Account" icon={<AccountCircleIcon />}></BottomNavigationAction>
+        <BottomNavigationAction  to='/#manage-tournaments' component={Link}  label="Manage Tournaments" icon={<Icon path={mdiFamilyTree} />} />
+        <BottomNavigationAction to='/#manage-drinks' component={Link} label="Manage Drinks" icon={<Icon path={mdiBeerOutline} title="Drink" size={1} />}/>
+        <BottomNavigationAction to='/#manage-users' component={Link} label="Manage Users" icon={<PeopleIcon />} />
+        <BottomNavigationAction to='/#manage-refunds' component={Link} label="Refunds" icon={<AccountBalanceWalletIcon />} />
+        <BottomNavigationAction to='/#account' component={Link} label="Account" icon={<AccountCircleIcon />}></BottomNavigationAction>
       
       </BottomNavigation>)
   }else if(role=="owner"){
@@ -74,10 +74,10 @@ export default function BottomNavigationBar({paths,role}) {
           console.log(paths[newValue])
         }}
       >
-        <BottomNavigationAction  to='/owner-manage-users' component={Link}  label="Manage Users" icon={<PeopleIcon />} />
-        <BottomNavigationAction to='/manage-drinks' component={Link} label="Manage Drinks" icon={<Icon path={mdiBeerOutline} title="Drink" size={1} />}/>
-        <BottomNavigationAction to='/money' component={Link} label="Money" icon={<Icon path={mdiCash} />} />
-        <BottomNavigationAction to='/account' component={Link} label="Account" icon={<AccountCircleIcon />}></BottomNavigationAction>
+        <BottomNavigationAction  to='/#owner-manage-users' component={Link}  label="Manage Users" icon={<PeopleIcon />} />
+        <BottomNavigationAction to='/#manage-drinks' component={Link} label="Manage Drinks" icon={<Icon path={mdiBeerOutline} title="Drink" size={1} />}/>
+        <BottomNavigationAction to='/#money' component={Link} label="Money" icon={<Icon path={mdiCash} />} />
+        <BottomNavigationAction to='/#account' component={Link} label="Account" icon={<AccountCircleIcon />}></BottomNavigationAction>
       
       </BottomNavigation>)
   }

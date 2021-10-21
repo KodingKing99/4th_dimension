@@ -46,37 +46,37 @@ function App() {
                             <OwnerManageUsersPage/>
                             }
                         </Route>
-                    <Route exact path="/game">
+                    <Route exact path="/#game">
                     <GamePage/>
                     </Route>
-                    <Route exact path="/drinks">
+                    <Route exact path="/#drinks">
                     <OrderDrinkPage/>
                     </Route>
-                    <Route exact path="/leaderboard">
+                    <Route exact path="/#leaderboard">
                     <LeaderBoardPage/>
                     </Route>
-                    <Route exact path="/account">
+                    <Route exact path="/#account">
                     <AccountPage/>
                     </Route>
-                    <Route exact path="/drink-orders">
+                    <Route exact path="/#drink-orders">
                     <DrinkOrdersPage/>
                     </Route>
-                    <Route exact path="/manage-tournaments">
+                    <Route exact path="/#manage-tournaments">
                     <ManageTournamentsPage/>
                     </Route>
-                    <Route exact path="/manage-drinks">
+                    <Route exact path="/#manage-drinks">
                     <ManageDrinksPage/>
                     </Route>
-                    <Route exact path="/manage-users">
+                    <Route exact path="/#manage-users">
                     <ManageUsersPage/>
                     </Route>
-                    <Route exact path="/manage-refunds">
+                    <Route exact path="/#manage-refunds">
                     <ManageRefundsPage/>
                     </Route>
-                    <Route exact path="/owner-manage-users">
+                    <Route exact path="/#owner-manage-users">
                     <OwnerManageUsersPage/>
                     </Route>
-                    <Route exact path="/money">
+                    <Route exact path="/#money">
                     <MoneyPage/>
                     </Route>
                     </Switch>

@@ -14,6 +14,9 @@ import ManageRefundsPage from "./Pages/ManageRefundsPage";
 import OwnerManageUsersPage from "./Pages/OwnerManageUsersPage";
 import MoneyPage from "./Pages/MoneyPage";
 import Navbar from './Navbar/Navbar';
+
+import {store} from '../redux/store';
+import {Provider} from 'react-redux'
 import BottomNavigationBar  from "./BottomNavigationBar";
 
 // import BottomAppBar from './BottomAppBar';
@@ -28,7 +31,6 @@ function App() {
       <div>
           <Router>
                 <div className="App">
-                    
                     <Switch >
                         <Route exact path="/">
                             {role=="player" &&
@@ -80,34 +82,10 @@ function App() {
                     </Switch>
                     <Navbar/>
                     <BottomNavigationBar paths = {playerPath} role={role} ></BottomNavigationBar>
-                    {/* <BottomAppBar/> */}
                 </div>
             </Router>
-                
-           
-          
+             {/* <Home/> */}
       </div>
   );
 }
-ReactDOM.render(<App/>, document.getElementById('app'))
-      
-    // <Router>    
-    //   <div className="App">
-    //     <div className="content">
-    //       <Switch>
-    //         <Route exact path="/">
-    //           <Home/>
-    //         </Route>
-    //         {/* <Route path="/create">
-    //           <Create/>
-    //         </Route>
-    //         <Route path="/blogs/:id">
-    //           <BlogDetails/>
-    //         </Route> 
-    //         <Route path="*">
-    //           <NotFound/>
-    //         </Route> */}
-    //       </Switch>
-    //     </div>
-    //   </div>
-    // </Router>
+ReactDOM.render(<Provider store={store}><App/></Provider>, document.getElementById('app'))

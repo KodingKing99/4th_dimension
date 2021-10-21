@@ -5,7 +5,7 @@ const initialState = {
   lastName: null,
   fullName: 'my liege',
   id: null,
-  role: null,
+  role: "manager",
   permissions: null,
 }
 

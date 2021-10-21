@@ -13,9 +13,12 @@ import { mdiBeerOutline } from '@mdi/js';
 import { mdiViewListOutline } from '@mdi/js';
 import { mdiFamilyTree } from '@mdi/js';
 import { mdiCash } from '@mdi/js';
-export default function BottomNavigationBar({paths,role}) {
+import { useSelector } from "react-redux";
+export default function BottomNavigationBar(props) {
+  const {paths} = props;
   const [value, setValue] = React.useState(0);
-
+  const role = useSelector((state) => state.user.role);
+  console.log(role);
   if(role == 'player'){
     return (
         <BottomNavigation

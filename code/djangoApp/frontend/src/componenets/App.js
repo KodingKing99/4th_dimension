@@ -18,7 +18,7 @@ import Navbar from './Navbar/Navbar';
 import {store} from '../redux/store';
 import {Provider} from 'react-redux'
 import BottomNavigationBar  from "./BottomNavigationBar";
-
+import PermissionsPractice from "./PermissionsPractice";
 // import BottomAppBar from './BottomAppBar';
 function App() {
     const playerPath = ["Game","Drinks","Leaderboards","Account"]
@@ -29,6 +29,7 @@ function App() {
 
   return (
       <div>
+          <PermissionsPractice/>
           <Router>
                 <div className="App">
                     <Switch >

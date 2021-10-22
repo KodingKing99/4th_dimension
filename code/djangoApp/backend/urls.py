@@ -7,5 +7,7 @@ router.register('api/tournament', TournamentParticipantViewSet, 'tournament')
 router.register('api/tournamentParticipant', TournamentParticipantViewSet, 'tournamentParticipant')
 router.register('api/transactionHistory', TransactionHistoryViewSet, 'transactionHistory')
 router.register('api/advertisement', AdvertisementViewSet, 'advertisement')
+router.register('api/login', LoginViewSet, 'login')
+router.register('api/signup', SignupViewSet, 'signup')
 
 urlpatterns = router.urls

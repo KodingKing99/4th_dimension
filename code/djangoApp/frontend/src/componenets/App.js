@@ -16,6 +16,9 @@ import MoneyPage from "./Pages/MoneyPage";
 
 import AddTournamentPage from "./Pages/AddTournamentPage";
 
+import Paper from '@mui/material/Paper';
+
+
 import Navbar from './Navbar/Navbar';
 
 import {store} from '../redux/store';
@@ -23,6 +26,8 @@ import {Provider} from 'react-redux'
 import BottomNavigationBar  from "./BottomNavigationBar";
 import PermissionsPractice from "./PermissionsPractice";
 import Tournament from "./Tournament/Tournament";
+import { Container } from "@mui/material";
+import { Box, display } from "@mui/system";
 // import BottomAppBar from './BottomAppBar';
 function App() {
     const playerPath = ["Game","Drinks","Leaderboards","Account"]
@@ -33,13 +38,19 @@ function App() {
     
   return (
       <div>
-
+          <Box sx={{
+              margin:'20px',
+              display:'flex',
+          }}>
           <PermissionsPractice/>
+          </Box>
           {/* <Tournament/> */}
+          <Container>
           <HashRouter>
                 <div className="App">
                     <Switch >
-                        <Route exact path="/">
+
+                        <Route exact path="/" style="margin:20px;">
                             {role=="player" &&
                             <GamePage/>
                             }
@@ -57,6 +68,7 @@ function App() {
                         {/* <Route path="tournament">
                             <Tournament/>
                         </Route> */}
+                        <Box>
                     <Route exact path="/#game">
                     <GamePage/>
                     </Route>
@@ -96,12 +108,17 @@ function App() {
                     <Route path="/add-tournament">
                         <AddTournamentPage></AddTournamentPage>
                     </Route>
-
+</Box>
                     </Switch>
                     <Navbar/>
-                    <BottomNavigationBar paths = {playerPath} role={role} ></BottomNavigationBar>
+                    <Paper sx={{ position: 'fixed', bottom: 0, left: 0, right: 0 }} elevation={3}>
+            <BottomNavigationBar paths = {playerPath} role={role} ></BottomNavigationBar>
+            </Paper>
                 </div>
             </HashRouter>
+</Container>
+           
+
              {/* <Home/> */}
       </div>
   );

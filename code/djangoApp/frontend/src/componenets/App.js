@@ -35,7 +35,7 @@ function App() {
       <div>
 
           <PermissionsPractice/>
-          <Tournament/>
+          {/* <Tournament/> */}
           <HashRouter>
                 <div className="App">
                     <Switch >
@@ -59,6 +59,7 @@ function App() {
                         </Route> */}
                     <Route exact path="/#game">
                     <GamePage/>
+                    </Route>
                     <Route path="/game" component={GamePage}>
                     </Route>
                     <Route path="/drinks" component={OrderDrinkPage}>

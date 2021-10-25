@@ -1,7 +1,7 @@
 import React from "react";
 import ReactDOM from 'react-dom';
-import {BrowserRouter as Router, Route, Switch} from 'react-router-dom';
-import Home from './Home/Home';
+// import {HashRouter as HashRouter, Route, Switch} from 'react-router-dom';
+import { HashRouter, Route ,Switch,Link} from "react-router-dom";
 import GamePage from './Pages/GamePage'
 import OrderDrinkPage from "./Pages/OrderDrinksPage";
 import LeaderBoardPage from "./Pages/LeaderboardPage";
@@ -13,7 +13,11 @@ import ManageUsersPage from "./Pages/ManageUsersPage";
 import ManageRefundsPage from "./Pages/ManageRefundsPage";
 import OwnerManageUsersPage from "./Pages/OwnerManageUsersPage";
 import MoneyPage from "./Pages/MoneyPage";
+
+import AddTournamentPage from "./Pages/AddTournamentPage";
+
 import Navbar from './Navbar/Navbar';
+
 import {store} from '../redux/store';
 import {Provider} from 'react-redux'
 import BottomNavigationBar  from "./BottomNavigationBar";
@@ -32,7 +36,7 @@ function App() {
 
           <PermissionsPractice/>
           <Tournament/>
-          <Router>
+          <HashRouter>
                 <div className="App">
                     <Switch >
                         <Route exact path="/">
@@ -55,42 +59,48 @@ function App() {
                         </Route> */}
                     <Route exact path="/#game">
                     <GamePage/>
+                    <Route path="/game" component={GamePage}>
                     </Route>
-                    <Route exact path="/#drinks">
-                    <OrderDrinkPage/>
+                    <Route path="/drinks" component={OrderDrinkPage}>
                     </Route>
-                    <Route exact path="/#leaderboard">
+                    <Route path="/leaderboard">
                     <LeaderBoardPage/>
                     </Route>
-                    <Route exact path="/#account">
+                    <Route path="/account">
                     <AccountPage/>
                     </Route>
-                    <Route exact path="/#drink-orders">
+                    <Route path="/drink-orders">
                     <DrinkOrdersPage/>
                     </Route>
-                    <Route exact path="/#manage-tournaments">
+                    <Route path="/manage-tournaments">
                     <ManageTournamentsPage/>
                     </Route>
-                    <Route exact path="/#manage-drinks">
+                    <Route  path="/manage-drinks">
                     <ManageDrinksPage/>
                     </Route>
-                    <Route exact path="/#manage-users">
+                    <Route path="/manage-users">
                     <ManageUsersPage/>
                     </Route>
-                    <Route exact path="/#manage-refunds">
+                    <Route path="/manage-refunds">
                     <ManageRefundsPage/>
                     </Route>
-                    <Route exact path="/#owner-manage-users">
+                    <Route path="/owner-manage-users">
                     <OwnerManageUsersPage/>
                     </Route>
-                    <Route exact path="/#money">
+                    <Route path="/money">
                     <MoneyPage/>
                     </Route>
+
+
+                    <Route path="/add-tournament">
+                        <AddTournamentPage></AddTournamentPage>
+                    </Route>
+
                     </Switch>
                     <Navbar/>
                     <BottomNavigationBar paths = {playerPath} role={role} ></BottomNavigationBar>
                 </div>
-            </Router>
+            </HashRouter>
              {/* <Home/> */}
       </div>
   );

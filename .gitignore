@@ -7,7 +7,6 @@ code/djangoApp/.vs/VSWorkspaceState.json
 code/djangoApp/.vs/djangoApp/v16/.suo
 code/djangoApp/.vs/slnx.sqlite
 code/djangoApp/backend/__pycache__/
-code/djangoApp/backend/migrations/
 code/djangoApp/db.sqlite3
 .sqlite3
 code/node_modules

@@ -23,6 +23,7 @@ import {Provider} from 'react-redux'
 import BottomNavigationBar  from "./BottomNavigationBar";
 import PermissionsPractice from "./PermissionsPractice";
 import Tournament from "./Tournament/Tournament";
+import CreateTournament from "./Tournament/CreateTournament";
 // import BottomAppBar from './BottomAppBar';
 function App() {
     const playerPath = ["Game","Drinks","Leaderboards","Account"]
@@ -35,7 +36,8 @@ function App() {
       <div>
 
           <PermissionsPractice/>
-          {/* <Tournament/> */}
+          <Tournament/>
+          <CreateTournament/>
           <HashRouter>
                 <div className="App">
                     <Switch >

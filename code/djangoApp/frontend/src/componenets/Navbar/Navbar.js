@@ -53,7 +53,6 @@ function Navbar() {
 
   return (
       <div>
-          <h1>Hello!</h1>
         <AppBar color="primary" sx={{ top: 'auto', bottom: 0 }} >
         <CssBaseline />
         <Toolbar>

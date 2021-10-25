@@ -9,25 +9,22 @@ import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import KeyboardArrowLeft from '@mui/icons-material/KeyboardArrowLeft';
 import KeyboardArrowRight from '@mui/icons-material/KeyboardArrowRight';
+import Fab from '@mui/material/Fab';
+import { Divider } from "@mui/material";
 
 const steps = [
   {
-    label: 'Select campaign settings',
-    description: `For each ad campaign that you create, you can control how much
-              you're willing to spend on clicks and conversions, which networks
-              and geographical locations you want your ads to show on, and more.`,
+    label: '',
+    description: ``,
   },
   {
-    label: 'Create an ad group',
+    label: '',
     description:
-      'An ad group contains one or more ads which target a shared set of keywords.',
+      '',
   },
   {
-    label: 'Create an ad',
-    description: `Try out different ad text to see what brings in the most customers,
-              and learn how to enhance your ads using features like ad extensions.
-              If you run into any problems with your ads, find out how to tell if
-              they're running and how to resolve approval issues.`,
+    label: '',
+    description: ``,
   },
 ];
 
@@ -46,7 +43,7 @@ const GamePage = (props) => {
     };
     return ( 
         <div className="homeTop" style={{marginTop: '100px'}}>
-            <Box sx={{ maxWidth: 400, flexGrow: 1 }}>
+            <Box sx={{ flexGrow: 1 }}>
       <Paper
         square
         elevation={0}
@@ -58,10 +55,11 @@ const GamePage = (props) => {
           bgcolor: 'background.default',
         }}
       >
-        <Typography>{steps[activeStep].label}</Typography>
       </Paper>
       <Box sx={{ height: 255, maxWidth: 400, width: '100%', p: 2 }}>
-        {steps[activeStep].description}
+      <h2>Par</h2>
+
+      <h1>- 0 +</h1>
       </Box>
       <MobileStepper
         variant="text"
@@ -94,6 +92,19 @@ const GamePage = (props) => {
         }
       />
     </Box>
+    <Box>
+      Score Total: 
+      </Box>
+
+      <Divider variant="middle" />
+      <Box>
+        <h2>Leaderboard</h2>
+        </Box>
+        <Box sx={{ position: 'fixed', bottom: 100, right: 50 }} elevation={3}>
+    <Fab color="primary" aria-label="add">
+  {/* <AddIcon /> */}
+</Fab>
+</Box>
                     </div>
      );
 }

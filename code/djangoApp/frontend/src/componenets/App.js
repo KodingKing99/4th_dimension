@@ -1,7 +1,7 @@
 import React from "react";
 import ReactDOM from 'react-dom';
 // import {HashRouter as HashRouter, Route, Switch} from 'react-router-dom';
-import { HashRouter, Route ,Switch} from "react-router-dom";
+import { HashRouter, Route ,Switch,Link} from "react-router-dom";
 import GamePage from './Pages/GamePage'
 import OrderDrinkPage from "./Pages/OrderDrinksPage";
 import LeaderBoardPage from "./Pages/LeaderboardPage";
@@ -18,13 +18,11 @@ import AddTournamentPage from "./Pages/AddTournamentPage";
 
 import Navbar from './Navbar/Navbar';
 
-import {Link} from 'react-router-dom';
-
-
 import {store} from '../redux/store';
 import {Provider} from 'react-redux'
 import BottomNavigationBar  from "./BottomNavigationBar";
 import PermissionsPractice from "./PermissionsPractice";
+import Tournament from "./Tournament/Tournament";
 // import BottomAppBar from './BottomAppBar';
 function App() {
     const playerPath = ["Game","Drinks","Leaderboards","Account"]
@@ -32,13 +30,13 @@ function App() {
     const getPage = () => {
 
     }
-
+    
   return (
       <div>
-          <PermissionsPractice/>
-          <HashRouter>
-          <Link to='/#manage-tournaments'> Testing routing</Link>
 
+          <PermissionsPractice/>
+          <Tournament/>
+          <HashRouter>
                 <div className="App">
                     <Switch >
                         <Route exact path="/">
@@ -54,7 +52,13 @@ function App() {
                             {role=="owner"&&
                             <OwnerManageUsersPage/>
                             }
+                        
                         </Route>
+                        {/* <Route path="tournament">
+                            <Tournament/>
+                        </Route> */}
+                    <Route exact path="/#game">
+                    <GamePage/>
                     <Route path="/game" component={GamePage}>
                     </Route>
                     <Route path="/drinks" component={OrderDrinkPage}>

@@ -48,7 +48,7 @@ class LoginViewSet(viewsets.ModelViewSet):
         users = User.objects.filter(useremail=email)
         salt = users.values('usersalt')
         salt = salt[0]['usersalt']
-        password_hashed = hashlib.sha256(str(users.values('userfirstname')[0]['userfirstname']).encode('utf-8')+str(salt).encode('utf-8')).hexdigest()
+        password_hashed = hashlib.sha256(str(password).encode('utf-8')+str(salt).encode('utf-8')).hexdigest()
         print(password_hashed)
         
         return User.objects.filter(useremail=email).filter(userpassword=password_hashed)

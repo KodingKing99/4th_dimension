@@ -39,14 +39,34 @@ fi
 django=$(python -m django --version)
 if [ -z $django ]
 then
-    printf "\ndjango not found, please install django\n"
-    exit -1
+    printf "\ndjango not found, trying to install...\n"
+    pip install django
 else
     printf "\ndjango found! version $django\n"
+fi
+
+# Test for djangorestframework
+django=$(python -c "import rest_framework; print(rest_framework.VERSION)")
+if [ -z $django ]
+then
+    printf "\ndjango not found, trying to install...\n"
+    pip install djangorestframework
+else
+    printf "\ndjangorestframework found! version $django\n"
 fi
 
 # Migrate seems to be needed to run twice
 python manage.py migrate
 python manage.py makemigrations
 python manage.py migrate
-python manage.py runserver
+python manage.py runserver &
+
+if [ "$(uname)" == "Linux"]
+then
+    xdg-open 127.0.0.1:8000/
+elif [ "$(uname)" == "Darwin"];
+then
+    open 127.0.0.1:8000/
+else
+    printf "\nCould not open browser, please go to 127.0.0.1:8000/"
+fi

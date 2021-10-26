@@ -13,6 +13,7 @@ const useStyles = makeStyles((theme) => ({
   navlinks: {
     marginLeft: theme.spacing(10),
     display: "flex",
+    textAlign:"center"
   },
  logo: {
     flexGrow: "1",
@@ -57,7 +58,7 @@ function Navbar() {
         <AppBar color="primary" sx={{ top: 'auto', bottom: 0 }} >
         <CssBaseline />
         <Toolbar>
-            <Typography variant="h4" className={classes.logo}>
+            <Typography style={{textAlign:'center'}} variant="h4" className={classes.logo}>
             Putt Putt Golf
             </Typography>
             <div className={classes.navlinks}>

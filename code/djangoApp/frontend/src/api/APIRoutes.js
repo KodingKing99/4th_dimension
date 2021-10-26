@@ -1,34 +1,28 @@
 import {store} from '../redux/store'
 
 export const login = (email, password) => {
-    fetch("api/login/?email="+email.replace('@','%40')+"&password="+password)
-        .then(response => {
-            if (response.status > 400) {
-                return {response: "Error"}
-            }
-        })
+    console.log("/api/login/?email="+email.replace('@','%40')+"&password="+password)
+    fetch("/api/login/?email="+email.replace('@','%40')+"&password="+password)
+        .then(response => response.json())
         .then(data => {
             console.log(data)
             return data;
         })
 }
 
-export const signup = (userEmail) => {
-    fetch("api/login/",
+export const signup = (userEmail, userFirstName, userLastName, userPassword, userRole = 1) => {
+    fetch("api/signup/",
     {
-        headers: {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json'
-        },
-        method: "POST",
+        method: 'POST',
         body: {
-            "useremail": "",
-            "userfirstname": "",
-            "userlastname": "",
-            "userpassword": "",
-            "useraccount": null,
-            "userrole": null,
-            "usersalt": ""
+            "useremail": userEmail,
+            "userfirstname": userFirstName,
+            "userlastname": userLastName,
+            "userpassword": userPassword,
+            "userrole": userRole,
+        },
+        headers: {
+            'Content-Type': 'application/json'
         },
     })
         .then(response => {

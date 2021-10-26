@@ -43,6 +43,8 @@ class LoginViewSet(viewsets.ModelViewSet):
     def get_queryset(self):
         email = self.request.query_params.get('email')
         password = self.request.query_params.get('password')
+        if not email or not password:
+            return User.objects.none()
         users = User.objects.filter(useremail=email)
         salt = users.values('usersalt')
         salt = salt[0]['usersalt']

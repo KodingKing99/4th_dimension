@@ -1,40 +1,65 @@
 import React, { useState } from 'react';
-import {store} from '../../redux/store'
-import {login, signup} from '../../api/APIRoutes'
+import { store } from '../../redux/store'
+import { login, signup } from '../../api/APIRoutes'
 // import './Login.css';
 
 const Login = () => {
 
-    const [userEmail, setUserEmail] = useState("a");
+    const [userEmail, setUserEmail] = useState("");
     const [userPassword, setUserPassword] = useState("");
-    const [returnVal, setReturnVal] = useState({});
-    console.log(userEmail)
-    return(
+    const [userFirst, setUserFirst] = useState("");
+    const [userLast, setUserLast] = useState("");
+    const [signUpToggle, setSignUpToggle] = useState(false)
+    const [fetchReturn, setFetchReturn] = useState("")
+    return (
         <div className="LoginPage">
-            <div className="LoginBox">
-                 <div className="Email">
-                     <form>
-                     <label htmlFor="email-input">Email:</label>
-                     <input type="email" id="email-input" onInput={e => setUserEmail(e.target.value)} />
-                     </form>
-                 </div>
+            {!signUpToggle ?
+                <div className="LoginBox">
+                    <div className="Email">
+                        <form>
+                            <label htmlFor="email-input">Email:</label>
+                            <input type="email" id="email-input" onInput={e => setUserEmail(e.target.value)} />
+                        </form>
+                    </div>
 
-                 <div className="Password">
-                     <form>
-                     <label htmlFor="password-input">Password:</label>
-                     <input type="password" id="password-input" onInput={e => setUserPassword(e.target.value)} />
-                     </form>
+                    <div className="Password">
+                        <form>
+                            <label htmlFor="password-input">Password:</label>
+                            <input type="password" id="password-input" onInput={e => setUserPassword(e.target.value)} />
+                        </form>
+                    </div>
+                    <div className="LoginButtons">
+                        <button onClick={() => { setFetchReturn(login(userEmail, userPassword)) }}>Login</button>
+                        <button onClick={() => { setSignUpToggle(true) }}>Sign Up</button>
+                    </div>
                 </div>
-            </div>
-            <div className="LoginButtons">
-                <button onClick={()=>{setReturnVal(login(userEmail, userPassword))}}>Login</button>
-                <button onClick={()=>{signup()}}>Sign Up</button>
-            </div>
-            {userEmail && <div>{userEmail}</div>}
-            {userPassword && <div>{userPassword}</div>}
-            {returnVal && <div>{JSON.stringify(returnVal)}</div>}
+                :
+                <div className="SignupBox">
+                    <div className="SignUpForm">
+                        <form>
+                            <label htmlFor="email-input">*Email:</label>
+                            <input type="email" id="email-input" onInput={e => setUserEmail(e.target.value)} /><br/> {/* Temporary Line breaks, remove once css is done*/}
+                            <label htmlFor="first-name-input">*First Name:</label>
+                            <input type="text" id="first-name-input" onInput={e => setUserFirst(e.target.value)} /><br/>
+                            <label htmlFor="last-name-input">Last Name:</label>
+                            <input type="text" id="last-name-input" onInput={e => setUserLast(e.target.value)} /><br/>
+                            <label htmlFor="password-input">*Password:</label>
+                            <input type="password" id="password-input" onInput={e => setUserPassword(e.target.value)} /><br/>
+                        </form>
+                        * Is Required
+                    </div>
+                    <div className="LoginButtons">
+                        <button onClick={() => { 
+                            setFetchReturn(signup(userEmail, userFirst, userLast, userPassword));
+                            setSignUpToggle(false)
+                            }}>Create Account</button>
+                        <button onClick={() => { setSignUpToggle(false) }}>Back</button>
+                    </div>
+                </div>
+            }
+
         </div>
-        
+
     )
 }
 

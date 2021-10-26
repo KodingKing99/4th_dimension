@@ -13,6 +13,7 @@ import ManageUsersPage from "./Pages/ManageUsersPage";
 import ManageRefundsPage from "./Pages/ManageRefundsPage";
 import OwnerManageUsersPage from "./Pages/OwnerManageUsersPage";
 import MoneyPage from "./Pages/MoneyPage";
+import ManageSponsorshipPage from "./Pages/manage-sponsorshipPage";
 
 import AddTournamentPage from "./Pages/AddTournamentPage";
 
@@ -107,6 +108,10 @@ function App() {
 
                     <Route path="/add-tournament">
                         <AddTournamentPage></AddTournamentPage>
+                    </Route>
+
+                    <Route path="/manage-sponsorship">
+                        <ManageSponsorshipPage></ManageSponsorshipPage>
                     </Route>
 </Box>
                     </Switch>

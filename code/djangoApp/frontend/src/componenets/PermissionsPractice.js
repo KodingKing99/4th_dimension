@@ -7,6 +7,7 @@ const PermissionsPractice = () => {
     const setOwner = () => dispatch(setRole("owner"));
     const setDrinkMiester = () =>  dispatch(setRole("drinkMiester"));
     const setPlayer = () =>  dispatch(setRole("player"));
+    const setSponsor = () =>  dispatch(setRole("sponsor"));
     const role = () =>  useSelector((state) => state.user.role);
     console.log(role);
     return ( 
@@ -16,6 +17,8 @@ const PermissionsPractice = () => {
             <button onClick={setOwner}>Owner</button>
             <button onClick={setDrinkMiester}>Drink Miester</button> 
             <button onClick={setPlayer}>Player</button> 
+            <button onClick={setSponsor}>Sponsor</button> 
+
         </div>
      );
 }

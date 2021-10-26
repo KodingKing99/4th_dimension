@@ -59,4 +59,10 @@ fi
 python manage.py migrate
 python manage.py makemigrations
 python manage.py migrate
+until [ -f "./frontend/static/frontend/main.js" ]
+do
+    echo "Waiting for frontend file to exist"
+    sleep 5
+done 
+
 python manage.py runserver 

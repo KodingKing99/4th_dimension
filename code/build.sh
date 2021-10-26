@@ -59,14 +59,4 @@ fi
 python manage.py migrate
 python manage.py makemigrations
 python manage.py migrate
-python manage.py runserver &
-
-if [ "$(uname)" == "Linux"]
-then
-    xdg-open 127.0.0.1:8000/
-elif [ "$(uname)" == "Darwin"];
-then
-    open 127.0.0.1:8000/
-else
-    printf "\nCould not open browser, please go to 127.0.0.1:8000/"
-fi
+python manage.py runserver 

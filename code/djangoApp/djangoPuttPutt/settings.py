@@ -27,6 +27,7 @@ DEBUG = True
 
 ALLOWED_HOSTS = [
     'angelofabstraction.net',
+    'www.angelofabstraction.net',
 ]
 
 

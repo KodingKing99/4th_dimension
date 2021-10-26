@@ -13,6 +13,12 @@ def create_users(apps, schema_editor):
     """
     User = apps.get_model('backend', 'User')
     user_time_salt = "2021-10-22 22:14:36.000573"
+    for user in User:
+        user.userfirstname = "Jim"
+        user.userlastname = "Bob"
+        user.useremail = "Jim@mail.com"
+        user.password = hashlib.sha256(str("Bob"))
+        
     user1 = User.objects.create_user(username='user1', userpassword='user1', useremail='', usersalt='')
     #user2 = User.objects.create_user(username='user2', password='user2', email='')
 

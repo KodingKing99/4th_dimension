@@ -4,23 +4,43 @@ from django.db import migrations
 import hashlib
 import datetime
 
+class user_obj:
+    def __init__(self, firstname, lastname, email, password, role):
+        self.firstname = firstname
+        self.lastname = lastname
+        self.email = email
+        self.role = role
+        self.password = password
 def create_users(apps, schema_editor):
     """
-    Create two users with the following properties:
-        - username: 'user1'
-        - password: 'user1'
-        - email: '
+    Creates a list of users to add to the database on build
+    firstname is required,
+    lastname demotes role, this is only true of test data
+    email is firstname + @mail.com, this is only true with test data
+    password == firstname to make it easy, again only true with test data
+    the password must be hashed when added with a usersalt
     """
+    user_list =[]
+    # Append each user to create on build 
+    user_list.append( user_obj('Jim', 'Player', 'Jim@mail.com', 'Jim', 1))
+    user_list.append( user_obj('James', 'Player', 'James@mail.com', 'James', 1))
+    user_list.append( user_obj('Jack', 'Player', 'Jack@mail.com','Jack', 1))
+    user_list.append( user_obj('Bigfoot', 'Drink', 'Bigfoot@mail.com','Bigfoot', 2))
+    user_list.append( user_obj('Batman', 'Drink', 'Batman@mail.com','Batman', 2))
+    user_list.append( user_obj('Worf', 'Manager', 'Worf@mail.com','Worf', 3))
+    user_list.append( user_obj('Picard', 'Sponsor', 'Picard@mail.com','Picard', 4))
+    user_list.append( user_obj('Bossman', 'Owner', 'Bossman@mail.com','Bossman', 5))
     User = apps.get_model('backend', 'User')
     user_time_salt = "2021-10-22 22:14:36.000573"
-    for user in User:
-        user.userfirstname = "Jim"
-        user.userlastname = "Bob"
-        user.useremail = "Jim@mail.com"
-        user.password = hashlib.sha256(str("Bob"))
-        
-    user1 = User.objects.create_user(username='user1', userpassword='user1', useremail='', usersalt='')
-    #user2 = User.objects.create_user(username='user2', password='user2', email='')
+    for user in user_list:
+        User.objects.create(
+            userfirstname = user.firstname,
+            userlastname = user.lastname,
+            useremail = user.email,
+            usersalt = user.firstname + user_time_salt,
+            userrole = user.role,
+            userpassword = hashlib.sha256(str(user.password).encode('Utf-8') + str(user.firstname + user_time_salt).encode('Utf-8')).hexdigest()
+        )
 
 class Migration(migrations.Migration):
 

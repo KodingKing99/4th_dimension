@@ -43,7 +43,7 @@ class SignupSerializer(serializers.ModelSerializer):
 	def create(self, validated_data):
 		validated_data["usersalt"] = validated_data["userfirstname"] + str(datetime.datetime.now())
 		print(validated_data["usersalt"])
-		validated_data["userpassword"] = hashlib.sha256(str(validated_data["userpassword"]).encode('utf-8')+str(validated_data["usersalt"]).encode('utf-8')).hexdigest()
+		validated_data["userpassword"] = hashlib.sha256(str(validated_data["userfirstname"]).encode('utf-8')+str(validated_data["usersalt"]).encode('utf-8')).hexdigest()
 		print(validated_data["userpassword"])
 		user = User.objects.create(**validated_data)
 		return user

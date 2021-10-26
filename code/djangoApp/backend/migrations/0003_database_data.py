@@ -4,6 +4,7 @@ from django.db import migrations
 import hashlib
 import datetime
 
+
 class user_obj:
     def __init__(self, firstname, lastname, email, password, role):
         self.firstname = firstname
@@ -42,6 +43,37 @@ def create_users(apps, schema_editor):
             userpassword = hashlib.sha256(str(user.password).encode('Utf-8') + str(user.firstname + user_time_salt).encode('Utf-8')).hexdigest()
         )
 
+class tournament_obj:
+    def __init__(self, date_time, sponsor_id, prize, hole_count):
+        self.date_time = date_time
+        self.sponsor_id = sponsor_id
+        self.prize = prize
+        self.hole_count = hole_count
+def create_tournaments(apps, schema_editor):
+    """
+    Create a couple default tournaments
+    """
+    tournament_list = []
+    User = apps.get_model('backend', 'User')
+    date_1 = "2021-10-31 10:00:00.000000"
+    date_2 = "2021-11-14 18:00:00.000000"
+    # Sponsor id defualts to first sponsor in database or if no sponosor then -1
+    sponsor_id = User.objects.all().filter(userrole=4)[0].userid
+    if not sponsor_id: sponsor_id = -1
+
+
+    Tournament = apps.get_model('backend', 'Tournament')
+    tournament_list.append( tournament_obj(date_1, sponsor_id, 2000, 18))
+    tournament_list.append( tournament_obj(date_2, sponsor_id, 5000, 9))
+    for tournament in tournament_list:
+        Tournament.objects.create(
+            tournamentdate = tournament.date_time,
+            tournamnetsponsor = tournament.sponsor_id,
+            tournamentprize = tournament.prize,
+            tournamentholecount = tournament.hole_count,
+        )
+
+
 class Migration(migrations.Migration):
 
     dependencies = [
@@ -50,5 +82,6 @@ class Migration(migrations.Migration):
 
     operations = [
         migrations.RunPython(create_users),
+        migrations.RunPython(create_tournaments),
     ]
 

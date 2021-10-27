@@ -1,52 +1,81 @@
-#!/bin/sh
+@REM This script tests for needed programs and runs start commands
+@REM Add the -DB flag to delete and build the default database
+@echo off
+@REM Test for npm
+call npm -v 2> nul 
+@REM If npm is not found, exit
+if "%errorlevel%" == "9009" (
+    echo "npm not found. Please install npm and try again."
+    exit /b -1
+) else (
+    echo npm found
+)
 
-# This script tests for needed programs and runs start commands
-# Add the -DB flag to delete and build the default database
-
-# Test for npm
-npm=$(npm -version)
-if [ -z $npm ]
-then
-    printf "\nnpm not found, please install npm\n"
-    exit -1
-else
-    printf "\nnpm found! version $npm\n"
-fi
-
-npm install
-npm run dev &
+call npm install
+start /B npm run dev 
 
 cd djangoApp/
 
-# If db does not exist does not matter
-if [ "$1" = "-DB" ]
-then
-    rm db.sqlite3
-    printf "\nDeleted db\n"
-fi
+@REM If db does not exist does not matter
+if "%1" == "-DB" (
+    del db.sqlite3
+    echo "\nDeleted db\n"
+)
 
-# Test for python
-python=$(python -V)
-if [ -z $python ]
-then
-    printf "\npython not found, please install python 3\n"
-    exit -1
-else
-    printf "\npython found! version $python\n"
-fi
+@REM Test for python
+call python -V 2> nul
+@REM If python is not found, exit
+if "%errorlevel%" == "9009" (
+    echo "python not found. Please install python and try again."
+    exit /b -1
+) else (
+    echo python found
+)
 
-# Test for django
-django=$(python -m django --version)
-if [ -z $django ]
-then
-    printf "\ndjango not found, please install django\n"
-    exit -1
-else
-    printf "\ndjango found! version $django\n"
-fi
+@REM Test for django
+@REM If django is not found, exit
+for /f "delims=" %%V in ('python -m django --version') do @set django=%%V
+if "%django%" == "" (
+    echo "django not found. Trying to install..."
+    call pip -V 2> nul
+    if "%errorlevel%" == "9009" (
+        echo "pip not found. Please install pip and try again."
+        exit /b -1
+    ) else (
+        echo pip found
+        call pip3 install django
+        echo "django installed"
+    )
+) else (
+    echo django found
+)
 
-# Migrate seems to be needed to run twice
-python manage.py migrate
-python manage.py makemigrations
-python manage.py migrate
-python manage.py runserver
+@REM Test for djangorestframework
+@REM If django is not found, exit
+for /f "delims=" %%V in ('python -c "import rest_framework; print(rest_framework.VERSION)"') do @set djangorestframework=%%V
+if "%djangorestframework%" == "" (
+    echo "djangorestframework not found. Trying to install..."
+    call pip -V 2> nul
+    if "%errorlevel%" == "9009" (
+        echo "pip not found. Please install pip and try again."
+        exit /b -1
+    ) else (
+        echo pip found
+        call pip install djangorestframework
+        echo "django rest framework installed"
+    )
+) else (
+    echo djangorestframework found
+)
+
+@REM Migrate seems to be needed to run twice
+call python manage.py migrate
+call python manage.py makemigrations
+call python manage.py migrate
+start /B python manage.py runserver
+
+
+echo ""
+echo "Server Built Successfully"
+echo "Server running on 127.0.0.1:8000/"
+start "" http://127.0.0.1:8000/

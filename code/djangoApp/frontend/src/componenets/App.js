@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import ReactDOM from 'react-dom';
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
-import Home from './Home/Home';
+// import {HashRouter as HashRouter, Route, Switch} from 'react-router-dom';
+import { HashRouter, Route ,Switch,Link} from "react-router-dom";
 import GamePage from './Pages/GamePage'
 import OrderDrinkPage from "./Pages/OrderDrinksPage";
 import LeaderBoardPage from "./Pages/LeaderboardPage";
@@ -13,6 +13,9 @@ import ManageUsersPage from "./Pages/ManageUsersPage";
 import ManageRefundsPage from "./Pages/ManageRefundsPage";
 import OwnerManageUsersPage from "./Pages/OwnerManageUsersPage";
 import MoneyPage from "./Pages/MoneyPage";
+
+import AddTournamentPage from "./Pages/AddTournamentPage";
+
 import Navbar from './Navbar/Navbar';
 import Login from './Login/Login'
 
@@ -20,6 +23,8 @@ import { store } from '../redux/store';
 import { Provider } from 'react-redux'
 import BottomNavigationBar from "./BottomNavigationBar";
 import PermissionsPractice from "./PermissionsPractice";
+import Tournament from "./Tournament/Tournament";
+import CreateTournament from "./Tournament/CreateTournament";
 // import BottomAppBar from './BottomAppBar';
 function App() {
     const playerPath = ["Game", "Drinks", "Leaderboards", "Account"]
@@ -27,79 +32,80 @@ function App() {
     const getPage = () => {
 
     }
-    const [user, setUser] = useState(store.getState().user);
+    
+  return (
+      <div>
 
-    console.log(store.getState());
-
-    return (
-        <Provider store={store}>
-        <div>
-            {/* <PermissionsPractice /> */}
-            <Router>
+          <PermissionsPractice/>
+          <Tournament/>
+          <CreateTournament/>
+          <HashRouter>
                 <div className="App">
-                    {!user.id ? <Login /> : // If a user is not loaded load login
-                        <div className="Home">
-                            <Switch >
-                                <Route exact path="/">
-                                    {role == "player" &&
-                                        <GamePage />
-                                    }
-                                    {role == "drinkMiester" &&
-                                        <DrinkOrdersPage />
-                                    }
-                                    {role == "manager" &&
-                                        <ManageTournamentsPage />
-                                    }
-                                    {role == "owner" &&
-                                        <OwnerManageUsersPage />
-                                    }
-                                </Route>
-                                <Route exact path="/#game">
-                                    <GamePage />
-                                </Route>
-                                <Route exact path="/#drinks">
-                                    <OrderDrinkPage />
-                                </Route>
-                                <Route exact path="/#leaderboard">
-                                    <LeaderBoardPage />
-                                </Route>
-                                <Route exact path="/#account">
-                                    <AccountPage />
-                                </Route>
-                                <Route exact path="/#drink-orders">
-                                    <DrinkOrdersPage />
-                                </Route>
-                                <Route exact path="/#manage-tournaments">
-                                    <ManageTournamentsPage />
-                                </Route>
-                                <Route exact path="/#manage-drinks">
-                                    <ManageDrinksPage />
-                                </Route>
-                                <Route exact path="/#manage-users">
-                                    <ManageUsersPage />
-                                </Route>
-                                <Route exact path="/#manage-refunds">
-                                    <ManageRefundsPage />
-                                </Route>
-                                <Route exact path="/#owner-manage-users">
-                                    <OwnerManageUsersPage />
-                                </Route>
-                                <Route exact path="/#money">
-                                    <MoneyPage />
-                                </Route>
-                            </Switch>
+                    <Switch >
+                        <Route exact path="/">
+                            {role=="player" &&
+                            <GamePage/>
+                            }
+                            {role=="drinkMiester" &&
+                            <DrinkOrdersPage/>
+                            }
+                            {role=="manager"&&
+                            <ManageTournamentsPage/>
+                            }
+                            {role=="owner"&&
+                            <OwnerManageUsersPage/>
+                            }
+                        
+                        </Route>
+                        {/* <Route path="tournament">
+                            <Tournament/>
+                        </Route> */}
+                    <Route exact path="/#game">
+                    <GamePage/>
+                    </Route>
+                    <Route path="/game" component={GamePage}>
+                    </Route>
+                    <Route path="/drinks" component={OrderDrinkPage}>
+                    </Route>
+                    <Route path="/leaderboard">
+                    <LeaderBoardPage/>
+                    </Route>
+                    <Route path="/account">
+                    <AccountPage/>
+                    </Route>
+                    <Route path="/drink-orders">
+                    <DrinkOrdersPage/>
+                    </Route>
+                    <Route path="/manage-tournaments">
+                    <ManageTournamentsPage/>
+                    </Route>
+                    <Route  path="/manage-drinks">
+                    <ManageDrinksPage/>
+                    </Route>
+                    <Route path="/manage-users">
+                    <ManageUsersPage/>
+                    </Route>
+                    <Route path="/manage-refunds">
+                    <ManageRefundsPage/>
+                    </Route>
+                    <Route path="/owner-manage-users">
+                    <OwnerManageUsersPage/>
+                    </Route>
+                    <Route path="/money">
+                    <MoneyPage/>
+                    </Route>
 
-                            <>
-                                <Navbar />
-                                <BottomNavigationBar paths={playerPath} role={role} ></BottomNavigationBar>
-                            </>
-                        </div>
-                    }
+
+                    <Route path="/add-tournament">
+                        <AddTournamentPage></AddTournamentPage>
+                    </Route>
+
+                    </Switch>
+                    <Navbar/>
+                    <BottomNavigationBar paths = {playerPath} role={role} ></BottomNavigationBar>
                 </div>
-            </Router>
-            {/* <Home/> */}
-        </div>
-        </Provider>
-    );
+            </HashRouter>
+      </div>
+  );
 }
 ReactDOM.render(<Provider store={store}><App /></Provider>, document.getElementById('app'))

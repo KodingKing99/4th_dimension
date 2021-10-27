@@ -33,7 +33,7 @@ class TransactionHistorySerializer(serializers.ModelSerializer):
 class LoginSerializer(serializers.ModelSerializer):
 	class Meta:
 		model = User
-		fields = ('useremail','userpassword','usersalt')
+		fields = ('userfirstname', 'userlastname', 'useremail', 'userrole', 'userid')
 class SignupSerializer(serializers.ModelSerializer):
 
 	class Meta:

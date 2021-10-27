@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { store } from '../../redux/store'
 import { login, signup } from '../../services/services.js'
 // import './Login.css';
@@ -11,8 +11,19 @@ const Login = () => {
     const [userLast, setUserLast] = useState("");
     const [signUpToggle, setSignUpToggle] = useState(false)
     const [fetchReturn, setFetchReturn] = useState("")
-    login("Jim@mail.com", "Jim")
-    //login(userEmail, userPassword)
+
+    useEffect(() => {
+        console.log(fetchReturn)
+    }, [fetchReturn])
+
+    const handleLogin = (e) => {
+        setUserEmail("Jim@mail.com")
+        setUserPassword("Jim")
+        console.log("login")
+        login(userEmail, userPassword).then(res => {res.json()}).then(data => {setFetchReturn(data)}) 
+        console.log(fetchReturn)
+    }
+
     return (
         <div className="LoginPage">
             {!signUpToggle ?
@@ -31,8 +42,7 @@ const Login = () => {
                         </form>
                     </div>
                     <div className="LoginButtons">
-                        <button onClick={() => {login(userEmail, userPassword)}}>Login</button>
-                        <button onClick={() =>  {login("Jim@mail.com", "Jim")}}>Login</button>
+                        <button onClick={handleLogin}>Login</button>
                         <button onClick={() => { setSignUpToggle(true) }}>Sign Up</button>
                     </div>
                 </div>

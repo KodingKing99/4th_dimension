@@ -24,42 +24,49 @@ export const createTournament = (date, sponsorId, prize, holeCount) => {
 }
 
 export const login = (email, password) => {
-    const {data, isLoading, error} = useFetch(applicationName + "login/?email="+email.replace('@','%40')+"&password="+password)
-    console.log(data,"here")
-    return {data, isLoading, error}
+    // const {data, isLoading, error} = useFetch(applicationName + "login/?email="+email.replace('@','%40')+"&password="+password)
+    // console.log(data,"here")
+    // return {data, isLoading, error}
+    // return {data: {}, isLoading: false, error: null}
+     fetch("/api/login/?email="+email.replace('@','%40')+"&password="+password)
+        .then(response => response.json())
+        .then(data => {
+            return data;
+        })
 }
 
 export const signup = (email, firstName, lastName, password, role = 1) => {
-    requestOptions = {
-        ...requestOptions,
-        body: JSON.stringify({
-            useremail: email,
-            userfirstname: firstName,
-            userlastname: lastName,
-            userpassword: password,
-            userrole: role,
+    fetch("api/signup/",
+    {
+        method: 'POST',
+        body: {
+            "useremail": email,
+            "userfirstname": firstName,
+            "userlastname": lastName,
+            "userpassword": password,
+            "userrole": role,
+        },
+        headers: {
+            'Content-Type': 'application/json'
+        },
+    })
+        .then(response => {
+            console.log(response)
         })
-    }
-    const { data, isLoading, error } = useFetch(applicationName + 'signup', {...requestOptions})
-    return { data, isLoading, error }
-    // fetch("api/signup/",
-    // {
-    //     method: 'POST',
-    //     body: {
-    //         "useremail": userEmail,
-    //         "userfirstname": userFirstName,
-    //         "userlastname": userLastName,
-    //         "userpassword": userPassword,
-    //         "userrole": userRole,
-    //     },
-    //     headers: {
-    //         'Content-Type': 'application/json'
-    //     },
-    // })
-    //     .then(response => {
-    //         console.log(response)
+        .then(data => {
+            console.log(data)
+        })
+    // requestOptions = {
+    //     ...requestOptions,
+    //     body: JSON.stringify({
+    //         useremail: email,
+    //         userfirstname: firstName,
+    //         userlastname: lastName,
+    //         userpassword: password,
+    //         userrole: role,
     //     })
-    //     .then(data => {
-    //         console.log(data)
-    //     })
+    // }
+    // const { data, isLoading, error } = useFetch(applicationName + 'signup', {...requestOptions})
+    // return { data, isLoading, error }
+    
 }

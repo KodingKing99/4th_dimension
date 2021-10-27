@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 // import './Home.css'
 import { useTheme } from '@mui/material/styles';
   import MobileStepper from '@mui/material/MobileStepper';
@@ -13,6 +13,7 @@ import { useTheme } from '@mui/material/styles';
   import { mdiBeerOutline } from '@mdi/js';
 
   import Fab from '@mui/material/Fab';
+import { current } from "immer";
 const steps = [
     {
       label: '',
@@ -28,8 +29,27 @@ const steps = [
       description: ``,
     },
   ];
-const ManageSponsorshipPage = (props) => {
 
+
+
+
+const GameComponent = (props) => {
+
+    let [currentScore,setCount] = useState(0);
+
+
+
+    const handleIncrementScore = ()=>{
+        console.log("increment")
+        console.log(currentScore)
+        currentScore=currentScore +1;
+      }
+    
+      const handleDecrimentScore = () =>{
+        console.log("decrement")
+        console.log(currentScore)
+        currentScore= currentScore + 1;
+      }
 
 
     const theme = useTheme();
@@ -63,7 +83,7 @@ const ManageSponsorshipPage = (props) => {
   
         </Paper>
         <Box sx={{   width: '100%', textAlign:'center', fontSize:'120px', }}>
-        <span style={{fontSize:'40px'}}>Par</span><br></br><span> - </span> 0 <span> + </span>
+        <span style={{fontSize:'40px'}}>Par</span><br></br><span onClick={()=>{if(currentScore>0){setCount(currentScore-1)}}}> - </span> {currentScore} <span onClick={()=>{setCount(currentScore+1)}} > + </span>
         </Box>
         <MobileStepper
           variant="text"
@@ -112,4 +132,4 @@ const ManageSponsorshipPage = (props) => {
      );
 }
  
-export default ManageSponsorshipPage;
+export default GameComponent;

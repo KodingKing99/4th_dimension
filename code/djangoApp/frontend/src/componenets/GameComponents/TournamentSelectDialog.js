@@ -16,7 +16,8 @@ const TournamentSelectDialog = (props) => {
     return ( 
         <Dialog onClose={handleClose} open={open}>
         <DialogTitle>Set backup account</DialogTitle>
-<p>Dialog</p>
+        
+        <Button >Cancel</Button>
       </Dialog>
      );
 }

@@ -35,8 +35,8 @@ function App() {
     
   return (
       <div>
-
           <PermissionsPractice/>
+          <Login/>
           <Tournament/>
           <CreateTournament/>
           <HashRouter>

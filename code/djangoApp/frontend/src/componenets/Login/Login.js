@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { store } from '../../redux/store'
-import { login, signup } from '../../api/APIRoutes'
+import { login, signup } from '../../services/services.js'
 // import './Login.css';
 
 const Login = () => {
@@ -11,6 +11,8 @@ const Login = () => {
     const [userLast, setUserLast] = useState("");
     const [signUpToggle, setSignUpToggle] = useState(false)
     const [fetchReturn, setFetchReturn] = useState("")
+    login("Jim@mail.com", "Jim")
+    //login(userEmail, userPassword)
     return (
         <div className="LoginPage">
             {!signUpToggle ?
@@ -29,7 +31,8 @@ const Login = () => {
                         </form>
                     </div>
                     <div className="LoginButtons">
-                        <button onClick={() => { setFetchReturn(login(userEmail, userPassword)) }}>Login</button>
+                        <button onClick={() => {login(userEmail, userPassword)}}>Login</button>
+                        <button onClick={() =>  {login("Jim@mail.com", "Jim")}}>Login</button>
                         <button onClick={() => { setSignUpToggle(true) }}>Sign Up</button>
                     </div>
                 </div>
@@ -50,6 +53,7 @@ const Login = () => {
                     </div>
                     <div className="LoginButtons">
                         <button onClick={() => { 
+                            {console.log("here")}
                             setFetchReturn(signup(userEmail, userFirst, userLast, userPassword));
                             setSignUpToggle(false)
                             }}>Create Account</button>

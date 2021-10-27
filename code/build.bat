@@ -78,7 +78,7 @@ call python manage.py migrate
 if exist ".\frontend\static\frontend\main.js" goto Exists
 echo "Waiting for frontend file to exist..."
 Timeout /t 5 >nul
-goto CheckForFrontend
+@REM goto CheckForFrontend
 
 :Exists
 call python manage.py runserver

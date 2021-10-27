@@ -74,8 +74,10 @@ call python manage.py makemigrations
 call python manage.py migrate
 
 @REM Wait for frontend file to exist
+set file="djangoApp\frontend\static\frontend\main.js"
 :CheckForFrontend
-if exist "djangoApp/frontend/static/frontend/main.js" goto Exists
+if exist %file% goto Exists
+echo "Waiting for frontend file to exist..."
 Timeout /t 5
 goto CheckForFrontend
 :Exists

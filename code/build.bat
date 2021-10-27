@@ -74,17 +74,12 @@ call python manage.py makemigrations
 call python manage.py migrate
 
 @REM Wait for frontend file to exist
-set file="djangoApp\frontend\static\frontend\main.js"
 :CheckForFrontend
-if exist %file% goto Exists
+if exist ".\frontend\static\frontend\main.js" goto Exists
 echo "Waiting for frontend file to exist..."
-Timeout /t 5
+Timeout /t 5 >nul
 goto CheckForFrontend
+
 :Exists
-start /B python manage.py runserver
+call python manage.py runserver
 
-
-echo ""
-echo "Server Built Successfully"
-echo "Server running on 127.0.0.1:8000/"
-start "" http://127.0.0.1:8000/

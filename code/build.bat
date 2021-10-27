@@ -72,6 +72,13 @@ if "%djangorestframework%" == "" (
 call python manage.py migrate
 call python manage.py makemigrations
 call python manage.py migrate
+
+@REM Wait for frontend file to exist
+:CheckForFrontend
+if exist "djangoApp/frontend/static/frontend/main.js" goto Exists
+Timeout /t 5
+goto CheckForFrontend
+:Exists
 start /B python manage.py runserver
 
 

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import useFetch from "react-fetch-hook"
-
+import { createTournament } from '../../services/services';
 // import { createTournament } from '../../services/services';
 const CreateTournament = (props) => {
     // const {data, isLoading} = getAllTournaments();
@@ -13,24 +13,6 @@ const CreateTournament = (props) => {
     //     const{data, isLoading, error} = 
     // }
     // console.log(data);
-    const applicationName = 'http://127.0.0.1:8000/api/'
-    let requestOptions = {
-    method : 'POST',
-    headers: { 'Content-Type': 'application/json' },
-}
-    const createTournament = (date, sponsorId, prize, holeCount) => {  
-        requestOptions = {
-            ...requestOptions,
-            body: JSON.stringify({ 
-                tournamentdate: date,
-                tournamnetsponsor: sponsorId,
-                tournamentprize: prize,
-                tournamentholecount: holeCount
-            })
-        };
-        const {data, isLoading, error} = useFetch(applicationName + 'tournament/', {...requestOptions});
-        if(data){console.log(data)}
-    }
     const handleSubmit = (e) => {
         e.preventDefault();
         console.log("submitting...")

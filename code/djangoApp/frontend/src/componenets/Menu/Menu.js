@@ -12,6 +12,7 @@ const Menu = () => {
     const [toggleAll, setToggleAll] = useState(false);
     const [toggleDrawer, setToggleDrawer] = useState(false);
     const [transactions, setTransactions] = useState([]);
+    const [quantity, setQuantity] = useState(0);
     const dispatch = useDispatch();
     useEffect(() => {
         if (role === 'drinkMiester') {
@@ -34,6 +35,9 @@ const Menu = () => {
     }
     const handleDeleteClick = () => {
         // Delete transaction
+    }
+    const handleAddMenuItemClick = () => {
+        // Add menu item
     }
     const item = { id: 1 }
     return (
@@ -68,8 +72,9 @@ const Menu = () => {
                             <Icon>coffee</Icon>
                             <div>Coffee</div>
                             <div>$1.00</div>
-                            <input type="number" />
-                            <button className="purchase-button">Purchase</button>
+                            <label htmlFor="purchase-button">Quantity: </label>
+                            <input type="number" onInput={e => setQuantity(e.target.value)} />
+                            <button className="purchase-button" onClick={() => { handlePurchaseClick() }}>Purchase</button>
                         </div>
                     </Drawer>
                 </div>
@@ -83,8 +88,8 @@ const Menu = () => {
                                 <div className="item-quantity">{item.transactiondate}</div>
                                 <div className="item-quantity">${item.transactionprice}</div>
                                 <div className="item-quantity">{item.transactionactiveflag}</div>
-                                <button className="complete-button" onClick={() => {handleCompleteClick(item.transactionid)}}>Complete</button>
-                                <button className="delete-button" onClick={() => {handleCompleteClick(item.transactionid)}}>Delete</button>
+                                <button className="complete-button" onClick={() => { handleCompleteClick(item.transactionid) }}>Complete</button>
+                                <button className="delete-button" onClick={() => { handleDeleteClick(item.transactionid) }}>Delete</button>
                             </div>
                         )
                     })}
@@ -94,6 +99,19 @@ const Menu = () => {
             }{(role === "owner" || role === "manager") &&
                 <div className="manager-view">
                     {/* Edit drinks */}
+                    <div className="menu-items">
+                        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+                        {/*  icon onclick should open a drawer to edit name, price, and icon */}
+                        <span className="icon-span" onClick={() => { handleIconClick(item.id) }}><div className="inner-icon"><div><Icon>coffee</Icon></div><span>Coffee</span></div></span>
+                        <span className="icon-span" onClick={() => { handleIconClick(item.id) }}><div className="inner-icon"><div><Icon>coffee</Icon></div><span>Coffee</span></div></span>
+                        <span className="icon-span" onClick={() => { handleIconClick(item.id) }}><div className="inner-icon"><div><Icon>coffee</Icon></div><span>Coffee</span></div></span>
+                        <span className="icon-span" onClick={() => { handleIconClick(item.id) }}><div className="inner-icon"><div><Icon>coffee</Icon></div><span>Coffee</span></div></span>
+                        <span className="icon-span" onClick={() => { handleIconClick(item.id) }}><div className="inner-icon"><div><Icon>coffee</Icon></div><span>Coffee</span></div></span>
+                        <span className="icon-span" onClick={() => { handleIconClick(item.id) }}><div className="inner-icon"><div><Icon>coffee</Icon></div><span>Coffee</span></div></span>
+                        <span className="icon-span" onClick={() => { handleIconClick(item.id) }}><div className="inner-icon"><div><Icon>coffee</Icon></div><span>Coffee</span></div></span>
+                        <span className="icon-span" onClick={() => { handleIconClick(item.id) }}><div className="inner-icon"><div><Icon>coffee</Icon></div><span>Coffee</span></div></span>
+                        <button className="add-button" onClick={() => { handleAddMenuItemClick() }}>Add</button>
+                    </div>
                 </div>
             }
         </div>

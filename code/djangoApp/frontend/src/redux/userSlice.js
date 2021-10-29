@@ -31,13 +31,13 @@ export const userSlice = createSlice({
     setPermissions: (state, action) => {
         state.permissions = action.payload;
     },
-    setDefaultUser: (state) => {
+    resetUser: (state) => {
       return {...initialState};
     },
   },
 })
 
 // Action creators are generated for each case reducer function
-export const { setFirstName, setLastName, setFullName, setId, setRole, setPermissions, setDefaultUser } = userSlice.actions
+export const { setFirstName, setLastName, setFullName, setId, setRole, setPermissions, resetUser } = userSlice.actions
 
 export default userSlice.reducer

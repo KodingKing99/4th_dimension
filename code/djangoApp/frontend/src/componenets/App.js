@@ -37,8 +37,9 @@ import { Box, display } from "@mui/system";
 function App() {
     const playerPath = ["Game", "Drinks", "Leaderboards", "Account"]
     const userId = useSelector((state) => state.user.id)
+    const role = useSelector((state) => state.user.role)
+    console.log(role)
 
-    const role = "";
     const getPage = () => {
 
     }

@@ -3,6 +3,7 @@ import { getAllTournaments } from '../services/services';
 
 const initialState = {
   tournaments : [],
+  transactions: [],
 }
 
 export const dataSlice = createSlice({
@@ -12,6 +13,9 @@ export const dataSlice = createSlice({
     setTournaments : (state, action) => {
         state.tournaments = action.payload;
     },
+    setTransactions : (state, action) => {
+        state.transactions = action.payload;
+    },
     resetData: (state) => {
       state = {...initialState};
     },
@@ -19,7 +23,7 @@ export const dataSlice = createSlice({
 })
 
 // Action creators are generated for each case reducer function
-export const { setTournaments, resetData } = dataSlice.actions
+export const { setTournaments, setTransactions, resetData } = dataSlice.actions
 
 export default dataSlice.reducer
 // export const fetchTournaments = () => async (dispatch) => {

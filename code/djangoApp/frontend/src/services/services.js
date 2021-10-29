@@ -45,11 +45,24 @@ export const createTournament = (date, sponsorId, prize, holeCount) => {
 }
 
 export const getAllTransactions = async () => {
-    const respone = await axios.get(applicationName + 'transactionHistory/');
-    console.log(respone);
-    return respone.data;
+    const response = await axios.get(applicationName + 'transactionHistory/');
+    return response.data;
+}
+export const getAllActiveTransactions = async () => {
+    let response = await axios.get(applicationName + 'transactionHistoryActiveOnly/');
+    return response.data;
 }
 
+export const createNewTransaction = async (buyerId, drinkMiesterId, price, date, active=true) => {
+    const response = await axios.post(applicationName + 'transactionHistory/', {
+        buyer: buyerId,
+        drinkMiester: drinkMiesterId,
+        price: price,
+        date: date,
+        active: active
+    });
+    console.log(response);
+}
 
 export const login = async (email, password) => {
     try {
@@ -69,7 +82,7 @@ export const login = async (email, password) => {
                 role = "player"
                 break;
             case 2:
-                role = "miester"
+                role = "drinkMiester"
                 break;
             case 3:
                 role = "manager"

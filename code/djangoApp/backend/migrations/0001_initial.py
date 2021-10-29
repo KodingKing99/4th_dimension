@@ -68,6 +68,7 @@ class Migration(migrations.Migration):
                 ('transactionbuyer', models.IntegerField(db_column='transactionBuyer')),
                 ('transactiondrinkmeister', models.IntegerField(blank=True, db_column='transactionDrinkMeister', null=True)),
                 ('transactiondate', models.DateTimeField(db_column='TransactionDate')),
+                ('transactionactiveflag', models.BooleanField(db_column='transactionActiveFlag', default=True)),
             ],
             options={
                 'verbose_name_plural': 'Transactionhistory',

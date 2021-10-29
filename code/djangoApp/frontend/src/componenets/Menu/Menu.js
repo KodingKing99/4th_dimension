@@ -1,14 +1,26 @@
-import { useSelector } from "react-redux";
-import React, { useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import React, { useEffect, useMemo, useState } from "react";
+import { getAllActiveTransactions } from "../../services/services";
 import { Drawer } from "@material-ui/core";
 import Icon from '@mui/material/Icon';
 import './Menu.css'
+
 
 
 const Menu = () => {
     const role = useSelector((state) => state.user.role);
     const [toggleAll, setToggleAll] = useState(false);
     const [toggleDrawer, setToggleDrawer] = useState(false);
+    const [transactions, setTransactions] = useState([]);
+    const dispatch = useDispatch();
+    useEffect(() => {
+        if (role === 'drinkMiester') {
+            getAllActiveTransactions().then((data) => {
+                setTransactions(data);
+            });
+        }
+    }, []);
+
 
     const handleIconClick = (itemId) => {
         setToggleDrawer(true);
@@ -16,6 +28,12 @@ const Menu = () => {
     const handlePurchaseClick = () => {
         // Add item to purchase history
         setToggleDrawer(false);
+    }
+    const handleCompleteClick = () => {
+        // Complete transaction
+    }
+    const handleDeleteClick = () => {
+        // Delete transaction
     }
     const item = { id: 1 }
     return (
@@ -57,6 +75,19 @@ const Menu = () => {
                 </div>
             }{role === "drinkMiester" &&
                 <div className="drink-miester-view">
+                    {transactions.map((item) => {
+                        return (
+                            <div className="transaction-container" key={item.transactionid}>
+                                <div className="item-name">{item.transactionbuyer}</div>
+                                <div className="item-price">{item.transactiondrinkmeister}</div>
+                                <div className="item-quantity">{item.transactiondate}</div>
+                                <div className="item-quantity">${item.transactionprice}</div>
+                                <div className="item-quantity">{item.transactionactiveflag}</div>
+                                <button className="complete-button" onClick={() => {handleCompleteClick(item.transactionid)}}>Complete</button>
+                                <button className="delete-button" onClick={() => {handleCompleteClick(item.transactionid)}}>Delete</button>
+                            </div>
+                        )
+                    })}
                     {/* Get all current drinks and display them */}
                     {/* Button to fulfill and delete */}
                 </div>

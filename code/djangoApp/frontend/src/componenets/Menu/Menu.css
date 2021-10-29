@@ -17,3 +17,8 @@
 .draw-content {
     align-content: center;
 }
+.transaction-container{
+    background-color: #ccc;
+    border-radius: 5px;
+    margin-bottom: 5px;
+}

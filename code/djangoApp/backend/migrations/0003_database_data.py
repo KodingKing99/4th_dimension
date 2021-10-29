@@ -106,7 +106,7 @@ def create_transactions(apps, schema_editor):
             transactionbuyer = transaction.buyer_id,
             transactiondrinkmeister = transaction.drink_miester_id,
             transactiondate = transaction.date_time,
-            # transactionactiveflag = transaction.active_flag,
+            transactionactiveflag = transaction.active_flag,
         )
 
 class Migration(migrations.Migration):

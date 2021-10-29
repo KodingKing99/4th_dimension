@@ -7,11 +7,13 @@ import {
   makeStyles,
 } from "@material-ui/core";
 import { Link } from "react-router-dom";
+import LogoutIcon from '@mui/icons-material/Logout';
 
 const useStyles = makeStyles((theme) => ({
   navlinks: {
     marginLeft: theme.spacing(10),
     display: "flex",
+    textAlign:"center"
   },
  logo: {
     flexGrow: "1",
@@ -56,22 +58,11 @@ function Navbar() {
         <AppBar color="primary" sx={{ top: 'auto', bottom: 0 }} >
         <CssBaseline />
         <Toolbar>
-            <Typography variant="h4" className={classes.logo}>
-            Navbar
+            <Typography style={{textAlign:'center'}} variant="h4" className={classes.logo}>
+            Putt Putt Golf
             </Typography>
             <div className={classes.navlinks}>
-                <Link to="/" className={classes.link}>
-                Home
-                </Link>
-                <Link to="/about" className={classes.link}>
-                About
-                </Link>
-                <Link to="/contact" className={classes.link}>
-                Contact
-                </Link>
-                <Link to="/faq" className={classes.link}>
-                FAQ
-                </Link>
+              <LogoutIcon/>
             </div>
         </Toolbar>
         </AppBar>

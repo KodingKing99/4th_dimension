@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { store } from '../../redux/store'
+import { useDispatch } from 'react-redux';
+import { setUser } from '../../redux/userSlice';
 import { login, signup } from '../../services/services.js'
-// import './Login.css';
+// import css from './Login.css';
 
 const Login = () => {
 
@@ -10,22 +11,36 @@ const Login = () => {
     const [userFirst, setUserFirst] = useState("");
     const [userLast, setUserLast] = useState("");
     const [signUpToggle, setSignUpToggle] = useState(false)
-    const [fetchReturn, setFetchReturn] = useState("")
+    const [error, setError] = useState("")
+    const [success, setSuccess] = useState("")
+    const dispatch = useDispatch();
 
-    useEffect(() => {
-        console.log(fetchReturn)
-    }, [fetchReturn])
+    const handleLogin =  (e) => {
+        const user = login(userEmail, userPassword).then(data => {
+            if (data.error) {
+                setError(data.error)
+            } else {
+                dispatch(setUser(data))
+            }
+        })
+    }
 
-    const handleLogin = (e) => {
-        setUserEmail("Jim@mail.com")
-        setUserPassword("Jim")
-        console.log("login")
-        login(userEmail, userPassword).then(res => {res.json()}).then(data => {setFetchReturn(data)}) 
-        console.log(fetchReturn)
+    const handleSignup =  (e) => {
+        const user = signup(userEmail, userFirst, userLast, userPassword).then(data => {
+            if (data.error) {
+                if(data.error.useremail) setError(data.error.useremail)
+                else setError(data.error)
+            } else {
+                setSuccess(data.success)
+                setSignUpToggle(false)
+            }
+        })
     }
 
     return (
         <div className="LoginPage">
+            {error && <div>Error. {error}</div>}
+            {success && <div>Success! {success}</div>}
             {!signUpToggle ?
                 <div className="LoginBox">
                     <div className="Email">
@@ -42,7 +57,7 @@ const Login = () => {
                         </form>
                     </div>
                     <div className="LoginButtons">
-                        <button onClick={handleLogin}>Login</button>
+                        <button onClick={() => {handleLogin()}}>Login</button>
                         <button onClick={() => { setSignUpToggle(true) }}>Sign Up</button>
                     </div>
                 </div>
@@ -62,16 +77,11 @@ const Login = () => {
                         * Is Required
                     </div>
                     <div className="LoginButtons">
-                        <button onClick={() => { 
-                            {console.log("here")}
-                            setFetchReturn(signup(userEmail, userFirst, userLast, userPassword));
-                            setSignUpToggle(false)
-                            }}>Create Account</button>
+                        <button onClick={() => {handleSignup()}}>Create Account</button>
                         <button onClick={() => { setSignUpToggle(false) }}>Back</button>
                     </div>
                 </div>
             }
-
         </div>
 
     )

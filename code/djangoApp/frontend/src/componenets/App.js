@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect } from "react";
 import ReactDOM from 'react-dom';
 // import {HashRouter as HashRouter, Route, Switch} from 'react-router-dom';
 import { HashRouter, Route ,Switch,Link} from "react-router-dom";
@@ -20,7 +20,7 @@ import Navbar from './Navbar/Navbar';
 import Login from './Login/Login'
 
 import { store } from '../redux/store';
-import { Provider } from 'react-redux'
+import { Provider, useSelector } from 'react-redux'
 import BottomNavigationBar from "./BottomNavigationBar";
 import PermissionsPractice from "./PermissionsPractice";
 import Tournament from "./Tournament/Tournament";
@@ -28,6 +28,8 @@ import CreateTournament from "./Tournament/CreateTournament";
 // import BottomAppBar from './BottomAppBar';
 function App() {
     const playerPath = ["Game", "Drinks", "Leaderboards", "Account"]
+    const userId = useSelector((state) => state.user.id)
+    
     const role = "";
     const getPage = () => {
 
@@ -35,8 +37,9 @@ function App() {
     
   return (
       <div>
+          {!userId ? <Login /> :
+          <>
           <PermissionsPractice/>
-          <Login/>
           <Tournament/>
           <CreateTournament/>
           <HashRouter>
@@ -105,6 +108,8 @@ function App() {
                     <BottomNavigationBar paths = {playerPath} role={role} ></BottomNavigationBar>
                 </div>
             </HashRouter>
+            </>
+            }
       </div>
   );
 }

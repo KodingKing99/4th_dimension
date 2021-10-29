@@ -129,9 +129,9 @@ function App() {
             </Paper>
                 </div>
             </HashRouter>
+</Container>
             </>
             }
-</Container>
            
 
              {/* <Home/> */}

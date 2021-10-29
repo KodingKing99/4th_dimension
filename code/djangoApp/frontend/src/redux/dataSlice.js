@@ -35,9 +35,9 @@ export const dataSlice = createSlice({
 export const { setTournaments, resetData } = dataSlice.actions
 
 export default dataSlice.reducer
-export const fetchTournaments = () => async (dispatch) => {
-    console.log("fetching tournaments");
-    // const response = getAllTournaments();
-    // console.log(response);
-    // dispatch(setTournaments(response.data))
-}
+// export const fetchTournaments = () => async (dispatch) => {
+//     console.log("fetching tournaments");
+//     // const response = getAllTournaments();
+//     // console.log(response);
+//     // dispatch(setTournaments(response.data))
+// }

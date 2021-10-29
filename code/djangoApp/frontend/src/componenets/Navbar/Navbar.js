@@ -7,11 +7,17 @@ import {
   makeStyles,
 } from "@material-ui/core";
 import { Link } from "react-router-dom";
+import LogoutIcon from '@mui/icons-material/Logout';
+import { setDefaultUser } from "../../redux/userSlice";
+import { store } from "../../redux/store";
+import { useDispatch } from "react-redux";
+import { resetData } from "../../redux/dataSlice";
 
 const useStyles = makeStyles((theme) => ({
   navlinks: {
     marginLeft: theme.spacing(10),
     display: "flex",
+    textAlign:"center"
   },
  logo: {
     flexGrow: "1",
@@ -50,28 +56,22 @@ const useStyles = makeStyles((theme) => ({
 // });
 function Navbar() {
   const classes = useStyles();
+  const dispatch = useDispatch();
+  const handleLogout = () => {
+    dispatch(resetUser());
+    dispatch(resetData());
+  };
 
   return (
       <div>
         <AppBar color="primary" sx={{ top: 'auto', bottom: 0 }} >
         <CssBaseline />
         <Toolbar>
-            <Typography variant="h4" className={classes.logo}>
-            Navbar
+            <Typography style={{textAlign:'center'}} variant="h4" className={classes.logo}>
+            Putt Putt Golf
             </Typography>
             <div className={classes.navlinks}>
-                <Link to="/" className={classes.link}>
-                Home
-                </Link>
-                <Link to="/about" className={classes.link}>
-                About
-                </Link>
-                <Link to="/contact" className={classes.link}>
-                Contact
-                </Link>
-                <Link to="/faq" className={classes.link}>
-                FAQ
-                </Link>
+              <LogoutIcon onClick={() => {handleLogout()}}/>
             </div>
         </Toolbar>
         </AppBar>

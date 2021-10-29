@@ -60,6 +60,7 @@ class Transactionhistory(models.Model):
     transactionbuyer = models.IntegerField(db_column='transactionBuyer')  # Field name made lowercase.
     transactiondrinkmeister = models.IntegerField(db_column='transactionDrinkMeister', blank=True, null=True)  # Field name made lowercase.
     transactiondate = models.DateTimeField(db_column='TransactionDate')
+    transactionactiveflag = models.BooleanField(db_column='transactionActiveFlag', default=True)  # Field name made lowercase.
 
     class Meta:
         db_table = 'TransactionHistory'

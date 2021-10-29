@@ -39,6 +39,9 @@ const Login = () => {
 
     return (
         <div className="LoginPage">
+            <div className="Title">
+                Login
+            </div>
             {error && <div>Error. {error}</div>}
             {success && <div>Success! {success}</div>}
             {!signUpToggle ?

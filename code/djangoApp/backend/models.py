@@ -77,7 +77,7 @@ class User(models.Model):
     userpassword = models.CharField(db_column='userPassword', max_length=128)  # Field name made lowercase.
     useraccount = models.DecimalField(db_column='userAccount', max_digits=6, decimal_places=2, blank=True, null=True)  # Field name made lowercase.
     userrole = models.IntegerField(db_column='userRole')  # Field name made lowercase.
-
+    usersalt = models.CharField(db_column='userSalt', max_length=128, null=True)
     class Meta:
         db_table = 'Users'
 

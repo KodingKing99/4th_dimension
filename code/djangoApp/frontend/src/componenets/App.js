@@ -27,6 +27,7 @@ import {Provider} from 'react-redux'
 import BottomNavigationBar  from "./BottomNavigationBar";
 import PermissionsPractice from "./PermissionsPractice";
 import Tournament from "./Tournament/Tournament";
+import CreateTournament from "./Tournament/CreateTournament";
 import { Container } from "@mui/material";
 import { Box, display } from "@mui/system";
 // import BottomAppBar from './BottomAppBar';
@@ -44,6 +45,8 @@ function App() {
               display:'flex',
           }}>
           <PermissionsPractice/>
+          <Tournament/>
+          <CreateTournament/>
           </Box>
           {/* <Tournament/> */}
           <Container>

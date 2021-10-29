@@ -8,6 +8,10 @@ import {
 } from "@material-ui/core";
 import { Link } from "react-router-dom";
 import LogoutIcon from '@mui/icons-material/Logout';
+import { setDefaultUser } from "../../redux/userSlice";
+import { store } from "../../redux/store";
+import { useDispatch } from "react-redux";
+import { resetData } from "../../redux/dataSlice";
 
 const useStyles = makeStyles((theme) => ({
   navlinks: {
@@ -52,6 +56,11 @@ const useStyles = makeStyles((theme) => ({
 // });
 function Navbar() {
   const classes = useStyles();
+  const dispatch = useDispatch();
+  const handleLogout = () => {
+    dispatch(resetUser());
+    dispatch(resetData());
+  };
 
   return (
       <div>
@@ -62,7 +71,7 @@ function Navbar() {
             Putt Putt Golf
             </Typography>
             <div className={classes.navlinks}>
-              <LogoutIcon/>
+              <LogoutIcon onClick={() => {handleLogout()}}/>
             </div>
         </Toolbar>
         </AppBar>

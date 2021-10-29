@@ -10,6 +10,13 @@ module.exports = {
 				// 	loader: "babel-loader"
 				// }
 			},
+			{
+				test: /\.css$/,
+				use: [
+				  'style-loader',
+				  'css-loader'
+				]
+			  }
 	// 		{
 	// 			target: 'node', // use require() & use NodeJs CommonJS style
 	// 			externals: [nodeExternals()], // in order to ignore all modules in node_modules folder

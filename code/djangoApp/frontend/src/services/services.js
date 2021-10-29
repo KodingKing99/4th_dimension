@@ -12,7 +12,6 @@ export const getAllTournaments = () => {
     console.log("fetching tournaments...")
     axios.get(applicationName + 'tournament/').then((response) => {
         console.log("Fetched tourneys")
-        console.log(response);
         store.dispatch(setTournaments(response.data));
     }).catch(err => console.log(err));
 }

@@ -70,8 +70,8 @@ if "%djangorestframework%" == "" (
 
 @REM Migrate seems to be needed to run twice
 call python manage.py migrate
-call python manage.py makemigrations
 call python manage.py migrate
+call python manage.py makemigrations
 
 @REM Wait for frontend file to exist
 :CheckForFrontend

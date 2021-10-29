@@ -7,3 +7,5 @@ export const store = configureStore({
       data: dataReducer,
   },
 });
+
+export default store; // run dev complaining about no default export

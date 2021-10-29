@@ -56,8 +56,8 @@ else
 fi
 
 # Migrate seems to be needed to run twice
-python manage.py migrate
 python manage.py makemigrations
+python manage.py migrate
 python manage.py migrate
 until [ -f "./frontend/static/frontend/main.js" ]
 do

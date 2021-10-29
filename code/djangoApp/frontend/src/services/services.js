@@ -1,5 +1,5 @@
 import useFetch from "react-fetch-hook"
-import store from '../redux/store'
+// import store from '../redux/store'
 // import { useDispatch } from "react-redux";
 import { setTournaments } from "../redux/dataSlice";
 import axios from "axios";
@@ -10,13 +10,14 @@ let requestOptions = {
 }
 // const dispatch = useDispatch();
 export const getAllTournaments = () => {
-    // console.log("Getting all tournaments...")
+    console.log("fetching tournaments...")
     // const {data, isLoading, error} = useFetch(applicationName + 'tournament/');
     // return {data, isLoading, error}
     axios.get(applicationName + 'tournament/').then((response) => {
         console.log("Fetched tourneys")
         console.log(response);
-        console.log(store)
+        // console.log(store)
+        // dispatch(setTournaments(response.data));
         return response
         // store.dispatch({type: setTournaments, payload: {response}})
     }).catch(err => console.log(err));

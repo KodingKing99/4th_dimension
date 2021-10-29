@@ -1,10 +1,19 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { getAllTournaments } from '../../services/services';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { fetchTournaments } from '../../redux/dataSlice';
 const Tournament = (props) => {
     // const {data, isLoading} = getAllTournaments();
     // fetchTournaments();
+    // dispatch = useDispatch();
+    fetchTournaments();
+    // useEffect(() => {fetchTournaments()}, [])
+    // dispatch(fetchTournaments());
+    // let myAction = {
+    //     type: "data/fetchTournaments",
+    //     payload: {}
+    // };
+    // dispatch(myAction)
     const data = useSelector((state) => state.data.tournaments);
     console.log(data);
     return ( 

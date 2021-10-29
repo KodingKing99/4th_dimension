@@ -24,6 +24,8 @@ import BottomNavigationBar  from "./BottomNavigationBar";
 import PermissionsPractice from "./PermissionsPractice";
 import Tournament from "./Tournament/Tournament";
 import CreateTournament from "./Tournament/CreateTournament";
+import "core-js/stable";
+import "regenerator-runtime/runtime";
 // import BottomAppBar from './BottomAppBar';
 function App() {
     const playerPath = ["Game","Drinks","Leaderboards","Account"]

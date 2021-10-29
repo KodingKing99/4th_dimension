@@ -7,15 +7,18 @@ const PermissionsPractice = () => {
     const setOwner = () => dispatch(setRole("owner"));
     const setDrinkMiester = () =>  dispatch(setRole("drinkMiester"));
     const setPlayer = () =>  dispatch(setRole("player"));
+    const setSponsor = () =>  dispatch(setRole("sponsor"));
     const role = () =>  useSelector((state) => state.user.role);
     console.log(role);
     return ( 
         <div id="permissionContainer" style={{marginTop: '100px'}}>
             <label>Set Your Role to view custom rendering</label>
-            <button onClick={setManager}>Manager</button>
-            <button onClick={setOwner}>Owner</button>
-            <button onClick={setDrinkMiester}>Drink Miester</button> 
-            <button onClick={setPlayer}>Player</button> 
+            <button style={{marginRight:'5px'}} onClick={setManager}>Manager</button>
+            <button style={{marginRight:'5px'}} onClick={setOwner}>Owner</button>
+            <button style={{marginRight:'5px'}} onClick={setDrinkMiester}>Drink Miester</button> 
+            <button style={{marginRight:'5px'}} onClick={setPlayer}>Player</button> 
+            <button style={{marginRight:'5px'}} onClick={setSponsor}>Sponsor</button> 
+
         </div>
      );
 }

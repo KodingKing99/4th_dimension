@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import useFetch from "react-fetch-hook"
-import { createTournament } from '../../services/services';
+import { createTournament, getAllTournaments } from '../../services/services';
 // import { createTournament } from '../../services/services';
 const CreateTournament = (props) => {
     // const {data, isLoading} = getAllTournaments();
@@ -8,6 +8,7 @@ const CreateTournament = (props) => {
     const [date, setDate] = useState();
     const [holecnt, setHoleCnt] = useState();
     const [prize, setPrize] = useState();
+    // getAllTournaments();
     // const [sponsorid, setSponsorId] = useState();
     // const createMyTourney = (date, sponsorid, prize, holecnt) => {
     //     const{data, isLoading, error} = 

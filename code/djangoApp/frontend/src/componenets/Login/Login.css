@@ -1,11 +1,75 @@
-.LoginPage {
+.LoginPage{
+    background-color: #ccc;
+    margin: auto;
+    margin-top: 5%;
+    width: 50%;
+    padding: 10px;
+    border-radius: 10px;
+}
+
+.LoginBox{
     margin: auto;
     width: 50%;
     padding: 10px;
 }
+.LoginPage form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
 
+.LoginPage input {
+    width: 75%;
+    max-width: 150px;
+    padding: 10px;
+    margin: 5px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+.LoginButtons{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.LoginPage button {
+    color: #fff;
+    margin: 10px;
+    background-color: #3f51b5;
+    border-radius: 5px;
+    border: none;
+    font-size: 15px;
+    padding: 5px
+}
+.LoginPage button:hover {
+    color:#fff;
+    filter: brightness(75%);
+}
 .Title {
     margin: auto;
     width: 50%;
     padding: 10px;
+    font-size: 20px;
+    text-align: center;
+}
+
+.SignupBox {
+    margin: auto;
+    width: 50%;
+    padding: 10px;
+}
+.input-message {
+    text-align: center;
+    color: red;
+    font-size: 15px;
+    padding: 5px;
+}
+
+.SignUpForm {
+    text-align: center;    
+}
+
+.required {
+    color: red;
+    font-size: 15px;
+    padding: 5px;
 }

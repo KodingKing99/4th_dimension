@@ -13,9 +13,15 @@ const Login = () => {
     const [signUpToggle, setSignUpToggle] = useState(false)
     const [error, setError] = useState("")
     const [success, setSuccess] = useState("")
+    const [loading, setLoading] = useState(false)
     const dispatch = useDispatch();
 
-    const handleLogin =  (e) => {
+    const handleLogin = (e) => {
+        if (userEmail === "" || userPassword === "") {
+            setError("Please fill out all required fields")
+            return
+        }
+        setLoading(true)
         const user = login(userEmail, userPassword).then(data => {
             if (data.error) {
                 setError(data.error)
@@ -23,70 +29,86 @@ const Login = () => {
                 dispatch(setUser(data))
             }
         })
+        setLoading(false)
     }
 
-    const handleSignup =  (e) => {
+    const handleToggle = () => {
+        setSignUpToggle(!signUpToggle)
+        setError("")
+    }
+
+    const handleSignup = (e) => {
+        if (userFirst === "" || userEmail === "" || userPassword === "") {
+            setError("Please fill out all required fields")
+            return
+        }
+        setLoading(true)
+
         const user = signup(userEmail, userFirst, userLast, userPassword).then(data => {
             if (data.error) {
-                if(data.error.useremail) setError(data.error.useremail)
+                if (data.error.useremail) setError(data.error.useremail)
                 else setError(data.error)
             } else {
                 setSuccess(data.success)
-                setSignUpToggle(false)
+                handleToggle()
             }
         })
+        setLoading(false)
+
     }
 
     return (
         <div className="LoginPage">
-            <div className="Title">
-                Login
-            </div>
-            {error && <div>Error. {error}</div>}
-            {success && <div>Success! {success}</div>}
-            {!signUpToggle ?
-                <div className="LoginBox">
-                    <div className="Email">
-                        <form>
-                            <label htmlFor="email-input">Email:</label>
-                            <input type="email" id="email-input" onInput={e => setUserEmail(e.target.value)} />
-                        </form>
+            {loading ? <div className="loading">Loading...</div> :
+                <>
+                    <div className="Title">
+                        Login
                     </div>
+                    {error && <div className="input-message">Error: {error}</div>}
+                    {success && <div className="input-message">Success! {success}</div>}
+                    {!signUpToggle ?
+                        <div className="LoginBox">
+                            <div className="Email">
+                                <form>
+                                    <label htmlFor="email-input"><span className="required">*</span>Email:</label>
+                                    <input type="email" id="email-input" onInput={e => setUserEmail(e.target.value)} />
+                                </form>
+                            </div>
 
-                    <div className="Password">
-                        <form>
-                            <label htmlFor="password-input">Password:</label>
-                            <input type="password" id="password-input" onInput={e => setUserPassword(e.target.value)} />
-                        </form>
-                    </div>
-                    <div className="LoginButtons">
-                        <button onClick={() => {handleLogin()}}>Login</button>
-                        <button onClick={() => { setSignUpToggle(true) }}>Sign Up</button>
-                    </div>
-                </div>
-                :
-                <div className="SignupBox">
-                    <div className="SignUpForm">
-                        <form>
-                            <label htmlFor="email-input">*Email:</label>
-                            <input type="email" id="email-input" onInput={e => setUserEmail(e.target.value)} /><br/> {/* Temporary Line breaks, remove once css is done*/}
-                            <label htmlFor="first-name-input">*First Name:</label>
-                            <input type="text" id="first-name-input" onInput={e => setUserFirst(e.target.value)} /><br/>
-                            <label htmlFor="last-name-input">Last Name:</label>
-                            <input type="text" id="last-name-input" onInput={e => setUserLast(e.target.value)} /><br/>
-                            <label htmlFor="password-input">*Password:</label>
-                            <input type="password" id="password-input" onInput={e => setUserPassword(e.target.value)} /><br/>
-                        </form>
-                        * Is Required
-                    </div>
-                    <div className="LoginButtons">
-                        <button onClick={() => {handleSignup()}}>Create Account</button>
-                        <button onClick={() => { setSignUpToggle(false) }}>Back</button>
-                    </div>
-                </div>
+                            <div className="Password">
+                                <form>
+                                    <label htmlFor="password-input"><span className="required">*</span>Password:</label>
+                                    <input type="password" id="password-input" onInput={e => setUserPassword(e.target.value)} />
+                                </form>
+                            </div>
+                            <div className="LoginButtons">
+                                <button onClick={() => { handleLogin() }}>Login</button>
+                                <button onClick={() => { handleToggle() }}>Sign Up</button>
+                            </div>
+                        </div>
+                        :
+                        <div className="SignupBox">
+                            <div className="SignUpForm">
+                                <form>
+                                    <label htmlFor="email-input"><span className="required">*</span>Email:</label>
+                                    <input type="email" id="email-input" onInput={e => setUserEmail(e.target.value)} />
+                                    <label htmlFor="first-name-input"><span className="required">*</span>First Name:</label>
+                                    <input type="text" id="first-name-input" onInput={e => setUserFirst(e.target.value)} />
+                                    <label htmlFor="last-name-input">Last Name:</label>
+                                    <input type="text" id="last-name-input" onInput={e => setUserLast(e.target.value)} />
+                                    <label htmlFor="password-input"><span className="required">*</span>Password:</label>
+                                    <input type="password" id="password-input" onInput={e => setUserPassword(e.target.value)} />
+                                </form>
+                            </div>
+                            <div className="LoginButtons">
+                                <button onClick={() => { handleSignup() }}>Create Account</button>
+                                <button onClick={() => { handleToggle() }}>Back</button>
+                            </div>
+                        </div>
+                    }
+                </>
             }
         </div>
-
     )
 }
 

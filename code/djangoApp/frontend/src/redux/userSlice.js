@@ -3,9 +3,9 @@ import { createSlice } from '@reduxjs/toolkit'
 const initialState = {
   firstName: null,
   lastName: null,
-  fullName: 'my liege',
+  fullName: null,
   id: null,
-  role: "manager",
+  role: "player",
   permissions: null,
 }
 
@@ -31,10 +31,13 @@ export const userSlice = createSlice({
     setPermissions: (state, action) => {
         state.permissions = action.payload;
     },
+    setDefaultUser: (state) => {
+      return {...initialState};
+    },
   },
 })
 
 // Action creators are generated for each case reducer function
-export const { setFirstName, setLastName, setFullName, setId, setRole, setPermissions } = userSlice.actions
+export const { setFirstName, setLastName, setFullName, setId, setRole, setPermissions, setDefaultUser } = userSlice.actions
 
 export default userSlice.reducer

@@ -12,11 +12,14 @@ export const dataSlice = createSlice({
     setTournaments : (state, action) => {
         state.tournaments = action.payload;
     },
+    resetData: (state) => {
+      state = {...initialState};
+    },
   },
 })
 
 // Action creators are generated for each case reducer function
-export const { setTournaments } = dataSlice.actions
+export const { setTournaments, resetData } = dataSlice.actions
 
 export default dataSlice.reducer
 // export const fetchTournaments = () => async (dispatch) => {

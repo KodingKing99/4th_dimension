@@ -2,6 +2,7 @@ import React from "react";
 import ReactDOM from 'react-dom';
 // import {HashRouter as HashRouter, Route, Switch} from 'react-router-dom';
 import { HashRouter, Route ,Switch,Link} from "react-router-dom";
+
 import GamePage from './Pages/GamePage'
 import OrderDrinkPage from "./Pages/OrderDrinksPage";
 import LeaderBoardPage from "./Pages/LeaderboardPage";
@@ -14,6 +15,7 @@ import ManageRefundsPage from "./Pages/ManageRefundsPage";
 import OwnerManageUsersPage from "./Pages/OwnerManageUsersPage";
 import MoneyPage from "./Pages/MoneyPage";
 import ManageSponsorshipPage from "./Pages/manage-sponsorshipPage";
+import Menu from "./Menu/Menu";
 
 import AddTournamentPage from "./Pages/AddTournamentPage";
 
@@ -59,7 +61,7 @@ function App() {
                             <GamePage/>
                             }
                             {role=="drinkMiester" &&
-                            <DrinkOrdersPage/>
+                            <Menu />
                             }
                             {role=="manager"&&
                             <ManageTournamentsPage/>
@@ -78,7 +80,8 @@ function App() {
                     </Route>
                     <Route path="/game" component={GamePage}>
                     </Route>
-                    <Route path="/drinks" component={OrderDrinkPage}>
+                    <Route path="/drinks" >
+                        <Menu/>
                     </Route>
                     <Route path="/leaderboard">
                     <LeaderBoardPage/>
@@ -87,13 +90,13 @@ function App() {
                     <AccountPage/>
                     </Route>
                     <Route path="/drink-orders">
-                    <DrinkOrdersPage/>
+                    <Menu />
                     </Route>
                     <Route path="/manage-tournaments">
                     <ManageTournamentsPage/>
                     </Route>
                     <Route  path="/manage-drinks">
-                    <ManageDrinksPage/>
+                    <Menu />
                     </Route>
                     <Route path="/manage-users">
                     <ManageUsersPage/>

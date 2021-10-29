@@ -43,10 +43,11 @@ export const createTournament = (date, sponsorId, prize, holeCount) => {
         console.log(response);
     })
 }
+
 export const getAllTransactions = async () => {
-    const respones = await axios.get(applicationName + 'transactionHistory/').then((response) => {
-        console.log(response);
-    })
+    const respone = await axios.get(applicationName + 'transactionHistory/');
+    console.log(respone);
+    return respone.data;
 }
 
 

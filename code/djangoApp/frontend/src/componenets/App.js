@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import ReactDOM from 'react-dom';
 // import {HashRouter as HashRouter, Route, Switch} from 'react-router-dom';
-import { HashRouter, Route ,Switch,Link} from "react-router-dom";
+import { HashRouter, Route, Switch, Link } from "react-router-dom";
 
 import GamePage from './Pages/GamePage'
 import OrderDrinkPage from "./Pages/OrderDrinksPage";
@@ -37,109 +37,109 @@ import { Box, display } from "@mui/system";
 function App() {
     const playerPath = ["Game", "Drinks", "Leaderboards", "Account"]
     const userId = useSelector((state) => state.user.id)
-    
+
     const role = "";
     const getPage = () => {
 
     }
-    
-  return (
-      <div>
-          <Box sx={{
-              margin:'20px',
-              display:'flex',
-          }}>
-          </Box>
 
-          {!userId ? <Login /> :
-          <>
-          <PermissionsPractice/>
-          <Tournament/>
-          <CreateTournament/>
-          {/* <Tournament/> */}
-          <Container>
-          <HashRouter>
-                <div className="App">
-                    <Switch >
+    return (
+        <div>
+            <Box sx={{
+                margin: '20px',
+                display: 'flex',
+            }}>
+            </Box>
 
-                        <Route exact path="/" style="margin:20px;">
-                            {role=="player" &&
-                            <GamePage/>
-                            }
-                            {role=="drinkMiester" &&
-                            <Menu />
-                            }
-                            {role=="manager"&&
-                            <ManageTournamentsPage/>
-                            }
-                            {role=="owner"&&
-                            <OwnerManageUsersPage/>
-                            }
-                        
-                        </Route>
-                        {/* <Route path="tournament">
+            {!userId ? <Login /> :
+                <>
+                    <PermissionsPractice />
+                    <Tournament />
+                    <CreateTournament />
+                    {/* <Tournament/> */}
+                    <Container>
+                        <HashRouter>
+                            <div className="App">
+                                <Switch >
+
+                                    <Route exact path="/" style="margin:20px;">
+                                        {role == "player" &&
+                                            <GamePage />
+                                        }
+                                        {role == "drinkMiester" &&
+                                            <Menu />
+                                        }
+                                        {role == "manager" &&
+                                            <ManageTournamentsPage />
+                                        }
+                                        {role == "owner" &&
+                                            <OwnerManageUsersPage />
+                                        }
+
+                                    </Route>
+                                    {/* <Route path="tournament">
                             <Tournament/>
                         </Route> */}
-                        <Box>
-                    <Route exact path="/#game">
-                    <GamePage/>
-                    </Route>
-                    <Route path="/game" component={GamePage}>
-                    </Route>
-                    <Route path="/drinks" >
-                        <Menu/>
-                    </Route>
-                    <Route path="/leaderboard">
-                    <LeaderBoardPage/>
-                    </Route>
-                    <Route path="/account">
-                    <AccountPage/>
-                    </Route>
-                    <Route path="/drink-orders">
-                    <Menu />
-                    </Route>
-                    <Route path="/manage-tournaments">
-                    <ManageTournamentsPage/>
-                    </Route>
-                    <Route  path="/manage-drinks">
-                    <Menu />
-                    </Route>
-                    <Route path="/manage-users">
-                    <ManageUsersPage/>
-                    </Route>
-                    <Route path="/manage-refunds">
-                    <ManageRefundsPage/>
-                    </Route>
-                    <Route path="/owner-manage-users">
-                    <OwnerManageUsersPage/>
-                    </Route>
-                    <Route path="/money">
-                    <MoneyPage/>
-                    </Route>
+                                    <Box>
+                                        <Route exact path="/#game">
+                                            <GamePage />
+                                        </Route>
+                                        <Route path="/game" component={GamePage}>
+                                        </Route>
+                                        <Route path="/drinks" >
+                                            <Menu />
+                                        </Route>
+                                        <Route path="/leaderboard">
+                                            <LeaderBoardPage />
+                                        </Route>
+                                        <Route path="/account">
+                                            <AccountPage />
+                                        </Route>
+                                        <Route path="/drink-orders">
+                                            <Menu />
+                                        </Route>
+                                        <Route path="/manage-tournaments">
+                                            <ManageTournamentsPage />
+                                        </Route>
+                                        <Route path="/manage-drinks">
+                                            <Menu />
+                                        </Route>
+                                        <Route path="/manage-users">
+                                            <ManageUsersPage />
+                                        </Route>
+                                        <Route path="/manage-refunds">
+                                            <ManageRefundsPage />
+                                        </Route>
+                                        <Route path="/owner-manage-users">
+                                            <OwnerManageUsersPage />
+                                        </Route>
+                                        <Route path="/money">
+                                            <MoneyPage />
+                                        </Route>
 
 
-                    <Route path="/add-tournament">
-                        <AddTournamentPage></AddTournamentPage>
-                    </Route>
+                                        <Route path="/add-tournament">
+                                            <AddTournamentPage></AddTournamentPage>
+                                        </Route>
 
-                    <Route path="/manage-sponsorship">
-                        <ManageSponsorshipPage></ManageSponsorshipPage>
-                    </Route>
-</Box>
-                    </Switch>
-                    <Navbar/>
-                    <Paper sx={{ position: 'fixed', bottom: 0, left: 0, right: 0 }} elevation={3}>
-            <BottomNavigationBar paths = {playerPath} role={role} ></BottomNavigationBar>
-            </Paper>
-                </div>
-            </HashRouter>
-</Container>
-           
+                                        <Route path="/manage-sponsorship">
+                                            <ManageSponsorshipPage></ManageSponsorshipPage>
+                                        </Route>
+                                    </Box>
+                                </Switch>
+                                <Navbar />
+                                <Paper sx={{ position: 'fixed', bottom: 0, left: 0, right: 0 }} elevation={3}>
+                                    <BottomNavigationBar paths={playerPath} role={role} ></BottomNavigationBar>
+                                </Paper>
+                            </div>
+                        </HashRouter>
+                    </Container>
 
-             {/* <Home/> */}
-            </>
+
+                    {/* <Home/> */}
+                </>
             }
-      </div>
-  );
+        </div>
+    );
 }
 ReactDOM.render(<Provider store={store}><App /></Provider>, document.getElementById('app'))

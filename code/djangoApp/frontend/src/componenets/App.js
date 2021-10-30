@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import ReactDOM from 'react-dom';
 // import {HashRouter as HashRouter, Route, Switch} from 'react-router-dom';
 import { HashRouter, Route ,Switch,Link} from "react-router-dom";
@@ -21,10 +21,11 @@ import Paper from '@mui/material/Paper';
 
 
 import Navbar from './Navbar/Navbar';
+import Login from './Login/Login'
 
-import {store} from '../redux/store';
-import {Provider} from 'react-redux'
-import BottomNavigationBar  from "./BottomNavigationBar";
+import { store } from '../redux/store';
+import { Provider, useSelector } from 'react-redux'
+import BottomNavigationBar from "./BottomNavigationBar";
 import PermissionsPractice from "./PermissionsPractice";
 import Tournament from "./Tournament/Tournament";
 import CreateTournament from "./Tournament/CreateTournament";
@@ -32,14 +33,18 @@ import { Container } from "@mui/material";
 import { Box, display } from "@mui/system";
 // import BottomAppBar from './BottomAppBar';
 function App() {
-    const playerPath = ["Game","Drinks","Leaderboards","Account"]
-    const role = "player"
+    const playerPath = ["Game", "Drinks", "Leaderboards", "Account"]
+    const userId = useSelector((state) => state.user.id)
+    
+    const role = "";
     const getPage = () => {
 
     }
     
   return (
       <div>
+          {!userId ? <Login /> :
+          <>
           <Box sx={{
               margin:'20px',
               display:'flex',
@@ -125,10 +130,12 @@ function App() {
                 </div>
             </HashRouter>
 </Container>
+            </>
+            }
            
 
              {/* <Home/> */}
       </div>
   );
 }
-ReactDOM.render(<Provider store={store}><App/></Provider>, document.getElementById('app'))
+ReactDOM.render(<Provider store={store}><App /></Provider>, document.getElementById('app'))

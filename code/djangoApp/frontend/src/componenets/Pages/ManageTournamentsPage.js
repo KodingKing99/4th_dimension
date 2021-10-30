@@ -20,51 +20,45 @@ const ManageTournamentsPage = (props) => {
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
+  const getDateString = (string) => {
+    let mystring = string.split("T");
+    let date = mystring[0].split("-");
+    let time = mystring[1].split("-")
+    mystring = "" + date[1] + "/" + date[2] + "/" + date[0] + " at " + time[0];
+    return mystring;
+  }
     return ( 
         <div className="homeTop" style={{marginTop: '100px'}}>
-                {/* <Box sx={{ width: '100%' }}>
-      <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-        <Tabs value={value} onChange={handleChange} aria-label="basic tabs example">
-          <Tab label="Item One" {...a11yProps(0)} />
-          <Tab label="Item Two" {...a11yProps(1)} />
-          <Tab label="Item Three" {...a11yProps(2)} />
-        </Tabs>
-      </Box>
-      <TabPanel value={value} index={0}>
-        Item One
-      </TabPanel>
-      <TabPanel value={value} index={1}>
-        Item Two
-      </TabPanel>
-      <TabPanel value={value} index={2}>
-        Item Three
-      </TabPanel>
-    </Box> */}
             <p>In Manage Tournaments  View</p>
-            <Box sx={{ position: 'fixed', bottom: 100, right: 50 }} elevation={3}>
             <div className="cardContainer">
               {tournaments && 
               tournaments.map((tournament, index) => {
+                let myString = getDateString(tournament.tournamentdate)
                 return(
-                <Card key={tournament.tournamentid} className={`tourneyCard${index}`}>
+                <div className="responsive" key={tournament.tournamentid}>
+                <Card key={tournament.tournamentid} className="tourneyCard">
                   <CardContent>
                     <Typography variant="h5">
-                      {`Date: ${tournament.tournamentdate}`}
+                      {`Date: ${myString}`}
                     </Typography>
-                    <Typography>
+                    <Typography variant="h5">
                       {`Sponsor: ${tournament.tournamnetsponsor}`}
                     </Typography>
-                    <Typography>
-                      {`Prize: ${tournament.tournamentprize}`}
+                    <Typography variant="h5">
+                      {`Prize: $${tournament.tournamentprize}`}
                     </Typography>
-                    <Typography>
+                    <Typography variant="h5">
                       {`${tournament.tournamentholecount} holes`}
                     </Typography>
                   </CardContent>
-                </Card>);
+                </Card>
+                </div>
+                );
               })
               }
             </div>
+            <Box sx={{ position: 'fixed', bottom: 100, right: 50 }} elevation={3}>
+            
             <Fab to='/add-tournament' component={Link} color="primary" aria-label="add">
   <AddIcon />
 </Fab>

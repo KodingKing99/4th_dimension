@@ -76,7 +76,6 @@ function App() {
                                         {role == "owner" &&
                                             <OwnerManageUsersPage />
                                         }
-
                                     </Route>
                                     {/* <Route path="tournament">
                             <Tournament/>

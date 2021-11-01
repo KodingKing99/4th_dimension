@@ -30,7 +30,7 @@ const Orders = () => {
     return (
         <div className="orders">
             <h1>Orders</h1>
-        {(role === "drinkMiester") &&
+            {(role === "drinkMiester") &&
                 <div className="drink-miester-view">
                     {transactions.map((item) => {
                         return (
@@ -40,8 +40,10 @@ const Orders = () => {
                                 <div className="item-quantity">{item.transactiondate}</div>
                                 <div className="item-quantity">${item.transactionprice}</div>
                                 <div className="item-quantity">{item.transactionactiveflag}</div>
-                                <button className="complete-button" onClick={() => { handleCompleteClick(item.transactionid) }}>Complete</button>
-                                <button className="delete-button" onClick={() => { handleDeleteClick(item.transactionid) }}>Delete</button>
+                                <div className="item-buttons">
+                                    <button className="complete-button" onClick={() => { handleCompleteClick(item.transactionid) }}>Complete</button>
+                                    <button className="delete-button" onClick={() => { handleDeleteClick(item.transactionid) }}>Delete</button>
+                                </div>
                             </div>
                         )
                     })}
@@ -51,6 +53,6 @@ const Orders = () => {
             }
         </div>
     )
-} 
+}
 
 export default Orders;

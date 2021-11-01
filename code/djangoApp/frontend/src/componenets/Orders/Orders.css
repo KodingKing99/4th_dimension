@@ -22,3 +22,15 @@
     font-size: 15px;
     padding: 5px
 }
+
+.item-buttons{
+    margin: auto;
+    width: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.item-buttons button:hover{
+    cursor: pointer;
+    filter: brightness(75%);
+}

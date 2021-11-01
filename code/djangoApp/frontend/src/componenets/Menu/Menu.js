@@ -103,7 +103,7 @@ const Menu = () => {
                                 <label htmlFor="description-input">Description</label>
                                 <input id="description-input" type="text" placeholder="Pipping hot coffee" onChange={(e) => { setName(e.target.value) }} />
                                 </div>
-                                <button onClick={() => { handleEditMenuItem() }}>Edit</button>
+                                <button className="edit-button drawer-button" onClick={() => { handleEditMenuItem() }}>Edit</button>
                             </form>
 
                         </div>
@@ -116,7 +116,7 @@ const Menu = () => {
                             <label htmlFor="purchase-button">Quantity: </label>
                             <input type="number" onInput={e => setQuantity(e.target.value)} />
                             <div>
-                            <button className="purchase-button" onClick={() => { handlePurchaseClick() }}>Purchase</button>
+                            <button className="purchase-button drawer-button" onClick={() => { handlePurchaseClick() }}>Purchase</button>
                             </div>
                         </div>
                     }

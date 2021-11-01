@@ -46,6 +46,10 @@ export const getAllActiveTransactions = async () => {
     let response = await axios.get(applicationName + 'transactionHistoryActiveOnly/');
     return response.data;
 }
+export const deleteTrancaction = async (id) => {
+    let response = await axios.delete(applicationName + 'transactionHistory/' + id);
+    return response.data;
+}
 
 export const createNewTransaction = async (buyerId, drinkMiesterId, price, date, active=true) => {
     const response = await axios.post(applicationName + 'transactionHistory/', {

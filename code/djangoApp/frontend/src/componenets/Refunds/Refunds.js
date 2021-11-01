@@ -1,9 +1,9 @@
-import React, { useEffect } from "react";
-import { getAllTransactions } from "../../services/services";
+import React, { useEffect, useState } from "react";
+import { getAllTransactions, deleteTrancaction } from "../../services/services";
 import './Refunds.css'
 
 const Refund = () => {
-  const [transactions, setTransactions] = React.useState([]);
+  const [transactions, setTransactions] = useState([]);
 
   useEffect(() => {
     getAllTransactions().then(res => {
@@ -15,12 +15,18 @@ const Refund = () => {
     // Remove money from owner, add money to user
   }
   const handleDeleteClick = (id) => {
-    // Remove Transaction from DB
+    // Remove Transaction from DB then fetch new transactions
+    deleteTrancaction(id).then(res => {
+      getAllTransactions().then(res => {
+        setTransactions(res);
+        console.log(res)
+      })
+    })
   }
   return (
     <div className="refund-page">
       {transactions.map(transaction => {
-        // if (transaction.transactionactiveflag === true) return
+        if (transaction.transactionactiveflag === true) return
         return (
           <div className="refund-card" key={transaction.transactionid}>
             <div className="refund-card-header">

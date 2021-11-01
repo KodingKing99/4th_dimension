@@ -20,7 +20,7 @@ export const createTournament = (date, sponsorId, prize, holeCount) => {
         ...requestOptions,
         body: JSON.stringify({ 
             tournamentdate: date,
-            tournamnetsponsor: sponsorId,
+            tournamentsponsor: sponsorId,
             tournamentprize: prize,
             tournamentholecount: holeCount
         })
@@ -29,7 +29,7 @@ export const createTournament = (date, sponsorId, prize, holeCount) => {
     // return {data, isLoading, error};
     let data = {
         tournamentdate: date,
-        tournamnetsponsor: sponsorId,
+        tournamentsponsor: sponsorId,
         tournamentprize: prize,
         tournamentholecount: holeCount
     }

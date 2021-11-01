@@ -34,6 +34,7 @@ import CreateTournament from "./Tournament/CreateTournament";
 import { Container } from "@mui/material";
 import { Box, display } from "@mui/system";
 import Orders from "./Orders/Orders";
+import Refunds from "./Refunds/Refunds";
 // import BottomAppBar from './BottomAppBar';
 function App() {
     const playerPath = ["Game", "Drinks", "Leaderboards", "Account"]
@@ -109,7 +110,7 @@ function App() {
                                             <ManageUsersPage />
                                         </Route>
                                         <Route path="/manage-refunds">
-                                            <ManageRefundsPage />
+                                            <Refunds />
                                         </Route>
                                         <Route path="/owner-manage-users">
                                             <OwnerManageUsersPage />

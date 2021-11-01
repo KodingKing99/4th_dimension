@@ -21,7 +21,7 @@ Django database - Using Django database system to store and save data. Django is
 Django backend - Host the web app
 
 ## Build Instructions
-You must have npm (use the node.js install for easy windows install https://nodejs.org/en/download/ or your linux package manager) and python installed
+You must have npm (use the node.js install for easy windows install https://nodejs.org/en/download/ or your linux package manager) and python with pip installed
 ### Windows
 clone repository ` $ git clone https://github.com/KodingKing99/4th_dimension.git` 
 

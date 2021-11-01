@@ -5,12 +5,13 @@ import hashlib
 
 
 class user_obj:
-    def __init__(self, firstname, lastname, email, password, role):
+    def __init__(self, firstname, lastname, email, password, role, account):
         self.firstname = firstname
         self.lastname = lastname
         self.email = email
         self.role = role
         self.password = password
+        self.account = account
 def create_users(apps, schema_editor):
     """
     Creates a list of users to add to the database on build
@@ -22,14 +23,14 @@ def create_users(apps, schema_editor):
     """
     user_list =[]
     # Append each user to create on build 
-    user_list.append( user_obj('Jim', 'Player', 'Jim@mail.com', 'Jim', 1))
-    user_list.append( user_obj('James', 'Player', 'James@mail.com', 'James', 1))
-    user_list.append( user_obj('Jack', 'Player', 'Jack@mail.com','Jack', 1))
-    user_list.append( user_obj('Bigfoot', 'Drink', 'Bigfoot@mail.com','Bigfoot', 2))
-    user_list.append( user_obj('Batman', 'Drink', 'Batman@mail.com','Batman', 2))
-    user_list.append( user_obj('Worf', 'Manager', 'Worf@mail.com','Worf', 3))
-    user_list.append( user_obj('Picard', 'Sponsor', 'Picard@mail.com','Picard', 4))
-    user_list.append( user_obj('Bossman', 'Owner', 'Bossman@mail.com','Bossman', 5))
+    user_list.append( user_obj('Jim', 'Player', 'Jim@mail.com', 'Jim', 1, 20))
+    user_list.append( user_obj('James', 'Player', 'James@mail.com', 'James', 1, 20))
+    user_list.append( user_obj('Jack', 'Player', 'Jack@mail.com','Jack', 1, 20))
+    user_list.append( user_obj('Bigfoot', 'Drink', 'Bigfoot@mail.com','Bigfoot', 2, 20))
+    user_list.append( user_obj('Batman', 'Drink', 'Batman@mail.com','Batman', 2, 20))
+    user_list.append( user_obj('Worf', 'Manager', 'Worf@mail.com','Worf', 3, 20))
+    user_list.append( user_obj('Picard', 'Sponsor', 'Picard@mail.com','Picard', 4, 20))
+    user_list.append( user_obj('Bossman', 'Owner', 'Bossman@mail.com','Bossman', 5, 20))
     User = apps.get_model('backend', 'User')
     user_time_salt = "2021-10-22 22:14:36.000573"
     for user in user_list:
@@ -39,6 +40,7 @@ def create_users(apps, schema_editor):
             useremail = user.email,
             usersalt = user.firstname + user_time_salt,
             userrole = user.role,
+            useraccount = user.account,
             userpassword = hashlib.sha256(str(user.password).encode('Utf-8') + str(user.firstname + user_time_salt).encode('Utf-8')).hexdigest()
         )
 

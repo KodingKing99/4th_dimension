@@ -55,7 +55,6 @@ export const completeTransaction = async (item) => {
     let response = await axios.put(applicationName + 'transactionHistory/' + item.transactionid + '/', {...item, transactionactiveflag: false});
     return response.data;
 }
-
 export const createNewTransaction = async (buyerId, drinkMiesterId, price, date, active=true) => {
     const response = await axios.post(applicationName + 'transactionHistory/', {
         buyer: buyerId,
@@ -66,6 +65,7 @@ export const createNewTransaction = async (buyerId, drinkMiesterId, price, date,
     });
     console.log(response);
 }
+
 export const getUserById = async (id) => {
     const user = await axios.get(applicationName + 'user/' + id);
     console.log(user);
@@ -108,6 +108,7 @@ export const login = async (email, password) => {
             id: resData.userid,
             email: resData.useremail,
             role: role,
+            account: resData.useraccount,
             // permissions: response.data.permissions
         }
         return data;

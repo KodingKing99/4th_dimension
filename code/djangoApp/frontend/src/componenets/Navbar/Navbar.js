@@ -12,6 +12,8 @@ import { setDefaultUser } from "../../redux/userSlice";
 import { store } from "../../redux/store";
 import { useDispatch } from "react-redux";
 import { resetData } from "../../redux/dataSlice";
+import { resetUser } from "../../redux/userSlice";
+import './Navbar.css'
 
 const useStyles = makeStyles((theme) => ({
   navlinks: {
@@ -71,7 +73,7 @@ function Navbar() {
             Putt Putt Golf
             </Typography>
             <div className={classes.navlinks}>
-              <LogoutIcon onClick={() => {handleLogout()}}/>
+              <span className="logout"><LogoutIcon onClick={() => {handleLogout()}}/></span>
             </div>
         </Toolbar>
         </AppBar>

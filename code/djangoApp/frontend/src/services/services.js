@@ -20,7 +20,7 @@ export const createTournament = (date, sponsorId, prize, holeCount) => {
         ...requestOptions,
         body: JSON.stringify({ 
             tournamentdate: date,
-            tournamnetsponsor: sponsorId,
+            tournamentsponsor: sponsorId,
             tournamentprize: prize,
             tournamentholecount: holeCount
         })
@@ -29,7 +29,7 @@ export const createTournament = (date, sponsorId, prize, holeCount) => {
     // return {data, isLoading, error};
     let data = {
         tournamentdate: date,
-        tournamnetsponsor: sponsorId,
+        tournamentsponsor: sponsorId,
         tournamentprize: prize,
         tournamentholecount: holeCount
     }
@@ -38,6 +38,85 @@ export const createTournament = (date, sponsorId, prize, holeCount) => {
     })
 }
 
+export const getAllTransactions = async () => {
+    const response = await axios.get(applicationName + 'transactionHistory/');
+    return response.data;
+}
+export const getAllActiveTransactions = async () => {
+    let response = await axios.get(applicationName + 'transactionHistoryActiveOnly/');
+    return response.data;
+}
+export const deleteTrancaction = async (id) => {
+    let response = await axios.delete(applicationName + 'transactionHistory/' + id);
+    return response.data;
+}
+export const completeTransaction = async (item) => {
+    console.log(item)
+    let response = await axios.put(applicationName + 'transactionHistory/' + item.transactionid + '/', {...item, transactionactiveflag: false});
+    return response.data;
+}
+export const createNewTransaction = async (buyerId, drinkMiesterId, price, date, active=true) => {
+    const response = await axios.post(applicationName + 'transactionHistory/', {
+        buyer: buyerId,
+        drinkMiester: drinkMiesterId,
+        price: price,
+        date: date,
+        active: active
+    });
+    console.log(response);
+}
+
+export const transferMoney = async (fromId, toId, amount) => {
+    amount = parseFloat(amount);
+    const fromUser = await axios.get(applicationName + 'user/' + fromId + '/');
+    if(fromUser.data.useraccount < amount || amount < 0) {
+        return false;
+    }
+    await axios.put(applicationName + 'user/' + fromId + '/', {
+        ...fromUser.data,
+        useraccount: (parseFloat(fromUser.data.useraccount) - amount).toFixed(2)
+    });
+    const toUser = await axios.get(applicationName + 'user/' + toId + '/');
+    await axios.put(applicationName + 'user/' + toId + '/', {
+        ...toUser.data,
+        useraccount: (parseFloat(toUser.data.useraccount) + amount).toFixed(2)
+    });
+    return true;
+}
+
+export const getUserById = async (id) => {
+    const user = await axios.get(applicationName + 'user/' + id);
+    // Translate the response into a user object
+    let resData = user.data;
+    let role = "player" // Default role
+    switch (resData.userrole) {
+        case 1:
+            role = "player"
+            break;
+        case 2:
+            role = "drinkMiester"
+            break;
+        case 3:
+            role = "manager"
+            break;
+        case 4:
+            role = "sponsor"
+            break;
+        case 5:
+            role = "owner"
+    }
+    const data = {
+        firstName: resData.userfirstname,
+        lastName: resData.userlastname,
+        fullName: resData.userfirstname + " " + resData.userlastname,
+        id: resData.userid,
+        email: resData.useremail,
+        role: role,
+        account: resData.useraccount,
+        // permissions: response.data.permissions
+    }
+    return data;
+}
 
 export const login = async (email, password) => {
     try {
@@ -57,7 +136,7 @@ export const login = async (email, password) => {
                 role = "player"
                 break;
             case 2:
-                role = "miester"
+                role = "drinkMiester"
                 break;
             case 3:
                 role = "manager"
@@ -75,6 +154,7 @@ export const login = async (email, password) => {
             id: resData.userid,
             email: resData.useremail,
             role: role,
+            account: resData.useraccount,
             // permissions: response.data.permissions
         }
         return data;

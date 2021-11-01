@@ -1,0 +1,45 @@
+.transaction-container{
+    background-color: #ccc;
+    border-radius: 5px;
+    margin-bottom: 5px;
+}
+.complete-button {
+    color: #fff;
+    margin: 10px;
+    background-color: #3f51b5;
+    border-radius: 5px;
+    border: none;
+    font-size: 15px;
+    padding: 5px
+}
+.transaction-header{
+    text-align: center;
+    margin: auto;
+    width: 50%;
+    font-size: large;
+}
+.transaction-body{
+    margin-left: 5px;
+}
+
+.delete-button{
+    color: #fff;
+    margin: 10px;
+    background-color: #bd1717;
+    border-radius: 5px;
+    border: none;
+    font-size: 15px;
+    padding: 5px
+}
+
+.item-buttons{
+    margin: auto;
+    width: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.item-buttons button:hover{
+    cursor: pointer;
+    filter: brightness(75%);
+}

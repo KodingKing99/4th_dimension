@@ -42,7 +42,7 @@ const ManageTournamentsPage = (props) => {
                       {`Date: ${myString}`}
                     </Typography>
                     <Typography variant="h5">
-                      {`Sponsor: ${tournament.tournamnetsponsor}`}
+                      {`Sponsor: ${tournament.tournamentsponsor}`}
                     </Typography>
                     <Typography variant="h5">
                       {`Prize: $${tournament.tournamentprize}`}

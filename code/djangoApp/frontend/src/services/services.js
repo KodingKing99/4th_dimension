@@ -38,6 +38,11 @@ export const createTournament = (date, sponsorId, prize, holeCount) => {
     })
 }
 
+export const getUserById = async (id) => {
+    const user = await axios.get(applicationName + 'user/' + id);
+    console.log(user);
+    return user.data;
+}
 
 export const login = async (email, password) => {
     try {

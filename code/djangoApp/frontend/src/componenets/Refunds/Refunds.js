@@ -12,10 +12,10 @@ const Refund = () => {
   }, [])
 
   const handleRefundClick = (id) => {
-    console.log(id)
+    // Remove money from owner, add money to user
   }
   const handleDeleteClick = (id) => {
-    console.log(id)
+    // Remove Transaction from DB
   }
   return (
     <div className="refund-page">

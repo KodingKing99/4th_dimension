@@ -12,7 +12,7 @@ const Menu = () => {
     const [toggleDrawer, setToggleDrawer] = useState(false);
     const [editable, setEditable] = useState(false);
     const [quantity, setQuantity] = useState(0);
-    
+
     const handleIconClick = (itemId, edit = false) => {
         setToggleDrawer(true);
         setEditable(edit)
@@ -21,7 +21,7 @@ const Menu = () => {
         // Add item to purchase history
         setToggleDrawer(false);
     }
-    
+
     const handleAddMenuItemClick = () => {
         // Add menu item
     }
@@ -65,18 +65,17 @@ const Menu = () => {
                         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
                         {/*  icon onclick should open a drawer to edit name, price, and icon */}
                         <div>
-                        <span className="icon-span" onClick={() => { handleIconClick(item.id, true) }}><div className="inner-icon"><div><Icon>coffee</Icon></div><span>Coffee</span></div></span>
-                        <span className="icon-span" onClick={() => { handleIconClick(item.id, true) }}><div className="inner-icon"><div><Icon>coffee</Icon></div><span>Coffee</span></div></span>
-                        <span className="icon-span" onClick={() => { handleIconClick(item.id, true) }}><div className="inner-icon"><div><Icon>coffee</Icon></div><span>Coffee</span></div></span>
-                        <span className="icon-span" onClick={() => { handleIconClick(item.id, true) }}><div className="inner-icon"><div><Icon>coffee</Icon></div><span>Coffee</span></div></span>
-                        <span className="icon-span" onClick={() => { handleIconClick(item.id, true) }}><div className="inner-icon"><div><Icon>coffee</Icon></div><span>Coffee</span></div></span>
-                        <span className="icon-span" onClick={() => { handleIconClick(item.id, true) }}><div className="inner-icon"><div><Icon>coffee</Icon></div><span>Coffee</span></div></span>
-                        <span className="icon-span" onClick={() => { handleIconClick(item.id, true) }}><div className="inner-icon"><div><Icon>coffee</Icon></div><span>Coffee</span></div></span>
-                        <span className="icon-span" onClick={() => { handleIconClick(item.id, true) }}><div className="inner-icon"><div><Icon>coffee</Icon></div><span>Coffee</span></div></span>
+                            <span className="icon-span" onClick={() => { handleIconClick(item.id, true) }}><div className="inner-icon"><div><Icon>coffee</Icon></div><span>Coffee</span></div></span>
+                            <span className="icon-span" onClick={() => { handleIconClick(item.id, true) }}><div className="inner-icon"><div><Icon>coffee</Icon></div><span>Coffee</span></div></span>
+                            <span className="icon-span" onClick={() => { handleIconClick(item.id, true) }}><div className="inner-icon"><div><Icon>coffee</Icon></div><span>Coffee</span></div></span>
+                            <span className="icon-span" onClick={() => { handleIconClick(item.id, true) }}><div className="inner-icon"><div><Icon>coffee</Icon></div><span>Coffee</span></div></span>
+                            <span className="icon-span" onClick={() => { handleIconClick(item.id, true) }}><div className="inner-icon"><div><Icon>coffee</Icon></div><span>Coffee</span></div></span>
+                            <span className="icon-span" onClick={() => { handleIconClick(item.id, true) }}><div className="inner-icon"><div><Icon>coffee</Icon></div><span>Coffee</span></div></span>
+                            <span className="icon-span" onClick={() => { handleIconClick(item.id, true) }}><div className="inner-icon"><div><Icon>coffee</Icon></div><span>Coffee</span></div></span>
+                            <span className="icon-span" onClick={() => { handleIconClick(item.id, true) }}><div className="inner-icon"><div><Icon>coffee</Icon></div><span>Coffee</span></div></span>
                         </div>
                         <div>
-                        <button className="add-button" onClick={() => { handleAddMenuItemClick() }}>Add</button>
-                        <button className="delete-button" onClick={() => { handleDeleteMenuItem() }}>Edit</button>
+                            <button className="add-button" onClick={() => { handleAddMenuItemClick() }}>Add</button>
                         </div>
                     </div>
                 </div>
@@ -92,18 +91,20 @@ const Menu = () => {
                             <Icon>coffee</Icon>
                             <form>
                                 <div>
-                                <label htmlFor="name-input">Name</label>
-                                <input id="name-input" type="text" placeholder="Coffee" onChange={(e) => { setName(e.target.value) }} />
+                                    <label htmlFor="name-input">Name</label>
+                                    <input id="name-input" type="text" placeholder="Coffee" onChange={(e) => { setName(e.target.value) }} />
                                 </div>
                                 <div>
-                                <label htmlFor="price-input">Price ($)</label>
-                                <input id="price-input" type="number" placeholder="1.00" onChange={(e) => { setName(e.target.value) }} />
+                                    <label htmlFor="price-input">Price ($)</label>
+                                    <input id="price-input" type="number" placeholder="1.00" onChange={(e) => { setName(e.target.value) }} />
                                 </div>
                                 <div>
-                                <label htmlFor="description-input">Description</label>
-                                <input id="description-input" type="text" placeholder="Pipping hot coffee" onChange={(e) => { setName(e.target.value) }} />
+                                    <label htmlFor="description-input">Description</label>
+                                    <input id="description-input" type="text" placeholder="Pipping hot coffee" onChange={(e) => { setName(e.target.value) }} />
                                 </div>
                                 <button className="edit-button drawer-button" onClick={() => { handleEditMenuItem() }}>Edit</button>
+                                <button className="delete-button drawer-button" onClick={() => { handleDeleteMenuItem() }}>Delete</button>
+
                             </form>
 
                         </div>
@@ -116,7 +117,7 @@ const Menu = () => {
                             <label htmlFor="purchase-button">Quantity: </label>
                             <input type="number" onInput={e => setQuantity(e.target.value)} />
                             <div>
-                            <button className="purchase-button drawer-button" onClick={() => { handlePurchaseClick() }}>Purchase</button>
+                                <button className="purchase-button drawer-button" onClick={() => { handlePurchaseClick() }}>Purchase</button>
                             </div>
                         </div>
                     }

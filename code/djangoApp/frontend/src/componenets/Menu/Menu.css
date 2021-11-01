@@ -17,13 +17,7 @@
     filter: brightness(75%);
 }
 .delete-button{
-    color: #fff;
-    margin: 10px;
-    background-color: #bd1717;
-    border-radius: 5px;
-    border: none;
-    font-size: 15px;
-    padding: 5px
+    background-color: #bd1717 !important;
 }
 
 

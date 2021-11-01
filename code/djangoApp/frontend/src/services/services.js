@@ -16,15 +16,15 @@ export const getAllTournaments = () => {
     }).catch(err => console.log(err));
 }
 export const createTournament = (date, sponsorId, prize, holeCount) => {  
-    requestOptions = {
-        ...requestOptions,
-        body: JSON.stringify({ 
-            tournamentdate: date,
-            tournamentsponsor: sponsorId,
-            tournamentprize: prize,
-            tournamentholecount: holeCount
-        })
-    };
+    // requestOptions = {
+    //     ...requestOptions,
+    //     body: JSON.stringify({ 
+    //         tournamentdate: date,
+    //         tournamentsponsor: sponsorId,
+    //         tournamentprize: prize,
+    //         tournamentholecount: holeCount
+    //     })
+    // };
     // const {data, isLoading, error} = useFetch(applicationName + 'tournament/', {...requestOptions});
     // return {data, isLoading, error};
     let data = {
@@ -35,7 +35,7 @@ export const createTournament = (date, sponsorId, prize, holeCount) => {
     }
     axios.post(applicationName + 'tournament/', data).then((response) => {
         console.log(response);
-    })
+    }).catch(err => {console.log(err)});
 }
 
 export const getAllTransactions = async () => {

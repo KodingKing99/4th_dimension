@@ -1,0 +1,75 @@
+/* Drawer Content */
+.edit-menu-item {
+    align-items: center;
+    text-align: center;
+}
+.edit-menu-item button {
+    color: #fff;
+    margin: 10px;
+    background-color: #3f51b5;
+    border-radius: 5px;
+    border: none;
+    font-size: 15px;
+    padding: 5px
+}
+.menu-item {
+    align-items: center;
+    text-align: center;
+}
+.menu-item button {
+    color: #fff;
+    margin: 10px;
+    background-color: #3f51b5;
+    border-radius: 5px;
+    border: none;
+    font-size: 15px;
+    padding: 5px
+}
+
+
+/* Menu View */
+.manager-view{
+    margin: auto;
+    width: 50%;
+}
+.menu-items {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.player-view {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.recent-items {
+    display: inline-block;
+}
+.all-items {
+    display: inline-block;
+}
+
+/* Icon buttons */
+.inner-icon {
+    display: flex;              /* establish flex container */
+    flex-direction: column;     /* stack flex items vertically */
+    justify-content: center;    /* center items vertically, in this case */
+    align-items: center; 
+}
+.icon-span {
+    display: inline-block;
+    margin: 5% 5px 5% 5px;; 
+}
+
+/* Menu buttons */
+.menu-main button {
+    color: #fff;
+    margin: 10px;
+    background-color: #3f51b5;
+    border-radius: 5px;
+    border: none;
+    font-size: 15px;
+    padding: 5px
+}

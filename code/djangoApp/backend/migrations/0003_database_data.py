@@ -2,7 +2,6 @@
 
 from django.db import migrations
 import hashlib
-import datetime
 
 
 class user_obj:
@@ -61,7 +60,6 @@ def create_tournaments(apps, schema_editor):
     sponsor_id = User.objects.all().filter(userrole=4)[0].userid
     if not sponsor_id: sponsor_id = -1
 
-
     Tournament = apps.get_model('backend', 'Tournament')
     tournament_list.append( tournament_obj(date_1, sponsor_id, 2000, 18))
     tournament_list.append( tournament_obj(date_2, sponsor_id, 5000, 9))
@@ -73,15 +71,54 @@ def create_tournaments(apps, schema_editor):
             tournamentholecount = tournament.hole_count,
         )
 
+class transactions_obj:
+    def __init__(self, buyer_id, drink_miester_id, price, date_time, active_flag):
+        self.buyer_id = buyer_id
+        self.drink_miester_id = drink_miester_id
+        self.price = price
+        self.date_time = date_time
+        self.active_flag = active_flag
+def create_transactions(apps, schema_editor):
+    """
+    Create a few default transactions, ongoing and passed
+    """
+    transaction_list = []
+
+    User = apps.get_model('backend', 'User')
+    player_id = User.objects.all().filter(userrole=1)[0].userid
+    drink_miester_id = User.objects.all().filter(userrole=2)[0].userid
+    if not drink_miester_id: drink_miester_id = -1
+    if not player_id: player_id = -1
+
+    transaction_list.append( transactions_obj(player_id, drink_miester_id, 2.50, "2021-10-31 10:00:00.000000", True))
+    transaction_list.append( transactions_obj(player_id, drink_miester_id, 2, "2021-10-30 10:00:00.000000", True))
+    transaction_list.append( transactions_obj(player_id, drink_miester_id, 5, "2021-10-31 10:00:00.000000", True))
+    transaction_list.append( transactions_obj(player_id, drink_miester_id, 3.75, "2021-10-30 10:00:00.000000", True))
+    transaction_list.append( transactions_obj(player_id, drink_miester_id, 0, "2021-10-9 10:00:00.000000", False))
+    transaction_list.append( transactions_obj(player_id, drink_miester_id, 1, "2021-10-8 10:00:00.000000", False))
+    transaction_list.append( transactions_obj(player_id, drink_miester_id, 5.50, "2021-10-7 10:00:00.000000", False))
+    transaction_list.append( transactions_obj(player_id, drink_miester_id, 3.23, "2021-10-6 10:00:00.000000", False))
+
+    Transaction = apps.get_model('backend', 'Transactionhistory')
+    for transaction in transaction_list:
+        Transaction.objects.create(
+            transactionprice = transaction.price,
+            transactionbuyer = transaction.buyer_id,
+            transactiondrinkmeister = transaction.drink_miester_id,
+            transactiondate = transaction.date_time,
+            transactionactiveflag = transaction.active_flag,
+        )
 
 class Migration(migrations.Migration):
 
     dependencies = [
         ('backend', '0002_user_usersalt'),
+        # ('backend', '0004_transactionhistory_transactionactiveflag'),
     ]
 
     operations = [
         migrations.RunPython(create_users),
         migrations.RunPython(create_tournaments),
+        migrations.RunPython(create_transactions),
     ]
 

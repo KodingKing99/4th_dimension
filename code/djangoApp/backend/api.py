@@ -39,6 +39,12 @@ class TransactionHistoryViewSet(viewsets.ModelViewSet):
         permissions.AllowAny
     ]
     serializer_class = TransactionHistorySerializer 
+class TransactionHistoryActiveViewSet(viewsets.ModelViewSet):
+    queryset = Transactionhistory.objects.filter(transactionactiveflag=True)
+    permission_classes = [
+        permissions.AllowAny
+    ]
+    serializer_class = TransactionHistorySerializer
 class LoginViewSet(viewsets.ModelViewSet):
     def get_queryset(self):
         email = self.request.query_params.get('email')

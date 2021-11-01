@@ -12,6 +12,7 @@ import { setDefaultUser } from "../../redux/userSlice";
 import { store } from "../../redux/store";
 import { useDispatch } from "react-redux";
 import { resetData } from "../../redux/dataSlice";
+import { resetUser } from "../../redux/userSlice";
 
 const useStyles = makeStyles((theme) => ({
   navlinks: {

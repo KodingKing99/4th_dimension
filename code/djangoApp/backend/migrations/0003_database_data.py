@@ -66,7 +66,7 @@ def create_tournaments(apps, schema_editor):
     for tournament in tournament_list:
         Tournament.objects.create(
             tournamentdate = tournament.date_time,
-            tournamnetsponsor = tournament.sponsor_id,
+            tournamentsponsor = tournament.sponsor_id,
             tournamentprize = tournament.prize,
             tournamentholecount = tournament.hole_count,
         )

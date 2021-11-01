@@ -15,7 +15,7 @@ const Tournament = (props) => {
             return (
             <ul key={Tournament.tournamentid}>
                 <li>{Tournament.tournamentdate}</li>
-                <li>{Tournament.tournamnetsponsor}</li>
+                <li>{Tournament.tournamentsponsor}</li>
                 <li>{Tournament.tournamentprize}</li>
                 <li>{Tournament.tournamentholecount}</li>
             </ul>);

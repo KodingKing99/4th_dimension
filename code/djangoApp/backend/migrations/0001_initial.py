@@ -40,7 +40,7 @@ class Migration(migrations.Migration):
             fields=[
                 ('tournamentid', models.AutoField(db_column='tournamentId', primary_key=True, serialize=False)),
                 ('tournamentdate', models.DateTimeField(db_column='TournamentDate')),
-                ('tournamnetsponsor', models.IntegerField(db_column='tournamnetSponsor')),
+                ('tournamentsponsor', models.IntegerField(db_column='tournamentsponsor')),
                 ('tournamentprize', models.DecimalField(blank=True, db_column='tournamentPrize', decimal_places=2, max_digits=6, null=True)),
                 ('tournamentholecount', models.IntegerField(blank=True, db_column='tournamentHoleCount', null=True)),
             ],

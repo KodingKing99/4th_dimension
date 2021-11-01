@@ -43,7 +43,7 @@ class Tournamentparticipant(models.Model):
 class Tournament(models.Model):
     tournamentid = models.AutoField(db_column='tournamentId', primary_key=True)  # Field name made lowercase.
     tournamentdate = models.DateTimeField(db_column='TournamentDate')  # Field name made lowercase.
-    tournamnetsponsor = models.IntegerField(db_column='tournamnetSponsor')  # Field name made lowercase.
+    tournamentsponsor = models.IntegerField(db_column='tournamentsponsor')  # Field name made lowercase.
     tournamentprize = models.DecimalField(db_column='tournamentPrize', max_digits=6, decimal_places=2, blank=True, null=True)  # Field name made lowercase.
     tournamentholecount = models.IntegerField(db_column='tournamentHoleCount', blank=True, null=True)  # Field name made lowercase.
 

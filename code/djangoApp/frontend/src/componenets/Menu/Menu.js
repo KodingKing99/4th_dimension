@@ -26,14 +26,12 @@ const Menu = () => {
     const handlePurchaseClick = (price) => {
         // Add item to purchase history
         transferMoney(user.id, 8, price * quantity).then((isSuccess) => {
-            console.log(isSuccess);
             if (!isSuccess) {
                 setPaymentError(true);
                 setQuantity(0);
                 return
             }
             getUserById(user.id).then((user) => {
-                console.log(user)
                 dispatch(setUser(user));
             });
         });

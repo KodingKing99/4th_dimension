@@ -94,6 +94,7 @@ const Menu = () => {
                     <div className="menu-items">
                         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
                         {/*  icon onclick should open a drawer to edit name, price, and icon */}
+                        <div>
                         <span className="icon-span" onClick={() => { handleIconClick(item.id, true) }}><div className="inner-icon"><div><Icon>coffee</Icon></div><span>Coffee</span></div></span>
                         <span className="icon-span" onClick={() => { handleIconClick(item.id, true) }}><div className="inner-icon"><div><Icon>coffee</Icon></div><span>Coffee</span></div></span>
                         <span className="icon-span" onClick={() => { handleIconClick(item.id, true) }}><div className="inner-icon"><div><Icon>coffee</Icon></div><span>Coffee</span></div></span>
@@ -102,7 +103,10 @@ const Menu = () => {
                         <span className="icon-span" onClick={() => { handleIconClick(item.id, true) }}><div className="inner-icon"><div><Icon>coffee</Icon></div><span>Coffee</span></div></span>
                         <span className="icon-span" onClick={() => { handleIconClick(item.id, true) }}><div className="inner-icon"><div><Icon>coffee</Icon></div><span>Coffee</span></div></span>
                         <span className="icon-span" onClick={() => { handleIconClick(item.id, true) }}><div className="inner-icon"><div><Icon>coffee</Icon></div><span>Coffee</span></div></span>
+                        </div>
+                        <div>
                         <button className="add-button" onClick={() => { handleAddMenuItemClick() }}>Add</button>
+                        </div>
                     </div>
                 </div>
             }
@@ -116,9 +120,18 @@ const Menu = () => {
                         <div className="edit-menu-item">
                             <Icon>coffee</Icon>
                             <form>
-                                <input type="text" placeholder="Coffee" onChange={(e) => { setName(e.target.value) }} />
-                                <input type="text" placeholder="Coffee" onChange={(e) => { setName(e.target.value) }} />
-                                <input type="text" placeholder="Coffee" onChange={(e) => { setName(e.target.value) }} />
+                                <div>
+                                <label htmlFor="name-input">Name</label>
+                                <input id="name-input" type="text" placeholder="Coffee" onChange={(e) => { setName(e.target.value) }} />
+                                </div>
+                                <div>
+                                <label htmlFor="price-input">Price ($)</label>
+                                <input id="price-input" type="number" placeholder="1.00" onChange={(e) => { setName(e.target.value) }} />
+                                </div>
+                                <div>
+                                <label htmlFor="description-input">Description</label>
+                                <input id="description-input" type="text" placeholder="Pipping hot coffee" onChange={(e) => { setName(e.target.value) }} />
+                                </div>
                                 <button onClick={() => { handleEditMenuItem() }}>Edit</button>
                             </form>
 
@@ -131,7 +144,9 @@ const Menu = () => {
                             <div>Pipping hot coffee</div>
                             <label htmlFor="purchase-button">Quantity: </label>
                             <input type="number" onInput={e => setQuantity(e.target.value)} />
+                            <div>
                             <button className="purchase-button" onClick={() => { handlePurchaseClick() }}>Purchase</button>
+                            </div>
                         </div>
                     }
 

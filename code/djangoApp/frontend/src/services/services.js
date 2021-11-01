@@ -50,6 +50,11 @@ export const deleteTrancaction = async (id) => {
     let response = await axios.delete(applicationName + 'transactionHistory/' + id);
     return response.data;
 }
+export const completeTransaction = async (item) => {
+    console.log(item)
+    let response = await axios.put(applicationName + 'transactionHistory/' + item.transactionid + '/', {...item, transactionactiveflag: false});
+    return response.data;
+}
 
 export const createNewTransaction = async (buyerId, drinkMiesterId, price, date, active=true) => {
     const response = await axios.post(applicationName + 'transactionHistory/', {

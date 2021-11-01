@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import { getAllActiveTransactions } from "../../services/services";
+import { getAllActiveTransactions, completeTransaction, deleteTrancaction } from "../../services/services";
 import './Orders.css'
 
 
@@ -18,13 +18,16 @@ const Orders = () => {
         updateTransactions();
     }, []);
 
-    const handleCompleteClick = () => {
-        updateTransactions();
-        // Complete transaction
+    const handleCompleteClick = (item) => {
+        // put needs all data, so whole item is passed
+        completeTransaction(item).then(() => {
+            updateTransactions();
+        });
     }
-    const handleDeleteClick = () => {
-        updateTransactions();
-        // Delete transaction
+    const handleDeleteClick = (id) => {
+        deleteTrancaction(id).then(res => {
+            updateTransactions();
+          })
     }
     console.log(transactions);
     return (
@@ -41,7 +44,7 @@ const Orders = () => {
                                 <div className="item-quantity">${item.transactionprice}</div>
                                 <div className="item-quantity">{item.transactionactiveflag}</div>
                                 <div className="item-buttons">
-                                    <button className="complete-button" onClick={() => { handleCompleteClick(item.transactionid) }}>Complete</button>
+                                    <button className="complete-button" onClick={() => { handleCompleteClick(item) }}>Complete</button>
                                     <button className="delete-button" onClick={() => { handleDeleteClick(item.transactionid) }}>Delete</button>
                                 </div>
                             </div>

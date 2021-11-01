@@ -56,6 +56,7 @@ export const createNewTransaction = async (buyerId, drinkMiesterId, price, date,
         active: active
     });
     console.log(response);
+}
 export const getUserById = async (id) => {
     const user = await axios.get(applicationName + 'user/' + id);
     console.log(user);

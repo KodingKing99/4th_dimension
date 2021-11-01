@@ -38,11 +38,15 @@ const Orders = () => {
                     {transactions.map((item) => {
                         return (
                             <div className="transaction-container" key={item.transactionid}>
-                                <div className="item-name">{item.transactionbuyer}</div>
-                                <div className="item-price">{item.transactiondrinkmeister}</div>
-                                <div className="item-quantity">{item.transactiondate}</div>
-                                <div className="item-quantity">${item.transactionprice}</div>
-                                <div className="item-quantity">{item.transactionactiveflag}</div>
+                                <div className="transaction-header">
+                                <div className="transaction-id">Transaction Number: {item.transactionid}</div>
+                                </div>
+                                <div className="transaction-body">
+                                <div className="item-name">Buyer: {item.transactionbuyer}</div>
+                                <div className="item-price">Drink Miester: {item.transactiondrinkmeister}</div>
+                                <div className="item-quantity">Date: {item.transactiondate}</div>
+                                <div className="item-quantity">Cost: ${item.transactionprice}</div>
+                                </div>
                                 <div className="item-buttons">
                                     <button className="complete-button" onClick={() => { handleCompleteClick(item) }}>Complete</button>
                                     <button className="delete-button" onClick={() => { handleDeleteClick(item.transactionid) }}>Delete</button>

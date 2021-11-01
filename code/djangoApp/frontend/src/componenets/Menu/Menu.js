@@ -1,25 +1,45 @@
 import { useSelector, useDispatch } from "react-redux";
 import React, { useEffect, useMemo, useState } from "react";
+import { transferMoney, getUserById } from "../../services/services";
 import { Drawer } from "@material-ui/core";
 import Icon from '@mui/material/Icon';
 import './Menu.css'
-
+import { setUser } from "../../redux/userSlice";
 
 
 const Menu = () => {
     const role = useSelector((state) => state.user.role);
+    const user = useSelector((state) => state.user);
     const [toggleAll, setToggleAll] = useState(false);
     const [toggleDrawer, setToggleDrawer] = useState(false);
     const [editable, setEditable] = useState(false);
     const [quantity, setQuantity] = useState(0);
+    const [paymentError, setPaymentError] = useState(false);
+    const dispatch = useDispatch();
+    
 
     const handleIconClick = (itemId, edit = false) => {
         setToggleDrawer(true);
+        setPaymentError(false);
         setEditable(edit)
     }
-    const handlePurchaseClick = () => {
+    const handlePurchaseClick = (price) => {
         // Add item to purchase history
+        transferMoney(user.id, 8, price * quantity).then((isSuccess) => {
+            console.log(isSuccess);
+            if (!isSuccess) {
+                setPaymentError(true);
+                setQuantity(0);
+                return
+            }
+            getUserById(user.id).then((user) => {
+                console.log(user)
+                dispatch(setUser(user));
+            });
+        });
         setToggleDrawer(false);
+        setQuantity(0);
+
     }
 
     const handleAddMenuItemClick = () => {
@@ -37,7 +57,7 @@ const Menu = () => {
             {role === "player" &&
                 <div className="player-view">
                     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
-
+                    {paymentError && <div className="payment-error">Error: Insufficient funds</div>}
                     <div className="recent-items">
                         <span className="icon-span" onClick={() => { handleIconClick(item.id) }}><div className="inner-icon"><div><Icon>coffee</Icon></div><span>Coffee</span></div></span>
                         <span className="icon-span" onClick={() => { handleIconClick(item.id) }}><div className="inner-icon"><div><Icon>coffee</Icon></div><span>Coffee</span></div></span>
@@ -115,9 +135,9 @@ const Menu = () => {
                             <div>$1.00</div>
                             <div>Pipping hot coffee</div>
                             <label htmlFor="purchase-button">Quantity: </label>
-                            <input type="number" onInput={e => setQuantity(e.target.value)} />
+                            <input type="number" defaultValue="0" onInput={e => setQuantity(e.target.value)} />
                             <div>
-                                <button className="purchase-button drawer-button" onClick={() => { handlePurchaseClick() }}>Purchase</button>
+                                <button className="purchase-button drawer-button" onClick={() => { handlePurchaseClick(1) }}>Purchase</button>
                             </div>
                         </div>
                     }

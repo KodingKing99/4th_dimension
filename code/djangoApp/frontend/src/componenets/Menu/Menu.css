@@ -86,3 +86,8 @@
     cursor: pointer;
     filter: brightness(75%);
 }
+
+.payment-error {
+    color: red;
+    font-size: 15px;
+}

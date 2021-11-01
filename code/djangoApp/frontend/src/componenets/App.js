@@ -51,7 +51,6 @@ function App() {
             {!userId ? <Login /> :
                 <>
                     <PermissionsPractice />
-                    <Tournament />
                     <CreateTournament />
                     {/* <Tournament/> */}
                     <Container>
@@ -73,9 +72,6 @@ function App() {
                                             <OwnerManageUsersPage />
                                         }
                                     </Route>
-                                    {/* <Route path="tournament">
-                            <Tournament/>
-                        </Route> */}
                                     <Box>
                                         <Route exact path="/#game">
                                             <GamePage />

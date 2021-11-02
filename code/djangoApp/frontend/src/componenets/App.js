@@ -29,7 +29,6 @@ import { store } from '../redux/store';
 import { Provider, useSelector } from 'react-redux'
 import BottomNavigationBar from "./BottomNavigationBar";
 import PermissionsPractice from "./PermissionsPractice";
-import CreateTournament from "./Tournament/CreateTournament";
 import { Container } from "@mui/material";
 import { Box, display } from "@mui/system";
 import Orders from "./Orders/Orders";
@@ -51,8 +50,6 @@ function App() {
             {!userId ? <Login /> :
                 <>
                     <PermissionsPractice />
-                    <CreateTournament />
-                    {/* <Tournament/> */}
                     <Container>
                         <HashRouter>
                             <div className="App">

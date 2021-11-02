@@ -6,13 +6,25 @@ const initialState = {
   fullName: null,
   id: null,
   role: "player",
+  email: null,
   permissions: null,
+  account: 0,
 }
 
 export const userSlice = createSlice({
   name: 'user',
   initialState,
   reducers: {
+    setUser: (state, action) => {
+      state.firstName = action.payload.firstName
+      state.lastName = action.payload.lastName
+      state.fullName = action.payload.fullName
+      state.id = action.payload.id
+      state.role = action.payload.role
+      state.email = action.payload.email
+      state.permissions = action.payload.permissions
+      state.account = action.payload.account
+    },
     setFirstName : (state, action) => {
         state.firstName = action.payload;
     },
@@ -31,6 +43,9 @@ export const userSlice = createSlice({
     setPermissions: (state, action) => {
         state.permissions = action.payload;
     },
+    setAccount: (state, action) => {
+        state.account = action.payload;
+    },
     resetUser: (state) => {
       return {...initialState};
     },
@@ -38,6 +53,6 @@ export const userSlice = createSlice({
 })
 
 // Action creators are generated for each case reducer function
-export const { setFirstName, setLastName, setFullName, setId, setRole, setPermissions, resetUser } = userSlice.actions
+export const { setFirstName, setLastName, setFullName, setId, setRole, setPermissions, setAccount, resetUser, setUser } = userSlice.actions;
 
 export default userSlice.reducer

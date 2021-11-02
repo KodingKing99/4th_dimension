@@ -1,6 +1,7 @@
 from rest_framework import viewsets, permissions
 from .models import *
-from .serializers import UserSerializer, TournamentSerializer, MenuSerializer, AdvertisementSerializer, TournamentParticipantSerializer, TransactionHistorySerializer
+from .serializers import UserSerializer, TournamentSerializer, MenuSerializer, AdvertisementSerializer, TournamentParticipantSerializer, TransactionHistorySerializer, LoginSerializer, SignupSerializer
+import hashlib
 # from .serializers import UserSerializer
 class UserViewSet(viewsets.ModelViewSet):
     queryset = User.objects.all()
@@ -38,3 +39,31 @@ class TransactionHistoryViewSet(viewsets.ModelViewSet):
         permissions.AllowAny
     ]
     serializer_class = TransactionHistorySerializer 
+class TransactionHistoryActiveViewSet(viewsets.ModelViewSet):
+    queryset = Transactionhistory.objects.filter(transactionactiveflag=True)
+    permission_classes = [
+        permissions.AllowAny
+    ]
+    serializer_class = TransactionHistorySerializer
+class LoginViewSet(viewsets.ModelViewSet):
+    def get_queryset(self):
+        email = self.request.query_params.get('email')
+        password = self.request.query_params.get('password')
+        if not email or not password:
+            return User.objects.none()
+        users = User.objects.filter(useremail=email)
+        salt = users.values('usersalt')
+        salt = salt[0]['usersalt']
+        password_hashed = hashlib.sha256(str(password).encode('utf-8')+str(salt).encode('utf-8')).hexdigest()
+        return User.objects.filter(useremail=email).filter(userpassword=password_hashed)
+        
+    permission_classes = [
+        permissions.AllowAny
+    ]
+    serializer_class = LoginSerializer
+class SignupViewSet(viewsets.ModelViewSet):
+    queryset = User.objects.none()
+    permission_classes = [
+        permissions.AllowAny
+    ]
+    serializer_class = SignupSerializer

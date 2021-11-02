@@ -31,6 +31,7 @@ def create_users(apps, schema_editor):
     user_list.append( user_obj('Worf', 'Manager', 'Worf@mail.com','Worf', 3, 20))
     user_list.append( user_obj('Picard', 'Sponsor', 'Picard@mail.com','Picard', 4, 20))
     user_list.append( user_obj('Bossman', 'Owner', 'Bossman@mail.com','Bossman', 5, 20))
+    user_list.append( user_obj('Test', 'Dev', 'Test','Test', 6, 20))
     User = apps.get_model('backend', 'User')
     user_time_salt = "2021-10-22 22:14:36.000573"
     for user in user_list:

@@ -3,7 +3,8 @@ import TextField from '@mui/material/TextField';
 import Checkbox from '@mui/material/Checkbox';
 import { Button, Container, Stack } from "@mui/material";
 import { Box } from "@mui/system";
-import { createTournament } from "../../services/services";
+import { createTournament } from "../../../services/services";
+import { Snackbar } from "@material-ui/core";
 // import './Home.css'
 
 const cssMarginFlexTextAlign = {
@@ -17,6 +18,8 @@ const AddTournamentPage = (props) => {
   const [date, setDate] = useState();
   const [holecnt, setHoleCnt] = useState();
   const [prize, setPrize] = useState();
+  const [snackbarOpen, setSnackBarOpen] = useState(false);
+  const [snackbarMsg, setSnackBarMsg] = useState("Sucessfully created tournament");
   const handleSubmit = (e) => {
   // console.log("submitting...")
   e.preventDefault();
@@ -24,9 +27,9 @@ const AddTournamentPage = (props) => {
   setSponsorId(1);
   // Error handling
   if(!sponsorid || !date || !holecnt || !prize){
+    setSnackBarMsg("failed to create tournament");
     return;
   }
-  
   console.log("submitting...")
   console.log(`sponsor id:`)
   console.log(sponsorid)
@@ -35,11 +38,21 @@ const AddTournamentPage = (props) => {
   console.log(`hole count:`)
   console.log(holecnt)
   console.log(`prize:`)
+  // formatting for post
+  setPrize(prize + ".00")
   console.log(prize)
   createTournament(date, sponsorid, prize, holecnt);
-  // console.log(data);
+  setSnackBarMsg("Sucesfully created Tournament");
+  setSnackBarOpen(true);
 }
-    return ( 
+    return (
+      <>
+      <Snackbar 
+      open={snackbarOpen}
+      onClose={() => {setSnackBarOpen(false)}}
+      message={snackbarMsg}
+      autoHideDuration={3000}
+      />
       <form>
 
         <Stack sx={{
@@ -64,7 +77,7 @@ const AddTournamentPage = (props) => {
           </Box>            
           <Box sx={cssMarginFlexTextAlign}>
           <Checkbox  />          
-          <TextField id="outlined-basic" label="1st Place Reward Money Amount" onChange={(e) => setPrize(e.target.value)}/>
+          <TextField id="outlined-basic" label="1st Place Reward Money Amount" type="number" onChange={(e) => setPrize((e.target.value))}/>
           </Box>
           <Box sx={cssMarginFlexTextAlign}>
           <Checkbox  />          
@@ -79,6 +92,7 @@ const AddTournamentPage = (props) => {
           </Box>
                     </Stack>
       </form>
+    </>
      );
 }
  

@@ -1,17 +1,18 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import {Link} from 'react-router-dom';
 import Fab from '@mui/material/Fab';
 import AddIcon from '@mui/icons-material/Add';
 import Box from '@mui/material/Box';
 import Tabs from '@mui/material/Tabs'
 import Tab from '@mui/material/Tab'
-import { getAllTournaments } from "../../services/services";
+import { getAllTournaments } from "../../../services/services";
 import { useSelector } from "react-redux";
-import { Card, CardContent, Typography } from "@mui/material";
+import { Button, Card, CardContent, Typography } from "@mui/material";
 import "./ManageTournamentsPage.css"
+import EditTournamentForm from "./EditTournamentForm";
 // import './Home.css'
 const ManageTournamentsPage = (props) => {
-  const [value, setValue] = React.useState(0);
+  const [value, setValue] = useState(0);
   useEffect(() => {
     getAllTournaments();
   }, []);
@@ -20,6 +21,10 @@ const ManageTournamentsPage = (props) => {
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
+  const [modalShow, setModalShow] = useState(false);
+  const handleClose = () => {setModalShow(false)}
+  const handleOpen = () => {setModalShow(true)}
+  const [tourney, setTourney] = useState();
   const getDateString = (string) => {
     let mystring = string.split("T");
     let date = mystring[0].split("-");
@@ -50,6 +55,7 @@ const ManageTournamentsPage = (props) => {
                     <Typography variant="h5">
                       {`${tournament.tournamentholecount} holes`}
                     </Typography>
+                    <Button variant="outlined" sx={{margin: "3px"}} onClick={() => handleOpen()}>Manage</Button>
                   </CardContent>
                 </Card>
                 </div>
@@ -63,6 +69,11 @@ const ManageTournamentsPage = (props) => {
   <AddIcon />
 </Fab>
 </Box>
+              {/* {tourney && 
+                <EditTournamentForm tourney={tourney} handleClose={handleClose} show={modalShow}/>
+              
+              } */}
+                <EditTournamentForm tourney={tourney} handleClose={handleClose} show={modalShow}/>
 
                     </div>
      );

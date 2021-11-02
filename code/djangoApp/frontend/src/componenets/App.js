@@ -8,7 +8,7 @@ import OrderDrinkPage from "./Pages/OrderDrinksPage";
 import LeaderBoardPage from "./Pages/LeaderboardPage";
 import AccountPage from "./Pages/AccountPage";
 import DrinkOrdersPage from "./Pages/DrinkOrdersPage";
-import ManageTournamentsPage from "./Pages/ManageTournamentsPage"
+import ManageTournamentsPage from "./Pages/Tournament/ManageTournamentsPage"
 import ManageDrinksPage from "./Pages/ManageDrinksPage";
 import ManageUsersPage from "./Pages/ManageUsersPage";
 import ManageRefundsPage from "./Pages/ManageRefundsPage";
@@ -17,7 +17,7 @@ import MoneyPage from "./Pages/MoneyPage";
 import ManageSponsorshipPage from "./Pages/manage-sponsorshipPage";
 import Menu from "./Menu/Menu";
 
-import AddTournamentPage from "./Pages/AddTournamentPage";
+import AddTournamentPage from "./Pages/Tournament/AddTournamentPage";
 
 import Paper from '@mui/material/Paper';
 

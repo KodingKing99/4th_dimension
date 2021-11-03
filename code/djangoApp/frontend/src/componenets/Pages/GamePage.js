@@ -1,4 +1,4 @@
-  import React from "react";
+  import React, {useCallback} from "react";
   // import './Home.css'
 
   import Box from '@mui/material/Box';
@@ -14,9 +14,11 @@
   import SpeedDialIcon from '@mui/material/SpeedDialIcon';
   import GameComponent from '../GameComponents/GameComponent'
 
+  import {Dialog, DialogTitle , DialogContent, DialogActions , DialogContentText, Button} from '@material-ui/core';
+
   import EditIcon from '@mui/icons-material/Edit';
 
-  import {  Link } from "react-router-dom";
+  import {  Link ,useHistory } from "react-router-dom";
 
 
   const selectedTournamentId='asdfasd'
@@ -33,8 +35,20 @@
 
 
   const GamePage = (props) => {
-    // const history = useHistory();
+     const history = useHistory();
+    
+    let [openQuickBuyDrinks, setOpenQuickBuyDrinks] = React.useState(false);
 
+    const openQuickBuyDrinksHandler = () => {
+      setOpenQuickBuyDrinks(openQuickBuyDrinks=true)
+    }
+    const purchaseQuickDrinkHandler = () => {
+      setOpenQuickBuyDrinks(openQuickBuyDrinks=false)
+    }
+
+    const closeQuickBuyDrinksHandler = () => {
+      setOpenQuickBuyDrinks(openQuickBuyDrinks=false)
+    }
 
     const handleClickOpen = () => {
       console.log("open dialogue func",openDialog)
@@ -42,11 +56,17 @@
     };
     
     const handleOpenDrinkFab = (button) => {
-      switch(button){
-        case 'All Drinks':
-
-          // history.push('/drinks')
+      console.log(button)
+      if(button.name =='all drinks'){
+        console.log("in here")
+          //openDrinksPage();
+           history.push('/drinks')
       }
+      else{
+        if(openQuickBuyDrinks!=true){
+          openQuickBuyDrinksHandler();
+        } 
+            }
     }
 
     const handleClose = (value) => {
@@ -98,13 +118,57 @@
             tooltipTitle={action.name}
             tooltipOpen
             tooltipTitle={action.name}
-            onClick={handleOpenDrinkFab(action.name)}
+            onClick={()=>{
+              if(action.name =='All Drinks'){
+                console.log("in here")
+                   history.push('/drinks')
+              }
+              else{
+                if(openQuickBuyDrinks!=true){
+                  openQuickBuyDrinksHandler();
+                } 
+                    }
+            }}
           />
         ))}
       </SpeedDial>
     {/* </Box> */}
   </Box>
   }
+
+
+
+<Dialog
+        open={openQuickBuyDrinks}
+        onClose={closeQuickBuyDrinksHandler}
+        aria-labelledby="responsive-dialog-title"
+      >
+        <DialogTitle id="responsive-dialog-title">
+          {"Confirm Purchase"}
+        </DialogTitle>
+        <DialogContent>
+        <Icon path={mdiBeerOutline} title="Drink" size={1}/>
+          <DialogContentText>
+Are you sure you want to buy this drink?
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button autoFocus onClick={closeQuickBuyDrinksHandler}>
+            Cancel
+          </Button>
+          <Button onClick={handleClose} autoFocus>
+            Purchase
+          </Button>
+        </DialogActions>
+      </Dialog>
+
+
+
+
+
+
+
+
 
                       </div>
       );

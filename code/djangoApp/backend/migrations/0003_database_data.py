@@ -2,16 +2,16 @@
 
 from django.db import migrations
 import hashlib
-import datetime
 
 
 class user_obj:
-    def __init__(self, firstname, lastname, email, password, role):
+    def __init__(self, firstname, lastname, email, password, role, account):
         self.firstname = firstname
         self.lastname = lastname
         self.email = email
         self.role = role
         self.password = password
+        self.account = account
 def create_users(apps, schema_editor):
     """
     Creates a list of users to add to the database on build
@@ -23,14 +23,14 @@ def create_users(apps, schema_editor):
     """
     user_list =[]
     # Append each user to create on build 
-    user_list.append( user_obj('Jim', 'Player', 'Jim@mail.com', 'Jim', 1))
-    user_list.append( user_obj('James', 'Player', 'James@mail.com', 'James', 1))
-    user_list.append( user_obj('Jack', 'Player', 'Jack@mail.com','Jack', 1))
-    user_list.append( user_obj('Bigfoot', 'Drink', 'Bigfoot@mail.com','Bigfoot', 2))
-    user_list.append( user_obj('Batman', 'Drink', 'Batman@mail.com','Batman', 2))
-    user_list.append( user_obj('Worf', 'Manager', 'Worf@mail.com','Worf', 3))
-    user_list.append( user_obj('Picard', 'Sponsor', 'Picard@mail.com','Picard', 4))
-    user_list.append( user_obj('Bossman', 'Owner', 'Bossman@mail.com','Bossman', 5))
+    user_list.append( user_obj('Jim', 'Player', 'Jim@mail.com', 'Jim', 1, 20))
+    user_list.append( user_obj('James', 'Player', 'James@mail.com', 'James', 1, 20))
+    user_list.append( user_obj('Jack', 'Player', 'Jack@mail.com','Jack', 1, 20))
+    user_list.append( user_obj('Bigfoot', 'Drink', 'Bigfoot@mail.com','Bigfoot', 2, 20))
+    user_list.append( user_obj('Batman', 'Drink', 'Batman@mail.com','Batman', 2, 20))
+    user_list.append( user_obj('Worf', 'Manager', 'Worf@mail.com','Worf', 3, 20))
+    user_list.append( user_obj('Picard', 'Sponsor', 'Picard@mail.com','Picard', 4, 20))
+    user_list.append( user_obj('Bossman', 'Owner', 'Bossman@mail.com','Bossman', 5, 20))
     User = apps.get_model('backend', 'User')
     user_time_salt = "2021-10-22 22:14:36.000573"
     for user in user_list:
@@ -40,6 +40,7 @@ def create_users(apps, schema_editor):
             useremail = user.email,
             usersalt = user.firstname + user_time_salt,
             userrole = user.role,
+            useraccount = user.account,
             userpassword = hashlib.sha256(str(user.password).encode('Utf-8') + str(user.firstname + user_time_salt).encode('Utf-8')).hexdigest()
         )
 
@@ -61,27 +62,65 @@ def create_tournaments(apps, schema_editor):
     sponsor_id = User.objects.all().filter(userrole=4)[0].userid
     if not sponsor_id: sponsor_id = -1
 
-
     Tournament = apps.get_model('backend', 'Tournament')
     tournament_list.append( tournament_obj(date_1, sponsor_id, 2000, 18))
     tournament_list.append( tournament_obj(date_2, sponsor_id, 5000, 9))
     for tournament in tournament_list:
         Tournament.objects.create(
             tournamentdate = tournament.date_time,
-            tournamnetsponsor = tournament.sponsor_id,
+            tournamentsponsor = tournament.sponsor_id,
             tournamentprize = tournament.prize,
             tournamentholecount = tournament.hole_count,
         )
 
+class transactions_obj:
+    def __init__(self, buyer_id, drink_miester_id, price, date_time, active_flag):
+        self.buyer_id = buyer_id
+        self.drink_miester_id = drink_miester_id
+        self.price = price
+        self.date_time = date_time
+        self.active_flag = active_flag
+def create_transactions(apps, schema_editor):
+    """
+    Create a few default transactions, ongoing and passed
+    """
+    transaction_list = []
+
+    User = apps.get_model('backend', 'User')
+    player_id = User.objects.all().filter(userrole=1)[0].userid
+    drink_miester_id = User.objects.all().filter(userrole=2)[0].userid
+    if not drink_miester_id: drink_miester_id = -1
+    if not player_id: player_id = -1
+
+    transaction_list.append( transactions_obj(player_id, drink_miester_id, 2.50, "2021-10-31 10:00:00.000000", True))
+    transaction_list.append( transactions_obj(player_id, drink_miester_id, 2, "2021-10-30 10:00:00.000000", True))
+    transaction_list.append( transactions_obj(player_id, drink_miester_id, 5, "2021-10-31 10:00:00.000000", True))
+    transaction_list.append( transactions_obj(player_id, drink_miester_id, 3.75, "2021-10-30 10:00:00.000000", True))
+    transaction_list.append( transactions_obj(player_id, drink_miester_id, 0, "2021-10-9 10:00:00.000000", False))
+    transaction_list.append( transactions_obj(player_id, drink_miester_id, 1, "2021-10-8 10:00:00.000000", False))
+    transaction_list.append( transactions_obj(player_id, drink_miester_id, 5.50, "2021-10-7 10:00:00.000000", False))
+    transaction_list.append( transactions_obj(player_id, drink_miester_id, 3.23, "2021-10-6 10:00:00.000000", False))
+
+    Transaction = apps.get_model('backend', 'Transactionhistory')
+    for transaction in transaction_list:
+        Transaction.objects.create(
+            transactionprice = transaction.price,
+            transactionbuyer = transaction.buyer_id,
+            transactiondrinkmeister = transaction.drink_miester_id,
+            transactiondate = transaction.date_time,
+            transactionactiveflag = transaction.active_flag,
+        )
 
 class Migration(migrations.Migration):
 
     dependencies = [
         ('backend', '0002_user_usersalt'),
+        # ('backend', '0004_transactionhistory_transactionactiveflag'),
     ]
 
     operations = [
         migrations.RunPython(create_users),
         migrations.RunPython(create_tournaments),
+        migrations.RunPython(create_transactions),
     ]
 

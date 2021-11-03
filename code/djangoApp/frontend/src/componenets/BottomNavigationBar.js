@@ -47,7 +47,7 @@ export default function BottomNavigationBar(props) {
   } else if(role=="manager"){
     return (
       <BottomNavigation
-        showLabels
+        showLabels={false}
         value={value}
         onChange={(event, newValue) => {
           setValue(newValue);

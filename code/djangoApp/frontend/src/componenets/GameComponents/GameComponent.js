@@ -12,44 +12,43 @@ import { useTheme } from '@mui/material/styles';
   import Icon from "@mdi/react";
   import { mdiBeerOutline } from '@mdi/js';
 
-  import Fab from '@mui/material/Fab';
-import { current } from "immer";
-const steps = [
-    {
-      label: '',
-      description: ``,
-    },
-    {
-      label: '',
-      description:
-        '',
-    },
-    {
-      label: '',
-      description: ``,
-    },
-  ];
 
 
 
 
 const GameComponent = (props) => {
 
-    let [currentScore,setCount] = useState(0);
+  const steps1 = [
+    {
+      label: 'Hole 1',
+      score: 0,
+    },
+    {
+      label: 'Hole 2',
+      score: 0,
+    },
+    {
+      label: 'Hole 3',
+      score: 0,
+    },
+  ];
 
 
+    let [scoreTotal,setScoreTotal] = useState(0);
+    let [steps,setScore] = useState([0,0,0,0,0]);
 
-    const handleIncrementScore = ()=>{
-        console.log("increment")
-        console.log(currentScore)
-        currentScore=currentScore +1;
-      }
+
+    // const handleIncrementScore = ()=>{
+    //     console.log("increment")
+    //     console.log(currentScore)
+    //     currentScore=currentScore +1;
+    //   }
     
-      const handleDecrimentScore = () =>{
-        console.log("decrement")
-        console.log(currentScore)
-        currentScore= currentScore + 1;
-      }
+    //   const handleDecrimentScore = () =>{
+    //     console.log("decrement")
+    //     console.log(currentScore)
+    //     currentScore= currentScore + 1;
+    //   }
 
 
     const theme = useTheme();
@@ -57,14 +56,23 @@ const GameComponent = (props) => {
     const maxSteps = steps.length;
   
     const handleNext = () => {
-      setActiveStep((prevActiveStep) => prevActiveStep + 1);
+        setActiveStep((prevActiveStep) => prevActiveStep + 1);
     };
   
     const handleBack = () => {
       setActiveStep((prevActiveStep) => prevActiveStep - 1);
     };
 
-
+    const handleIncrementScore = (index) =>{
+      steps[index] = steps[index] + 1
+      setScore([...steps]);
+      setScoreTotal(scoreTotal + 1);
+    }
+    const handleDecrimentScore = (index) =>{
+      steps[index] = steps[index] - 1;
+      setScore([...steps]);
+      setScoreTotal(scoreTotal - 1);
+    }
 
     return ( 
         <div>
@@ -80,10 +88,10 @@ const GameComponent = (props) => {
             bgcolor: 'background.default',
           }}
         >
-  
+          <Typography sx={{   width: '100%', textAlign:'center', fontSize:'120px', }}>{steps[activeStep].label}</Typography>        
         </Paper>
-        <Box sx={{   width: '100%', textAlign:'center', fontSize:'120px', }}>
-        <span style={{fontSize:'40px'}}>Par</span><br></br><span onClick={()=>{if(currentScore>0){setCount(currentScore-1)}}}> - </span> {currentScore} <span onClick={()=>{setCount(currentScore+1)}} > + </span>
+        <Box sx={{   width: '100%', textAlign:'center', fontSize:'120px',cursor: 'grab' }}>
+        <span style={{fontSize:'40px',cursor: 'grab'}}>Par</span><br></br><span onClick={()=>{if(steps[activeStep]>0){handleDecrimentScore(activeStep)}}}> - </span> {steps[activeStep]} <span onClick={()=>{handleIncrementScore(activeStep)}} > + </span>
         </Box>
         <MobileStepper
           variant="text"
@@ -91,6 +99,7 @@ const GameComponent = (props) => {
           position="static"
           activeStep={activeStep}
           nextButton={
+           
             <Button
               size="small"
               onClick={handleNext}
@@ -116,18 +125,19 @@ const GameComponent = (props) => {
           }
         />
       </Box>
-      <Box>
-        Score Total: 
+      {activeStep===(maxSteps-1) &&
+      <Box sx={{ alignItems: 'center', margin:1,textAlign:'center'}}>
+        <Button variant="outlined">Finish Game</Button>
         </Box>
-        <Divider variant="middle" />
+        }
+      <Divider />
+      <Box sx={{margin:1}}>
+        <h2>Score Total: {scoreTotal}</h2>
+        </Box>
+        <Divider sx={{margin:1}} variant="middle" />
         <Box>
           <h2>Leaderboard</h2>
           </Box>
-          <Box sx={{ position: 'fixed', bottom: 100, right: 50 }} elevation={3}>
-      <Fab color="primary" aria-label="add">
-      <Icon path={mdiBeerOutline} title="Drink" size={1} />
-  </Fab>
-  </Box>
   </div>
      );
 }

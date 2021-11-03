@@ -120,7 +120,7 @@ function App() {
                     </Switch>
                     <Navbar/>
                     <Paper sx={{ position: 'fixed', bottom: 0, left: 0, right: 0 }} elevation={3}>
-            <BottomNavigationBar paths = {playerPath} role={role} ></BottomNavigationBar>
+            <BottomNavigationBar showLabels={true} paths = {playerPath} role={role} ></BottomNavigationBar>
             </Paper>
                 </div>
             </HashRouter>

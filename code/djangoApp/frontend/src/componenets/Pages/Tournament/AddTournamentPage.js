@@ -21,12 +21,13 @@ const AddTournamentPage = (props) => {
   const [snackbarOpen, setSnackBarOpen] = useState(false);
   const [snackbarMsg, setSnackBarMsg] = useState("Sucessfully created tournament");
   const handleSubmit = (e) => {
-  // console.log("submitting...")
+   console.log("submitting...")
   e.preventDefault();
   // setting sponsor id to 1 for now. TAKE OUT later
   setSponsorId(1);
   // Error handling
   if(!sponsorid || !date || !holecnt || !prize){
+    console.log("Error: Failed to create tournament")
     setSnackBarMsg("failed to create tournament");
     return;
   }

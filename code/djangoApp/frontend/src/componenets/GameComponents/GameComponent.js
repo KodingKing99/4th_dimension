@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import {Link} from 'react-router-dom';
 // import './Home.css'
 import { useTheme } from '@mui/material/styles';
   import MobileStepper from '@mui/material/MobileStepper';
@@ -14,72 +15,63 @@ import { useTheme } from '@mui/material/styles';
   import Icon from "@mdi/react";
   import { mdiBeerOutline } from '@mdi/js';
 
+  import useMediaQuery from '@mui/material/useMediaQuery';
 
 
 
 
 const GameComponent = (props) => {
 
-
+  const theme = useTheme();
+  const fullScreen = useMediaQuery(theme.breakpoints.down('md'));
 
 
     let [scoreTotal,setScoreTotal] = useState(0);
     let [steps,setScore] = useState([0,0,0,0,0]);
 
-
-    // const handleIncrementScore = ()=>{
-    //     console.log("increment")
-    //     console.log(currentScore)
-    //     currentScore=currentScore +1;
-    //   }
-    
-    //   const handleDecrimentScore = () =>{
-    //     console.log("decrement")
-    //     console.log(currentScore)
-    //     currentScore= currentScore + 1;
-    //   }
-
-
-    const theme = useTheme();
     const [activeStep, setActiveStep] = React.useState(0);
-    let [confirmNextHole, setConfirmNextHole] = React.useState(false);
-    let [confirmLeaveGame, setConfirmLeaveGame] = React.useState(false);
-    let [confirmFinishGame, setConfirmFinishGame] = React.useState(false);
+    const [confirmNextHole, setConfirmNextHole] = React.useState(false);
+    const [confirmLeaveGame, setConfirmLeaveGame] = React.useState(false);
+    const [confirmFinishGame, setConfirmFinishGame] = React.useState(false);
+    const [gameFinished, setGameFinished] = React.useState(false);
 
     const maxSteps = steps.length;
 
     const onOpenFinishGameDialog = () => {
-      setConfirmFinishGame(confirmFinishGame =true);
+      setConfirmFinishGame(true);
     }
     const onCloseFinishGameDialog = () => {
-      setConfirmFinishGame(confirmFinishGame =false);
+      setConfirmFinishGame(false);
+      setGameFinished(true);
     }
     const handleFinishGame = () => {
-      setConfirmFinishGame(confirmFinishGame =false);
+      setConfirmFinishGame(false);
+      setGameFinished(true);
     }
     const onOpenConfirmLeaveGame = () => {
-      setConfirmLeaveGame(confirmLeaveGame = true);
+      setConfirmLeaveGame(true);
     }
 
     const onCloseConfirmLeaveGame = () => {
-      setConfirmLeaveGame(confirmLeaveGame = false);
+      setConfirmLeaveGame(false);
     }
 
     const handleLeaveGame = () => {
-      setConfirmLeaveGame(confirmLeaveGame = false);
+      setConfirmLeaveGame(false);
+      setGameFinished(true);
     }
   
     let onOpenConfirmNextHole = () => {
-        setConfirmNextHole(confirmNextHole =true);
+        setConfirmNextHole(true);
     }
     
     const onCancelGoNextHole = () => {
-      setConfirmNextHole(confirmNextHole =false);
+      setConfirmNextHole(false);
     }
 
     const incrementActiveStep = () => {
         setActiveStep((prevActiveStep) => prevActiveStep + 1);
-        setConfirmNextHole(confirmNextHole =false);
+        setConfirmNextHole(false);
     };
 
   
@@ -97,9 +89,9 @@ const GameComponent = (props) => {
       setScore([...steps]);
       setScoreTotal(scoreTotal - 1);
     }
-
     return ( 
         <div>
+
         <Box sx={{ flexGrow: 1 }}>
         <Paper
           square
@@ -112,7 +104,7 @@ const GameComponent = (props) => {
             bgcolor: 'background.default',
           }}
         >
-          <Typography sx={{   width: '100%', textAlign:'center', fontSize:'120px', }}><strong>Hole # {activeStep}</strong></Typography>    
+          <Typography sx={{   width: '100%', textAlign:'center', fontSize:'120px', }}><strong>Hole # {activeStep+1}</strong></Typography>    
           <Button variant="outlined" sx={{width:'10%'}} onClick={onOpenConfirmLeaveGame}>End Game</Button>    
         </Paper>
         <Box sx={{   width: '100%', textAlign:'center', fontSize:'120px',cursor: 'grab' }}>
@@ -163,12 +155,6 @@ const GameComponent = (props) => {
         <Box>
           <h2>Leaderboard</h2>
           </Box>
-
-
-
-
-
-
           <div>
       <Dialog
         open={confirmNextHole}
@@ -228,11 +214,51 @@ Are you sure you want to Finish the game?
           <Button onClick={handleFinishGame} autoFocus>Yes</Button>
           </DialogActions>
 </Dialog>
+
+
+
+
+
+<Dialog 
+      open={gameFinished}
+      fullScreen={fullScreen}
+      >
+        <DialogTitle id="alert-dialog-title">
+          Results
+          </DialogTitle>
+        <DialogContent>
+          <DialogContentText id="alert-dialog-description">
+          <Box >
+    <Typography sx={{textAlign:'center'}} variant="h2">
+Results</Typography>
+  </Box>
+  <Divider />
+  <Box sx={{margin:1}}>
+
+  <Typography sx={{textAlign:'center'}} variant="h4">
+  <strong>Score Total: {scoreTotal}</strong>
+  </Typography>
+  </Box>
+  <Divider />
+
+  { steps.map((hole, index) => (
+                
+  <Box>
+<Typography sx={{textAlign:'center'}} >
+  <strong>Hole {index+1} : {hole}</strong>
+</Typography>
+  </Box>
+              ))}
+
+
+
+            </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button href='/?#/' autoFocus>Close</Button>
+          </DialogActions>
+</Dialog>
     </div>
-
-
-
-
 
   </div>
      );

@@ -22,6 +22,12 @@ export const dataSlice = createSlice({
       });
       state.tournaments[index] = action.payload;
     },
+    // Takes a tournament id as a payload
+    deleteStoreTournament: (state, action) => {
+      state.tournaments = state.tournaments.filter((tourney) => {
+        return tourney.tournamentid !== action.payload
+      });
+    },
     setTransactions : (state, action) => {
         state.transactions = action.payload;
     },
@@ -32,6 +38,6 @@ export const dataSlice = createSlice({
 })
 
 // Action creators are generated for each case reducer function
-export const { setTournaments, setTransactions, resetData, addTournament, editStoreTournament } = dataSlice.actions
+export const { setTournaments, setTransactions, resetData, addTournament, editStoreTournament, deleteStoreTournament } = dataSlice.actions
 
 export default dataSlice.reducer

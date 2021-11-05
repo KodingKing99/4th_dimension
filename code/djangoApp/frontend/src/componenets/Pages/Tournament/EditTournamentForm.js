@@ -3,7 +3,7 @@ import { Fade, Modal, Tabs, Tab, Typography } from '@mui/material';
 import React, { useEffect, useState } from 'react';
 import Box from '@mui/material/Box';
 import { Button, Container, Stack } from "@mui/material";
-import { editTournament } from '../../../services/services';
+import { editTournament, deleteTourament } from '../../../services/services';
 import "./EditTournamentForm.css";
 
 const EditTournamentForm = (props) => {
@@ -46,6 +46,10 @@ const EditTournamentForm = (props) => {
         // date, sponsorId, prize, holeCount, id
         editTournament(date, sponsorId, prize, holeCount, tourney.tournamentid);
     }
+    const handleDelete = () => {
+        console.log("Deleting...")
+        deleteTourament(tourney.tournamentid)
+    }
     return ( 
         <>
             <Modal
@@ -60,7 +64,7 @@ const EditTournamentForm = (props) => {
                 <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
                     <TabList onChange={handleChange} aria-label="lab API tabs example">
                         <Tab label="Edit" value="1" />
-                        <Tab label="Item Two" value="2" />
+                        <Tab label="Delete" value="2" />
                         <Tab label="Item Three" value="3" />
                     </TabList>
                     </Box>
@@ -84,10 +88,12 @@ const EditTournamentForm = (props) => {
                             <Box sx={cssMarginFlexTextAlign}>
                                 <input className="formInput" type="number" required value={sponsorId} onChange={(e) => setSponsorId(e.target.value)}></input>
                             </Box>
-                            <Button onClick={() => handleSubmit()}>Submit</Button>
+                            <Button variant="outlined" onClick={() => handleSubmit()}>Submit</Button>
                         </Stack>
                     </TabPanel>
-                    <TabPanel value="2">Item Two</TabPanel>
+                    <TabPanel value="2">
+                            <Button variant="outlined" onClick={() => handleDelete()}>Delete</Button>
+                    </TabPanel>
                     <TabPanel value="3">Item Three</TabPanel>
                 
                 </TabContext>

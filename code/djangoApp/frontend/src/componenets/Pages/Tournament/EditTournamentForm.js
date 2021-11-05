@@ -3,6 +3,7 @@ import { Fade, Modal, Tabs, Tab, Typography } from '@mui/material';
 import React, { useEffect, useState } from 'react';
 import Box from '@mui/material/Box';
 import { Button, Container, Stack } from "@mui/material";
+import { editTournament } from '../../../services/services';
 import "./EditTournamentForm.css";
 
 const EditTournamentForm = (props) => {
@@ -29,7 +30,7 @@ const EditTournamentForm = (props) => {
     const handleChange = (e, value) => {
         setValue(value);
     }
-    let myTourney = tourney;
+    // let myTourney = tourney;
     // useEffect(() => {myTourney = tourney}, [tourney])
     const [date, setDate] = useState(tourney.tournamentdate);
     const [prize, setPrize] = useState(tourney.tournamentprize);
@@ -41,6 +42,10 @@ const EditTournamentForm = (props) => {
         setHoleCount(tourney.tournamentholecount);
         setSponsorId(tourney.tournamentsponsor);
     }, [tourney]);
+    const handleSubmit = () => {
+        // date, sponsorId, prize, holeCount, id
+        editTournament(date, sponsorId, prize, holeCount, tourney.tournamentid);
+    }
     return ( 
         <>
             <Modal
@@ -79,7 +84,7 @@ const EditTournamentForm = (props) => {
                             <Box sx={cssMarginFlexTextAlign}>
                                 <input className="formInput" type="number" required value={sponsorId} onChange={(e) => setSponsorId(e.target.value)}></input>
                             </Box>
-                            <Button>Submit</Button>
+                            <Button onClick={() => handleSubmit()}>Submit</Button>
                         </Stack>
                     </TabPanel>
                     <TabPanel value="2">Item Two</TabPanel>

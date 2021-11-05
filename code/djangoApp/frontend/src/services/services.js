@@ -1,7 +1,7 @@
 import useFetch from "react-fetch-hook"
 import {store} from '../redux/store'
 // import { useDispatch } from "react-redux";
-import { setTournaments, addTournament } from "../redux/dataSlice";
+import { setTournaments, addTournament, editStoreTournament, resetData } from "../redux/dataSlice";
 import axios from "axios";
 const applicationName = 'http://127.0.0.1:8000/api/'
 let requestOptions = {
@@ -26,6 +26,19 @@ export const createTournament = (date, sponsorId, prize, holeCount) => {
         console.log(response);
         store.dispatch(addTournament(response.data));
     }).catch(err => {console.log(err)});
+}
+export const editTournament = (date, sponsorId, prize, holeCount, id) => {
+    axios.put(applicationName + 'tournament/' + id + '/', {
+        tournamentdate: date,
+        tournamentholecount: holeCount,
+        tournamentsponsor: sponsorId,
+        tournamentprize: prize
+    }).then((res) => {
+        console.log(res);
+        store.dispatch(editStoreTournament(res.data));
+    }).catch((err) => {
+        console.log(err);
+    })
 }
 
 export const getAllTransactions = async () => {

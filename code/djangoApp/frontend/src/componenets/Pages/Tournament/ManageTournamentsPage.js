@@ -21,16 +21,23 @@ const ManageTournamentsPage = (props) => {
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
+
   const [modalShow, setModalShow] = useState(false);
   const handleClose = () => {setModalShow(false)}
   const handleOpen = () => {setModalShow(true)}
-  const [tourney, setTourney] = useState();
+  const [tourney, setTourney] = useState([{}]);
   const getDateString = (string) => {
     let mystring = string.split("T");
     let date = mystring[0].split("-");
     let time = mystring[1].split("-")
     mystring = "" + date[1] + "/" + date[2] + "/" + date[0] + " at " + time[0];
-    return mystring;
+
+  const openForms = (tournament) => {
+    console.log(tournament);
+    setTourney(tournament);
+    handleOpen();
+  }
+ 
   }
     return ( 
         <div className="homeTop" style={{marginTop: '100px'}}>
@@ -55,7 +62,7 @@ const ManageTournamentsPage = (props) => {
                     <Typography variant="h5">
                       {`${tournament.tournamentholecount} holes`}
                     </Typography>
-                    <Button variant="outlined" sx={{margin: "3px"}} onClick={() => handleOpen()}>Manage</Button>
+                    <Button variant="outlined" sx={{margin: "3px"}} onClick={openForms(tournament)}>Manage</Button>
                   </CardContent>
                 </Card>
                 </div>

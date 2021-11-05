@@ -11,6 +11,7 @@ import { Button, Container, Stack } from "@mui/material";
 import "./EditTournamentForm.css";
 
 const EditTournamentForm = (props) => {
+    console.log("Hello")
     const cssMarginFlexTextAlign = {
         margin:'5px',
         display:'flex',
@@ -27,7 +28,8 @@ const EditTournamentForm = (props) => {
         boxShadow: 24,
         p: 4,
       };
-    const {tourney, handleClose, show} = props;
+    const {handleClose, show} = props;
+    // console.log(tourney)
     const [value, setValue] = useState("1");
     const handleChange = (e, value) => {
         setValue(value);
@@ -36,6 +38,7 @@ const EditTournamentForm = (props) => {
     const [prize, setPrize] = useState();
     const [holeCount, setHoleCount] = useState();
     const [sponsorId, setSponsorId] = useState();
+    // this.props.tourney ? setDate(this.props.touney.dournamentDate)
     return ( 
         <>
         {/* <form>
@@ -66,27 +69,27 @@ const EditTournamentForm = (props) => {
                     </TabList>
                     </Box>
                     <TabPanel value="1">
-                    <Stack sx={{
-                        alignItems: 'center',marginBottom:'10px'}}>
-                        <h1>Edit Tournament</h1>
-                        <h2># Holes</h2>
-                        <Box sx={cssMarginFlexTextAlign} hint="0">
-                            <input className="formInput" type="number" onChange={(e) => setHoleCount(e.target.value)} required/>
-                        </Box>
-                        <h2>Date</h2>
-                        <Box sx={cssMarginFlexTextAlign}>
-                            <input className="formInput" type="datetime-local" onChange={(e) => setDate(e.target.value)} required></input>
-                        </Box>
-                        <h2>Prize</h2>
-                        <Box sx={cssMarginFlexTextAlign}>
-                            <input className="formInput" type="number" required onChange={(e) => setPrize(e.target.value)}></input>
-                        </Box>
-                        <h2>Sponsor ID</h2>
-                        <Box sx={cssMarginFlexTextAlign}>
-                            <input className="formInput" type="number" required onChange={(e) => setSponsorId(e.target.value)}></input>
-                        </Box>
-                        <Button>Submit</Button>
-                    </Stack>
+                        <Stack sx={{
+                            alignItems: 'center',marginBottom:'10px'}}>
+                            <h1>Edit Tournament</h1>
+                            <h2># Holes</h2>
+                            <Box sx={cssMarginFlexTextAlign} hint="0">
+                                <input className="formInput" type="number" onChange={(e) => setHoleCount(e.target.value)} required/>
+                            </Box>
+                            <h2>Date</h2>
+                            <Box sx={cssMarginFlexTextAlign}>
+                                <input className="formInput" type="datetime-local" onChange={(e) => setDate(e.target.value)} required></input>
+                            </Box>
+                            <h2>Prize</h2>
+                            <Box sx={cssMarginFlexTextAlign}>
+                                <input className="formInput" type="number" required onChange={(e) => setPrize(e.target.value)}></input>
+                            </Box>
+                            <h2>Sponsor ID</h2>
+                            <Box sx={cssMarginFlexTextAlign}>
+                                <input className="formInput" type="number" required onChange={(e) => setSponsorId(e.target.value)}></input>
+                            </Box>
+                            <Button>Submit</Button>
+                        </Stack>
                     </TabPanel>
                     <TabPanel value="2">Item Two</TabPanel>
                     <TabPanel value="3">Item Three</TabPanel>

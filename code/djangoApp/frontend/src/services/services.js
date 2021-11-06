@@ -48,6 +48,9 @@ export const deleteTourament = (tournamentid) => {
         console.log(err);
     })
 }
+// export const getAllActiveTournaments = () => {
+
+// }
 export const getAllTransactions = async () => {
     const response = await axios.get(applicationName + 'transactionHistory/');
     return response.data;

@@ -65,7 +65,6 @@ const EditTournamentForm = (props) => {
                     <TabList onChange={handleChange} aria-label="lab API tabs example">
                         <Tab label="Edit" value="1" />
                         <Tab label="Delete" value="2" />
-                        <Tab label="Item Three" value="3" />
                     </TabList>
                     </Box>
                     <TabPanel value="1">
@@ -92,10 +91,8 @@ const EditTournamentForm = (props) => {
                         </Stack>
                     </TabPanel>
                     <TabPanel value="2">
-                            <Button variant="outlined" onClick={() => handleDelete()}>Delete</Button>
+                            <Button variant="outlined" onClick={() => handleDelete()} className="deleteButt">Delete</Button>
                     </TabPanel>
-                    <TabPanel value="3">Item Three</TabPanel>
-                
                 </TabContext>
                 </Box>
             

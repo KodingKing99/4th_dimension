@@ -1,3 +1,6 @@
 .formInput {
     height: 50px;
 }
+.deleteButt{
+    align-self: center;
+}

@@ -65,6 +65,9 @@ const ManageTournamentsPage = (props) => {
                     <Typography variant="h5">
                       {`${tournament.tournamentholecount} holes`}
                     </Typography>
+                     <Typography variant="h5">
+                      {`Active: ${tournament.tournamentactiveflag}`}
+                    </Typography>
                     <Button variant="outlined" sx={{margin: "3px"}} onClick={() => {
                                                               console.log(tournament);
                                                               setTourney(tournament);

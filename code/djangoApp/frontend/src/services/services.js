@@ -48,9 +48,26 @@ export const deleteTourament = (tournamentid) => {
         console.log(err);
     })
 }
-// export const getAllActiveTournaments = () => {
-
-// }
+export const getAllActiveTournaments = () => {
+    axios.get(applicationName + 'tournamentGetAllActive/').then((res) => {
+        console.log(res);
+        return res.data;
+    }).catch((err) => {
+        console.log(err);
+    })
+}
+export const activateTournament = async (tourney) => {
+    let t = {...tourney}
+    t.tournamentactiveflag = true;
+    console.log(t);
+    axios.put(applicationName + 'tournament/' + tourney.tournamentid + '/', {
+        ...t
+    }).then((res) => {
+        console.log(res);
+        store.dispatch(editStoreTournament(res.data))
+        return res;
+    }).catch((err) => {console.log(err)})
+}
 export const getAllTransactions = async () => {
     const response = await axios.get(applicationName + 'transactionHistory/');
     return response.data;

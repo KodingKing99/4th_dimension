@@ -1,10 +1,11 @@
 import { TabContext, TabPanel, TabList } from '@material-ui/lab';
-import { Fade, Modal, Tabs, Tab, Typography } from '@mui/material';
+import { Fade, Modal, Tabs, Tab, Typography, Snackbar } from '@mui/material';
 import React, { useEffect, useState } from 'react';
 import Box from '@mui/material/Box';
 import { Button, Container, Stack } from "@mui/material";
-import { editTournament, deleteTourament } from '../../../services/services';
+import { editTournament, deleteTourament, activateTournament} from '../../../services/services';
 import "./EditTournamentForm.css";
+// import { Table } from '@material-ui/core';
 
 const EditTournamentForm = (props) => {
     console.log("Hello")
@@ -36,6 +37,8 @@ const EditTournamentForm = (props) => {
     const [prize, setPrize] = useState(tourney.tournamentprize);
     const [holeCount, setHoleCount] = useState(tourney.tournamentholecount);
     const [sponsorId, setSponsorId] = useState(tourney.tournamentsponsor);
+    const [snackbarOpen, setSnackBarOpen] = useState(false);
+    const [snackbarMsg, setSnackbarMsg] = useState("Failed");
     useEffect(() => {
         setDate(tourney.tournamentdate);
         setPrize(tourney.tournamentprize);
@@ -50,8 +53,22 @@ const EditTournamentForm = (props) => {
         console.log("Deleting...")
         deleteTourament(tourney.tournamentid)
     }
+    const handleSetActive = () => {
+        activateTournament(tourney).then((res) => {
+            console.log(res)
+            res.status === 200 ? setSnackbarMsg("Succesfully activated tournament") : setSnackbarMsg("Failed to activate tournament");
+            setSnackBarOpen(true);
+        });
+        
+    }
     return ( 
         <>
+             <Snackbar 
+                open={snackbarOpen}
+                onClose={() => {setSnackBarOpen(false)}}
+                message={snackbarMsg}
+                autoHideDuration={3000}
+            />
             <Modal
             aria-labelledby="transition-modal-title"
             aria-describedby="transition-modal-description"
@@ -65,26 +82,27 @@ const EditTournamentForm = (props) => {
                     <TabList onChange={handleChange} aria-label="lab API tabs example">
                         <Tab label="Edit" value="1" />
                         <Tab label="Delete" value="2" />
+                        <Tab label="Set Active" value="3"/>
                     </TabList>
                     </Box>
                     <TabPanel value="1">
                         <Stack sx={{
                             alignItems: 'center',marginBottom:'10px'}}>
                             <h1>Edit Tournament</h1>
-                            <h2># Holes</h2>
                             <Box sx={cssMarginFlexTextAlign} hint="0">
+                                <h2># Holes</h2>
                                 <input className="formInput" type="number" value={holeCount} onChange={(e) => setHoleCount(e.target.value)} required/>
                             </Box>
-                            <h2>Date</h2>
                             <Box sx={cssMarginFlexTextAlign}>
+                                <h2>Date</h2>
                                 <input className="formInput" type="datetime-local" value={date} onChange={(e) => setDate(e.target.value)} required></input>
                             </Box>
-                            <h2>Prize</h2>
                             <Box sx={cssMarginFlexTextAlign}>
+                                <h2>Prize</h2>
                                 <input className="formInput" type="number" required value={prize} onChange={(e) => setPrize(e.target.value)}></input>
                             </Box>
-                            <h2>Sponsor ID</h2>
                             <Box sx={cssMarginFlexTextAlign}>
+                                <h2>Sponsor ID</h2>
                                 <input className="formInput" type="number" required value={sponsorId} onChange={(e) => setSponsorId(e.target.value)}></input>
                             </Box>
                             <Button variant="outlined" onClick={() => handleSubmit()}>Submit</Button>
@@ -92,6 +110,9 @@ const EditTournamentForm = (props) => {
                     </TabPanel>
                     <TabPanel value="2">
                             <Button variant="outlined" onClick={() => handleDelete()} className="deleteButt">Delete</Button>
+                    </TabPanel>
+                    <TabPanel value="3">
+                        <Button variant="outlined" onClick={() => handleSetActive()}>Set Active</Button>
                     </TabPanel>
                 </TabContext>
                 </Box>

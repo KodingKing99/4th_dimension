@@ -46,7 +46,7 @@ class Tournament(models.Model):
     tournamentsponsor = models.IntegerField(db_column='tournamentsponsor')  # Field name made lowercase.
     tournamentprize = models.DecimalField(db_column='tournamentPrize', max_digits=6, decimal_places=2, blank=True, null=True)  # Field name made lowercase.
     tournamentholecount = models.IntegerField(db_column='tournamentHoleCount', blank=True, null=True)  # Field name made lowercase.
-
+    tournamentactiveflag = models.BooleanField(db_column='tournamentActiveFlag', default=False) # Field name made lowercase 
     class Meta:
         db_table = 'Tournaments'
 

@@ -213,4 +213,32 @@ export const signup = async (email, firstName, lastName, password, role = 1) => 
         return {error: error};
     }
 }
+
+export const depositMoney = async (uid, amount) => {
+    try {
+        amount = parseFloat(amount);
+        const user = await axios.get(applicationName + 'user/' + uid + '/');
+        await axios.put(applicationName + 'user/' + uid + '/', {
+            ...user.data,
+            useraccount: (parseFloat(user.data.useraccount) + amount).toFixed(2)
+        });
+        return true;
+    } catch (error) {
+        return { error: error };
+    }
+}
+
+export const changeName = async (uid, firstName, lastName) => {
+    try {
+        const user = await axios.get(applicationName + 'user/' + uid + '/');
+        await axios.put(applicationName + 'user/' + uid + '/', {
+            ...user.data,
+            userfirstname: firstName,
+            userlastname: lastName
+        });
+        return true;
+    } catch (error) {
+        return { error: error };
+    }
+}
     

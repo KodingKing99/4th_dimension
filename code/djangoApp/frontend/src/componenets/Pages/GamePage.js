@@ -1,33 +1,79 @@
-  import React from "react";
+  import React, {useCallback} from "react";
   // import './Home.css'
 
   import Box from '@mui/material/Box';
   
-  import Fab from '@mui/material/Fab';
+  import {Divider, Fab , Typography } from '@mui/material';
   import AddIcon from '@mui/icons-material/Add';
   import TournamentSelectDialog from "../GameComponents/TournamentSelectDialog";
+  import Icon from "@mdi/react";
+  import { mdiBeerOutline } from '@mdi/js';
+  import SpeedDial from '@mui/material/SpeedDial';
+  import SpeedDialAction from '@mui/material/SpeedDialAction';
 
+  import SpeedDialIcon from '@mui/material/SpeedDialIcon';
   import GameComponent from '../GameComponents/GameComponent'
 
-  const selectedTournamentId='asdfasd'
-  const selectedValue = ""
+  import {Dialog, DialogTitle , DialogContent, DialogActions , DialogContentText, Button} from '@material-ui/core';
+
+  import EditIcon from '@mui/icons-material/Edit';
+
+  import {  Link ,useHistory } from "react-router-dom";
 
 
-  let openDialog = false;
+
+  const actions = [
+    { icon: <Icon path={mdiBeerOutline} title="Drink" size={1} />, name: 'All Drinks', },
+    { icon: <Icon path={mdiBeerOutline} title="Drink" size={1} />, name: 'Root Beer', },
+
+  ];
+
 
 
 
   const GamePage = (props) => {
+     const history = useHistory();
+     const [openDialog, setOpenDialog] = React.useState(false);
+     const [selectedTournamentId, setSelectedTournamentId] = React.useState("NONE");
+     const [gameFinsihed, setGameFinsihed] = React.useState(false);
 
 
+    let [openQuickBuyDrinks, setOpenQuickBuyDrinks] = React.useState(false);
+
+    const openQuickBuyDrinksHandler = () => {
+      setOpenQuickBuyDrinks(openQuickBuyDrinks=true)
+    }
+    const purchaseQuickDrinkHandler = () => {
+      setOpenQuickBuyDrinks(openQuickBuyDrinks=false)
+    }
+
+    const closeQuickBuyDrinksHandler = () => {
+      setOpenQuickBuyDrinks(openQuickBuyDrinks=false)
+    }
 
     const handleClickOpen = () => {
       console.log("open dialogue func",openDialog)
-      openDialog=true;
+      setOpenDialog(true);
     };
     
-    const handleClose = (value) => {
-      openDialog=false;
+    const handleOpenDrinkFab = (button) => {
+      console.log(button)
+      if(button.name =='all drinks'){
+        console.log("in here")
+          //openDrinksPage();
+           history.push('/drinks')
+      }
+      else{
+        if(openQuickBuyDrinks!=true){
+          openQuickBuyDrinksHandler();
+        } 
+            }
+    }
+
+    const tournamentSelectHandleClose = (value) => {
+      console.log("handle close value",value)
+      setSelectedTournamentId(value)
+      setOpenDialog(false);
       //setSelectedValue(value);
     };
 
@@ -36,22 +82,108 @@
 
       return ( 
           <div className="homeTop" style={{marginTop: '100px'}}>
-            {selectedTournamentId!="" &&
+            {selectedTournamentId!="NONE" &&
             <GameComponent></GameComponent>
   }
-  {selectedTournamentId=="" && 
+  {selectedTournamentId=="NONE" && 
+  <div>
+    <Box sx={{margin:'10px',
+  display:'flex',
+  width:'100%',
+  textAlign:'center'}}>
+    <Typography sx={{textAlign:'center'}} variant="h2">
+Looks like you don't have an active Tournament to Play</Typography>
+  </Box>
+  <Divider />
+
+  <Box sx={{margin:'30px',
+    width:'100%',
+  textAlign:'center'}}>
+    <Typography sx={{textAlign:'center'}} variant="h4">
+Hit the + button to start a tournament</Typography>
+  </Box>
               <Box sx={{ position: 'fixed', bottom: 100, right: 50 }} elevation={3}>
       <Fab color="primary" aria-label="add" onClick={handleClickOpen}>
       <AddIcon />
     </Fab>
     
         <TournamentSelectDialog
-          selectedValue={selectedValue}
+          onClose={tournamentSelectHandleClose}
           open={openDialog}
-          onClose={handleClose}
         />
     </Box>
+    </div>
   }
+  {selectedTournamentId!="NONE" &&
+ <Box sx={{ position: 'fixed', bottom: 100, right: 50 }} elevation={3}>
+
+
+
+  {/* <Box sx={{ height: 320, transform: 'translateZ(0px)', flexGrow: 1 }}> */}
+      <SpeedDial
+        ariaLabel="SpeedDial basic example"
+        sx={{ position: 'absolute', bottom: 16, right: 16 }}
+        // icon={<Icon path={mdiBeerOutline} title="Drink" size={1} openIcon={<EditIcon />}/>}
+        icon={<SpeedDialIcon icon={<Icon path={mdiBeerOutline} title="Drink" size={1}/>} />}
+
+      >
+        {actions.map((action) => (
+          <SpeedDialAction
+            key={action.name}
+            icon={action.icon}
+            tooltipTitle={action.name}
+            tooltipOpen
+            tooltipTitle={action.name}
+            onClick={()=>{
+              if(action.name =='All Drinks'){
+                   history.push('/drinks')
+              }
+              else{
+                if(openQuickBuyDrinks!=true){
+                  openQuickBuyDrinksHandler();
+                } 
+                    }
+            }}
+          />
+        ))}
+      </SpeedDial>
+    {/* </Box> */}
+  </Box>
+  }
+
+
+<Dialog
+        open={openQuickBuyDrinks}
+        onClose={closeQuickBuyDrinksHandler}
+        aria-labelledby="responsive-dialog-title"
+      >
+        <DialogTitle id="responsive-dialog-title">
+          {"Confirm Purchase"}
+        </DialogTitle>
+        <DialogContent>
+        <Icon path={mdiBeerOutline} title="Drink" size={1}/>
+          <DialogContentText>
+Are you sure you want to buy this drink?
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button autoFocus onClick={closeQuickBuyDrinksHandler}>
+            Cancel
+          </Button>
+          <Button onClick={tournamentSelectHandleClose} autoFocus>
+            Purchase
+          </Button>
+        </DialogActions>
+      </Dialog>
+
+
+
+
+
+
+
+
+
                       </div>
       );
   }

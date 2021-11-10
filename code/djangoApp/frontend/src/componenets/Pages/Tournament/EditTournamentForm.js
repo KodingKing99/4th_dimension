@@ -54,12 +54,7 @@ const EditTournamentForm = (props) => {
         deleteTourament(tourney.tournamentid)
     }
     const handleSetActive = () => {
-        activateTournament(tourney).then((res) => {
-            console.log(res)
-            res.status === 200 ? setSnackbarMsg("Succesfully activated tournament") : setSnackbarMsg("Failed to activate tournament");
-            setSnackBarOpen(true);
-        });
-        
+        activateTournament(tourney)
     }
     return ( 
         <>

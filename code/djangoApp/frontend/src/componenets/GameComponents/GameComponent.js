@@ -24,10 +24,14 @@ const GameComponent = (props) => {
 
   const theme = useTheme();
   const fullScreen = useMediaQuery(theme.breakpoints.down('md'));
-
-
+  const {selectedTournament} = props;
+  selectedTournament.tournamentholecount
+  let tempArray = [];
+  for(let i=0;i<selectedTournament.tournamentholecount;i++){
+    tempArray.push(0);
+  }
     let [scoreTotal,setScoreTotal] = useState(0);
-    let [steps,setScore] = useState([0,0,0,0,0]);
+    let [steps,setScore] = useState(tempArray);
 
     const [activeStep, setActiveStep] = React.useState(0);
     const [confirmNextHole, setConfirmNextHole] = React.useState(false);

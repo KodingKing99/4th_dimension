@@ -36,6 +36,7 @@
      const [openDialog, setOpenDialog] = React.useState(false);
      const [selectedTournamentId, setSelectedTournamentId] = React.useState("NONE");
      const [gameFinsihed, setGameFinsihed] = React.useState(false);
+     const [selectedTournament, setSelectTournament] = React.useState(undefined);
 
 
     let [openQuickBuyDrinks, setOpenQuickBuyDrinks] = React.useState(false);
@@ -70,10 +71,18 @@
             }
     }
 
-    const tournamentSelectHandleClose = (value) => {
-      console.log("handle close value",value)
-      setSelectedTournamentId(value)
-      setOpenDialog(false);
+    const tournamentSelectHandleClose = (tournament) => {
+      if(tournament=="NONE"){
+        setSelectedTournamentId("NONE")
+        //setSelectTournament(tournament)
+        setOpenDialog(false);
+      } else{
+        setSelectedTournamentId(tournament.id);
+        console.log("test view tournament",tournament)
+        setSelectTournament(tournament);
+        setOpenDialog(false);
+      }
+
       //setSelectedValue(value);
     };
 
@@ -83,7 +92,7 @@
       return ( 
           <div className="homeTop" style={{marginTop: '100px'}}>
             {selectedTournamentId!="NONE" &&
-            <GameComponent></GameComponent>
+            <GameComponent selectedTournament = {selectedTournament}></GameComponent>
   }
   {selectedTournamentId=="NONE" && 
   <div>

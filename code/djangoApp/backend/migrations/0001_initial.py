@@ -30,6 +30,7 @@ class Migration(migrations.Migration):
                 ('itemname', models.CharField(db_column='itemName', max_length=45, unique=True)),
                 ('itemdescription', models.CharField(blank=True, db_column='itemDescription', max_length=500, null=True)),
                 ('itemprice', models.DecimalField(blank=True, db_column='itemPrice', decimal_places=2, max_digits=5, null=True)),
+                ('itemimage', models.CharField(blank=True, db_column='itemimage', max_length=500, null=True)),
             ],
             options={
                 'db_table': 'Menu',

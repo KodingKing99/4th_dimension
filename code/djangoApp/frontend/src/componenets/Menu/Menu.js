@@ -1,7 +1,7 @@
 import { useSelector, useDispatch } from "react-redux";
 import React, { useEffect, useMemo, useState } from "react";
 import { transferMoney, getUserById } from "../../services/services";
-import { addMenuItem, deleteMenuItem, changeMenuItem, getAllMenuItems } from "../../services/services";
+import { addMenuItem, deleteMenuItem, changeMenuItem, getAllMenuItems, createNewTransaction } from "../../services/services";
 import { Drawer } from "@material-ui/core";
 import Icon from '@mui/material/Icon';
 import './Menu.css'
@@ -17,12 +17,13 @@ const Menu = () => {
     const [quantity, setQuantity] = useState(0);
     const [paymentError, setPaymentError] = useState(false);
     const [menu, setMenu] = useState([]);
+    const [menuItem, setMenuItem] = useState({});
 
-    const [name, setName] = useState('');
-    const [price, setPrice] = useState(0.0);
-    const [image, setImage] = useState('');
-    const [description, setDescription] = useState('');
-    const [id, setId] = useState(0);
+    const [name, setName] = useState();
+    const [price, setPrice] = useState();
+    const [image, setImage] = useState();
+    const [description, setDescription] = useState();
+    const [id, setId] = useState();
     const dispatch = useDispatch();
 
     useEffect(() => {
@@ -44,22 +45,27 @@ const Menu = () => {
                 setQuantity(0);
                 return
             }
+            createNewTransaction(user.id, 4, price * quantity);
+
             getUserById(user.id).then((user) => {
                 dispatch(setUser(user));
             });
         });
         setToggleDrawer(false);
         setQuantity(0);
-
     }
 
     const handleAddMenuItemClick = () => {
         // Add menu item
-        addMenuItem(name, price, description, image)
+        setMenuItem(null);
+        handleIconClick(null, true);
     }
-    const handleEditMenuItem = () => {
+    const handleEditMenuItem = (id) => {
         // Add menu
-        changeMenuItem(name, price, description)
+        changeMenuItem(id, name, price, description, image)
+        getAllMenuItems().then(res => {
+            setMenu(res);
+        })
         setToggleDrawer(false);
     }
     const handleDeleteMenuItem = (id) => {
@@ -69,6 +75,19 @@ const Menu = () => {
             setMenu(res);
         })
         setToggleDrawer(false);
+    }
+    const handleSaveNewItem = () => {
+        // Add menu item
+        addMenuItem(name, price, description, image)
+        handleCancel();
+        getAllMenuItems().then(res => {
+            setMenu(res);
+        })
+    }
+    const handleCancel = () => {
+        // Cancel
+        setToggleDrawer(false);
+        setEditable(false);
     }
     const item = { id: 1 }
     return (
@@ -80,26 +99,23 @@ const Menu = () => {
                     <div className="recent-items">
                         {menu.slice(0, 3).map((item) => {
                             return (
-                                <span className="icon-span" onClick={() => { handleIconClick(item.id) }} key={item.itemid}><div className="inner-icon"><div><Icon>{item.itemimage}</Icon></div><span>{item.itemname}</span></div></span>
+                                <span className="icon-span" onClick={() => { handleIconClick(item.id); setMenuItem(item) }} key={item.itemid}><div className="inner-icon"><div><Icon>{item?.itemimage}</Icon></div><span>{item.itemname}</span></div></span>
                             )
                         })}
                     </div>
-
                     {toggleAll &&
                         <div className="all-items">
 
                             {menu.slice(3, menu.length).map((item) => {
                                 return (
-                                    <span className="icon-span" onClick={() => { handleIconClick(item.id) }} key={item.itemid}><div className="inner-icon"><div><Icon>{item.itemimage}</Icon></div><span>{item.itemname}</span></div></span>
+                                    <span className="icon-span" onClick={() => { handleIconClick(item.id); setMenuItem(item) }} key={item.itemid}><div className="inner-icon"><div><Icon>{item?.itemimage}</Icon></div><span>{item.itemname}</span></div></span>
                                 )
                             })}
                         </div>
                     }
-
                     <div className="toggle-button">
                         <button onClick={() => setToggleAll(!toggleAll)}>View All</button>
                     </div>
-
                 </div>
             }
             {(user.role === "owner" || user.role === "manager") &&
@@ -111,7 +127,7 @@ const Menu = () => {
                         <div>
                             {menu.map((item) => {
                                 return (
-                                    <span className="icon-span" onClick={() => { handleIconClick(setId(item.itemid), true) }} key={item.itemid}><div className="inner-icon"><div><Icon>{item.itemimage}</Icon></div><span>{item.itemname}</span></div></span>
+                                    <span className="icon-span" onClick={() => { handleIconClick(setId(item.itemid), true); setMenuItem(item) }} key={item.itemid}><div className="inner-icon"><div><Icon>{item?.itemimage}</Icon></div><span>{item.itemname}</span></div></span>
                                 )
                             })}
                         </div>
@@ -129,36 +145,49 @@ const Menu = () => {
                 <div className="drawer-content">
                     {editable ?
                         <div className="edit-menu-item">
-                            <Icon>coffee</Icon>
+                            <Icon>{menuItem?.itemimage}</Icon>
                             <form>
                                 <div>
+                                    <label htmlFor="image-input">Image</label>
+                                    <input id="image-input" type="text" placeholder={menuItem?.itemimage} onChange={(e) => { setImage(e.target.value) }} />
+                                </div>
+                                <div>
                                     <label htmlFor="name-input">Name</label>
-                                    <input id="name-input" type="text" placeholder="Coffee" onChange={(e) => { setName(e.target.value) }} />
+                                    <input id="name-input" type="text" placeholder={menuItem?.itemname} onChange={(e) => { setName(e.target.value) }} />
                                 </div>
                                 <div>
                                     <label htmlFor="price-input">Price ($)</label>
-                                    <input id="price-input" type="number" placeholder="1.00" onChange={(e) => { setPrice(e.target.value) }} />
+                                    <input id="price-input" type="number" placeholder={menuItem?.itemprice} step="0.01" onChange={(e) => { setPrice(e.target.value) }} />
                                 </div>
                                 <div>
                                     <label htmlFor="description-input">Description</label>
-                                    <input id="description-input" type="text" placeholder="Pipping hot coffee" onChange={(e) => { setDescription(e.target.value) }} />
+                                    <input id="description-input" type="text" placeholder={menuItem?.itemdescription} onChange={(e) => { setDescription(e.target.value) }} />
                                 </div>
-                                <button className="edit-button drawer-button" onClick={() => { handleEditMenuItem() }}>Edit</button>
-                                <button className="delete-button drawer-button" onClick={() => { handleDeleteMenuItem(id) }}>Delete</button>
+                                {menuItem ?
+                                    <>
+                                        <button className="edit-button drawer-button" onClick={() => { handleEditMenuItem(id) }}>Edit</button>
+                                        <button className="delete-button drawer-button" onClick={() => { handleDeleteMenuItem(id) }}>Delete</button>
+                                    </>
+                                    :
+                                    <>
+                                        <button className="edit-button drawer-button" onClick={() => { handleSaveNewItem() }}>Save</button>
+                                        <button className="delete-button drawer-button" onClick={() => { handleCancel() }}>Cancel</button>
+                                    </>
+                                }
 
                             </form>
 
                         </div>
                         :
                         <div className="menu-item">
-                            <Icon>coffee</Icon>
-                            <div>Coffee</div>
-                            <div>$1.00</div>
-                            <div>Pipping hot coffee</div>
+                            <Icon>{menuItem?.itemimage}</Icon>
+                            <div>{menuItem?.itemname}</div>
+                            <div>${menuItem?.itemprice}</div>
+                            <div>{menuItem?.itemdescription}</div>
                             <label htmlFor="purchase-button">Quantity: </label>
                             <input type="number" defaultValue="0" onInput={e => setQuantity(e.target.value)} />
                             <div>
-                                <button className="purchase-button drawer-button" onClick={() => { handlePurchaseClick(1) }}>Purchase</button>
+                                <button className="purchase-button drawer-button" onClick={() => { handlePurchaseClick(menuItem?.itemprice) }}>Purchase</button>
                             </div>
                         </div>
                     }

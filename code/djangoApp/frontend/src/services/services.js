@@ -68,15 +68,16 @@ export const completeTransaction = async (item) => {
     let response = await axios.put(applicationName + 'transactionHistory/' + item.transactionid + '/', {...item, transactionactiveflag: false});
     return response.data;
 }
-export const createNewTransaction = async (buyerId, drinkMiesterId, price, date, active=true) => {
+export const createNewTransaction = async (buyerId, drinkMiesterId, price, date=Date.now(), active=true) => {
+    date = new Date(date)
     const response = await axios.post(applicationName + 'transactionHistory/', {
-        buyer: buyerId,
-        drinkMiester: drinkMiesterId,
-        price: price,
-        date: date,
-        active: active
+        transactionbuyer: buyerId,
+        transactiondrinkmeister: drinkMiesterId,
+        transactionprice: price,
+        transactiondate: date,
+        transactionactiveflag: active
     });
-    console.log(response);
+    console.log('here', response);
 }
 
 export const transferMoney = async (fromId, toId, amount) => {
@@ -225,14 +226,16 @@ export const changeName = async (uid, firstName, lastName) => {
     }
 }
     
-export const changeMenuItem = async (id, name, price, description) => {
+export const changeMenuItem = async (id, name, price, description, image) => {
+    console.log(id, name, price, description, image)  
     try {
         const currentMenuItem = await axios.get(applicationName + 'menu/' + id + '/');
-        await axios.put(applicationName + 'menu/' + itemId + '/', {
+        await axios.put(applicationName + 'menu/' + id + '/', {
             ...currentMenuItem.data,
             itemname: name,
             itemprice: price,
             itemdescription: description,
+            itemimage: image,
         });
         return true;
     }
@@ -252,6 +255,7 @@ export const deleteMenuItem = async (id) => {
 }
 
 export const addMenuItem = async (name, price, description, image) => {
+    console.log(image, name, price, description);
     try {
         await axios.post(applicationName + 'menu/', {
             itemname: name,

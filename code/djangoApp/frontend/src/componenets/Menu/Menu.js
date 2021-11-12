@@ -35,10 +35,12 @@ const Menu = () => {
     const handleIconClick = (itemId, edit = false) => {
         setToggleDrawer(true);
         setPaymentError(false);
-        setEditable(edit)
+        setEditable(edit);
     }
-    const handlePurchaseClick = (price) => {
+    const handlePurchaseClick = (price,itemId) => {
         // Add item to purchase history
+        console.log(itemId);
+        setRecentPurchaseItems(itemId);
         transferMoney(user.id, 8, price * quantity).then((isSuccess) => {
             if (!isSuccess) {
                 setPaymentError(true);
@@ -50,9 +52,26 @@ const Menu = () => {
             getUserById(user.id).then((user) => {
                 dispatch(setUser(user));
             });
+
         });
         setToggleDrawer(false);
         setQuantity(0);
+    }
+
+
+    const setRecentPurchaseItems = (drinkId) => {
+        if(localStorage.getItem('recentDrinkPurchases')){
+            let recentDrinkPurchases = JSON.parse(localStorage.getItem('recentDrinkPurchases'));
+            if(recentDrinkPurchases.length > 3){
+                recentDrinkPurchases.shift();
+            }
+            recentDrinkPurchases.push(drinkId);
+            localStorage.setItem('recentDrinkPurchases', JSON.stringify(recentDrinkPurchases));
+        } else {
+            let recentDrinkPurchases = [];
+            recentDrinkPurchases.push(drinkId);
+            localStorage.setItem('recentDrinkPurchases', JSON.stringify(recentDrinkPurchases));
+        }
     }
 
     const handleAddMenuItemClick = () => {
@@ -99,7 +118,7 @@ const Menu = () => {
                     <div className="recent-items">
                         {menu.slice(0, 3).map((item) => {
                             return (
-                                <span className="icon-span" onClick={() => { handleIconClick(item.id); setMenuItem(item) }} key={item.itemid}><div className="inner-icon"><div><Icon>{item?.itemimage}</Icon></div><span>{item.itemname}</span></div></span>
+                                <span className="icon-span" onClick={() => { handleIconClick(item.itemid); setMenuItem(item) }} key={item.itemid}><div className="inner-icon"><div><Icon>{item?.itemimage}</Icon></div><span>{item.itemname}</span></div></span>
                             )
                         })}
                     </div>
@@ -108,7 +127,7 @@ const Menu = () => {
 
                             {menu.slice(3, menu.length).map((item) => {
                                 return (
-                                    <span className="icon-span" onClick={() => { handleIconClick(item.id); setMenuItem(item) }} key={item.itemid}><div className="inner-icon"><div><Icon>{item?.itemimage}</Icon></div><span>{item.itemname}</span></div></span>
+                                    <span className="icon-span" onClick={() => { handleIconClick(item.itemid); setMenuItem(item) }} key={item.itemid}><div className="inner-icon"><div><Icon>{item?.itemimage}</Icon></div><span>{item.itemname}</span></div></span>
                                 )
                             })}
                         </div>
@@ -187,7 +206,7 @@ const Menu = () => {
                             <label htmlFor="purchase-button">Quantity: </label>
                             <input type="number" defaultValue="0" onInput={e => setQuantity(e.target.value)} />
                             <div>
-                                <button className="purchase-button drawer-button" onClick={() => { handlePurchaseClick(menuItem?.itemprice) }}>Purchase</button>
+                                <button className="purchase-button drawer-button" onClick={() => { handlePurchaseClick(menuItem?.itemprice,menuItem?.itemid) }}>Purchase</button>
                             </div>
                         </div>
                     }

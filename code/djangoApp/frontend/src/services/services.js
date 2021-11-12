@@ -48,8 +48,25 @@ export const deleteTourament = (tournamentid) => {
         console.log(err);
     })
 }
-// export const getAllActiveTournaments = () => {
 
+
+
+
+
+export const addTournamentParticipant = (tournamentId, participantId,userscore) => {
+    let data = {
+        tournamentid: tournamentId,
+        userid: participantId,
+        userscore: userscore
+    }
+    axios.post(applicationName + 'tournamentParticipant/',data).then((response) => {
+        console.log(response)
+        
+    }).catch(err => console.log(err));
+}
+
+
+// export const getAllActiveTournaments = () => {
 // }
 export const getAllTransactions = async () => {
     const response = await axios.get(applicationName + 'transactionHistory/');

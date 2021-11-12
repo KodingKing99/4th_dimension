@@ -10,7 +10,7 @@ import AccountPage from "./Pages/AccountPage";
 import DrinkOrdersPage from "./Pages/DrinkOrdersPage";
 import ManageTournamentsPage from "./Pages/Tournament/ManageTournamentsPage"
 import ManageDrinksPage from "./Pages/ManageDrinksPage";
-import ManageUsersPage from "./Pages/ManageUsersPage";
+import ManageUsersPage from "./Pages/ManageUsers/ManageUsersPage";
 import ManageRefundsPage from "./Pages/ManageRefundsPage";
 import OwnerManageUsersPage from "./Pages/OwnerManageUsersPage";
 import MoneyPage from "./Pages/MoneyPage";

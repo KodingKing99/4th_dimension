@@ -1,0 +1,24 @@
+.formbox{
+    margin-top: 30px;
+    margin-left: 30%;
+    margin-bottom: 100px;
+    width: 500px;
+    padding: 50px;
+    border: 1px solid lightblue;
+    border-radius: 15px;
+    align-items: center;
+    /* display: inline-flex; */
+    float: left;
+}
+#roleSelect{
+    margin: 20px;
+}
+#itembox{
+    margin: 20px;
+    align-self: center;
+    align-content: center;
+    text-align: center;
+}
+/* .h2{
+    margin-left: auto;
+} */

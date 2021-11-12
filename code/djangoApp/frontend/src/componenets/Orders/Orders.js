@@ -1,12 +1,14 @@
 import React, { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
-import { getAllActiveTransactions, completeTransaction, deleteTrancaction } from "../../services/services";
+import { useDispatch, useSelector } from "react-redux";
+import { getAllActiveTransactions, completeTransaction, deleteTrancaction, getUserById, transferMoney } from "../../services/services";
+import { setUser } from "../../redux/userSlice";
 import './Orders.css'
 
 
 const Orders = () => {
-    const role = useSelector((state) => state.user.role);
+    const user = useSelector((state) => state.user);
     const [transactions, setTransactions] = useState([]);
+    const dispatch = useDispatch();
 
 
     const updateTransactions = async () => {
@@ -24,17 +26,31 @@ const Orders = () => {
             updateTransactions();
         });
     }
-    const handleDeleteClick = (id) => {
-        deleteTrancaction(id).then(res => {
-            updateTransactions();
+    const handleRefundClick = (id, amount, transactionId) => {
+        // Remove money from owner, add money to user
+        transferMoney(8, id, amount).then((response) => {
+          deleteTrancaction(transactionId).then((resDelete) => {
+              console.log(resDelete);
+            if(resDelete === false) {
+              return
+            }
+            getAllActiveTransactions().then((resGetAll) => {
+              setTransactions(resGetAll)
+            //   getUserById(user.id).then((res) => {
+            //       console.log(res);
+            //     dispatch(setUser(res))
+            //   })
+            })
           })
-    }
+        })
+        
+      }
     console.log(transactions);
     return (
         <div className="orders">
             <h1>Orders</h1>
-            {(role === "drinkMiester") &&
-                <div className="drink-miester-view">
+            {(user.role === "drinkMeister") &&
+                <div className="drink-meister-view">
                     {transactions.map((item) => {
                         return (
                             <div className="transaction-container" key={item.transactionid}>
@@ -43,13 +59,13 @@ const Orders = () => {
                                 </div>
                                 <div className="transaction-body">
                                 <div className="item-name">Buyer: {item.transactionbuyer}</div>
-                                <div className="item-price">Drink Miester: {item.transactiondrinkmeister}</div>
+                                <div className="item-price">Drink Meister: {item.transactiondrinkmeister}</div>
                                 <div className="item-quantity">Date: {item.transactiondate}</div>
                                 <div className="item-quantity">Cost: ${item.transactionprice}</div>
                                 </div>
                                 <div className="item-buttons">
                                     <button className="complete-button" onClick={() => { handleCompleteClick(item) }}>Complete</button>
-                                    <button className="delete-button" onClick={() => { handleDeleteClick(item.transactionid) }}>Delete</button>
+                                    <button className="delete-button" onClick={() => { handleRefundClick(item.transactionbuyer, item.transactionprice, item.transactionid) }}>Refund</button>
                                 </div>
                             </div>
                         )

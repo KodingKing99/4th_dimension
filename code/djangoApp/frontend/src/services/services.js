@@ -1,7 +1,7 @@
 import useFetch from "react-fetch-hook"
 import {store} from '../redux/store'
 // import { useDispatch } from "react-redux";
-import { setTournaments, addTournament } from "../redux/dataSlice";
+import { setTournaments, addTournament, editStoreTournament, resetData, deleteStoreTournament } from "../redux/dataSlice";
 import axios from "axios";
 const applicationName = 'http://127.0.0.1:8000/api/'
 let requestOptions = {
@@ -27,6 +27,30 @@ export const createTournament = (date, sponsorId, prize, holeCount) => {
         store.dispatch(addTournament(response.data));
     }).catch(err => {console.log(err)});
 }
+export const editTournament = (date, sponsorId, prize, holeCount, id) => {
+    axios.put(applicationName + 'tournament/' + id + '/', {
+        tournamentdate: date,
+        tournamentholecount: holeCount,
+        tournamentsponsor: sponsorId,
+        tournamentprize: prize
+    }).then((res) => {
+        console.log(res);
+        store.dispatch(editStoreTournament(res.data));
+    }).catch((err) => {
+        console.log(err);
+    })
+}
+export const deleteTourament = (tournamentid) => {
+    axios.delete(applicationName + 'tournament/' + tournamentid + '/').then((res) => {
+        console.log(res);
+        store.dispatch(deleteStoreTournament(tournamentid));
+    }).catch((err) => {
+        console.log(err);
+    })
+}
+
+
+
 
 
 export const addTournamentParticipant = (tournamentId, participantId,userscore) => {
@@ -41,6 +65,9 @@ export const addTournamentParticipant = (tournamentId, participantId,userscore) 
     }).catch(err => console.log(err));
 }
 
+
+// export const getAllActiveTournaments = () => {
+// }
 export const getAllTransactions = async () => {
     const response = await axios.get(applicationName + 'transactionHistory/');
     return response.data;
@@ -58,15 +85,15 @@ export const completeTransaction = async (item) => {
     let response = await axios.put(applicationName + 'transactionHistory/' + item.transactionid + '/', {...item, transactionactiveflag: false});
     return response.data;
 }
-export const createNewTransaction = async (buyerId, drinkMiesterId, price, date, active=true) => {
+export const createNewTransaction = async (buyerId, drinkMeisterId, price, date=Date.now(), active=true) => {
+    date = new Date(date)
     const response = await axios.post(applicationName + 'transactionHistory/', {
-        buyer: buyerId,
-        drinkMiester: drinkMiesterId,
-        price: price,
-        date: date,
-        active: active
+        transactionbuyer: buyerId,
+        transactiondrinkmeister: drinkMeisterId,
+        transactionprice: price,
+        transactiondate: date,
+        transactionactiveflag: active
     });
-    console.log(response);
 }
 
 export const transferMoney = async (fromId, toId, amount) => {
@@ -77,12 +104,12 @@ export const transferMoney = async (fromId, toId, amount) => {
     }
     await axios.put(applicationName + 'user/' + fromId + '/', {
         ...fromUser.data,
-        useraccount: (parseFloat(fromUser.data.useraccount) - amount).toFixed(2)
+        useraccount: parseFloat((parseFloat(fromUser.data.useraccount) - amount).toFixed(2))
     });
     const toUser = await axios.get(applicationName + 'user/' + toId + '/');
     await axios.put(applicationName + 'user/' + toId + '/', {
         ...toUser.data,
-        useraccount: (parseFloat(toUser.data.useraccount) + amount).toFixed(2)
+        useraccount: parseFloat((parseFloat(toUser.data.useraccount) + amount).toFixed(2))
     });
     return true;
 }
@@ -97,7 +124,7 @@ export const getUserById = async (id) => {
             role = "player"
             break;
         case 2:
-            role = "drinkMiester"
+            role = "drinkMeister"
             break;
         case 3:
             role = "manager"
@@ -139,7 +166,7 @@ export const login = async (email, password) => {
                 role = "player"
                 break;
             case 2:
-                role = "drinkMiester"
+                role = "drinkMeister"
                 break;
             case 3:
                 role = "manager"
@@ -186,4 +213,85 @@ export const signup = async (email, firstName, lastName, password, role = 1) => 
         return {error: error};
     }
 }
+
+export const depositMoney = async (uid, amount) => {
+    try {
+        amount = parseFloat(amount);
+        const user = await axios.get(applicationName + 'user/' + uid + '/');
+        await axios.put(applicationName + 'user/' + uid + '/', {
+            ...user.data,
+            useraccount: (parseFloat(user.data.useraccount) + amount).toFixed(2)
+        });
+        return true;
+    } catch (error) {
+        return { error: error };
+    }
+}
+
+export const changeName = async (uid, firstName, lastName) => {
+    try {
+        const user = await axios.get(applicationName + 'user/' + uid + '/');
+        await axios.put(applicationName + 'user/' + uid + '/', {
+            ...user.data,
+            userfirstname: firstName,
+            userlastname: lastName
+        });
+        return true;
+    } catch (error) {
+        return { error: error };
+    }
+}
     
+export const changeMenuItem = async (id, name, price, description, image) => {
+    console.log(id, name, price, description, image)  
+    try {
+        const currentMenuItem = await axios.get(applicationName + 'menu/' + id + '/');
+        await axios.put(applicationName + 'menu/' + id + '/', {
+            ...currentMenuItem.data,
+            itemname: name,
+            itemprice: price,
+            itemdescription: description,
+            itemimage: image,
+        });
+        return true;
+    }
+    catch (error) {
+        return { error: error };
+    }
+}
+
+export const deleteMenuItem = async (id) => {
+    try {
+        await axios.delete(applicationName + 'menu/' + id + '/');
+        return true;
+    }
+    catch (error) {
+        return { error: error };
+    }
+}
+
+export const addMenuItem = async (name, price, description, image) => {
+    console.log(image, name, price, description);
+    try {
+        await axios.post(applicationName + 'menu/', {
+            itemname: name,
+            itemprice: price,
+            itemdescription: description,
+            itemimage: image,
+        });
+        return true;
+    }
+    catch (error) {
+        return { error: error };
+    }
+}
+
+export const getAllMenuItems = async () => {
+    try {
+        const response = await axios.get(applicationName + 'menu/');
+        return response.data;
+    }
+    catch (error) {
+        return { error: error };
+    }
+}

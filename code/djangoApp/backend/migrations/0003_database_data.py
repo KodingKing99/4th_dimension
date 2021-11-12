@@ -31,6 +31,7 @@ def create_users(apps, schema_editor):
     user_list.append( user_obj('Worf', 'Manager', 'Worf@mail.com','Worf', 3, 20))
     user_list.append( user_obj('Picard', 'Sponsor', 'Picard@mail.com','Picard', 4, 20))
     user_list.append( user_obj('Bossman', 'Owner', 'Bossman@mail.com','Bossman', 5, 20))
+    user_list.append( user_obj('Test', 'Dev', 'Test','Test', 6, 20))
     User = apps.get_model('backend', 'User')
     user_time_salt = "2021-10-22 22:14:36.000573"
     for user in user_list:
@@ -74,9 +75,9 @@ def create_tournaments(apps, schema_editor):
         )
 
 class transactions_obj:
-    def __init__(self, buyer_id, drink_miester_id, price, date_time, active_flag):
+    def __init__(self, buyer_id, drink_meister_id, price, date_time, active_flag):
         self.buyer_id = buyer_id
-        self.drink_miester_id = drink_miester_id
+        self.drink_meister_id = drink_meister_id
         self.price = price
         self.date_time = date_time
         self.active_flag = active_flag
@@ -88,27 +89,56 @@ def create_transactions(apps, schema_editor):
 
     User = apps.get_model('backend', 'User')
     player_id = User.objects.all().filter(userrole=1)[0].userid
-    drink_miester_id = User.objects.all().filter(userrole=2)[0].userid
-    if not drink_miester_id: drink_miester_id = -1
+    drink_meister_id = User.objects.all().filter(userrole=2)[0].userid
+    if not drink_meister_id: drink_meister_id = -1
     if not player_id: player_id = -1
 
-    transaction_list.append( transactions_obj(player_id, drink_miester_id, 2.50, "2021-10-31 10:00:00.000000", True))
-    transaction_list.append( transactions_obj(player_id, drink_miester_id, 2, "2021-10-30 10:00:00.000000", True))
-    transaction_list.append( transactions_obj(player_id, drink_miester_id, 5, "2021-10-31 10:00:00.000000", True))
-    transaction_list.append( transactions_obj(player_id, drink_miester_id, 3.75, "2021-10-30 10:00:00.000000", True))
-    transaction_list.append( transactions_obj(player_id, drink_miester_id, 0, "2021-10-9 10:00:00.000000", False))
-    transaction_list.append( transactions_obj(player_id, drink_miester_id, 1, "2021-10-8 10:00:00.000000", False))
-    transaction_list.append( transactions_obj(player_id, drink_miester_id, 5.50, "2021-10-7 10:00:00.000000", False))
-    transaction_list.append( transactions_obj(player_id, drink_miester_id, 3.23, "2021-10-6 10:00:00.000000", False))
+    transaction_list.append( transactions_obj(player_id, drink_meister_id, 2.50, "2021-10-31 10:00:00.000000", True))
+    transaction_list.append( transactions_obj(player_id, drink_meister_id, 2, "2021-10-30 10:00:00.000000", True))
+    transaction_list.append( transactions_obj(player_id, drink_meister_id, 5, "2021-10-31 10:00:00.000000", True))
+    transaction_list.append( transactions_obj(player_id, drink_meister_id, 3.75, "2021-10-30 10:00:00.000000", True))
+    transaction_list.append( transactions_obj(player_id, drink_meister_id, 0, "2021-10-9 10:00:00.000000", False))
+    transaction_list.append( transactions_obj(player_id, drink_meister_id, 1, "2021-10-8 10:00:00.000000", False))
+    transaction_list.append( transactions_obj(player_id, drink_meister_id, 5.50, "2021-10-7 10:00:00.000000", False))
+    transaction_list.append( transactions_obj(player_id, drink_meister_id, 3.23, "2021-10-6 10:00:00.000000", False))
 
     Transaction = apps.get_model('backend', 'Transactionhistory')
     for transaction in transaction_list:
         Transaction.objects.create(
             transactionprice = transaction.price,
             transactionbuyer = transaction.buyer_id,
-            transactiondrinkmeister = transaction.drink_miester_id,
+            transactiondrinkmeister = transaction.drink_meister_id,
             transactiondate = transaction.date_time,
             transactionactiveflag = transaction.active_flag,
+        )
+
+class menu_obj:
+    def __init__(self, name, price, image, description):
+        self.name = name
+        self.price = price
+        self.image = image
+        self.description = description
+def create_menu(apps, schema_editor):
+    """
+    Create a few default transactions, ongoing and passed
+    """
+    menu_list = []
+
+    menu_list.append( menu_obj("Coffee", 2.50, "coffee", "Piping hot coffee"))
+    menu_list.append( menu_obj("Root Beer", 2, "rootbeer", "Ice cold root beer"))
+    menu_list.append( menu_obj("Tea", 5, "tea", "Soothing Tea"))
+    menu_list.append( menu_obj("Coca-Cola", 3.75, "cola", "Classic coca-cola"))
+    menu_list.append( menu_obj("Water", 0, "water", "Plain water with ice"))
+    menu_list.append( menu_obj("Mountain Dew", 1, "mountaindew", "Liquid citric acid"))
+    menu_list.append( menu_obj("Seltzer", 5.50, "seltzer", "Bubbly water"))
+
+    Menu = apps.get_model('backend', 'Menu')
+    for item in menu_list:
+        Menu.objects.create(
+            itemname = item.name,
+            itemprice = item.price,
+            itemimage = item.image,
+            itemdescription = item.description,
         )
 
 class Migration(migrations.Migration):
@@ -122,5 +152,6 @@ class Migration(migrations.Migration):
         migrations.RunPython(create_users),
         migrations.RunPython(create_tournaments),
         migrations.RunPython(create_transactions),
+        migrations.RunPython(create_menu),
     ]
 

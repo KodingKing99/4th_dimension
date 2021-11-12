@@ -15,6 +15,12 @@ class TournamentViewSet(viewsets.ModelViewSet):
         permissions.AllowAny
     ]
     serializer_class = TournamentSerializer 
+class TournamentActiveViewSet(viewsets.ModelViewSet):
+    queryset = Tournament.objects.filter(tournamentactiveflag=True)
+    permission_classes = [
+        permissions.AllowAny
+    ]
+    serializer_class = TournamentSerializer
 class TournamentParticipantViewSet(viewsets.ModelViewSet):
     queryset = Tournamentparticipant.objects.all()
     permission_classes = [

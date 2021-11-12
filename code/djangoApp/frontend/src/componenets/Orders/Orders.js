@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import { getAllActiveTransactions, completeTransaction, deleteTrancaction } from "../../services/services";
+import { getAllActiveTransactions, completeTransaction, deleteTrancaction, getUserById, transferMoney } from "../../services/services";
 import './Orders.css'
 
 
@@ -24,11 +24,24 @@ const Orders = () => {
             updateTransactions();
         });
     }
-    const handleDeleteClick = (id) => {
-        deleteTrancaction(id).then(res => {
-            updateTransactions();
+    const handleRefundClick = (id, amount, transactionId) => {
+        // Remove money from owner, add money to user
+        transferMoney(8, id, amount).then((response) => {
+          deleteTrancaction(transactionId).then((resDelete) => {
+              console.log(resDelete);
+            if(resDelete === false) {
+              return
+            }
+            getAllActiveTransactions().then((resGetAll) => {
+              setTransactions(resGetAll)
+              getUserById(user.id).then((res) => {
+                dispatch(setUser(res))
+              })
+            })
           })
-    }
+        })
+        
+      }
     console.log(transactions);
     return (
         <div className="orders">
@@ -49,7 +62,7 @@ const Orders = () => {
                                 </div>
                                 <div className="item-buttons">
                                     <button className="complete-button" onClick={() => { handleCompleteClick(item) }}>Complete</button>
-                                    <button className="delete-button" onClick={() => { handleDeleteClick(item.transactionid) }}>Delete</button>
+                                    <button className="delete-button" onClick={() => { handleRefundClick(item.transactionid) }}>Refund</button>
                                 </div>
                             </div>
                         )

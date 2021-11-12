@@ -87,12 +87,12 @@ export const transferMoney = async (fromId, toId, amount) => {
     }
     await axios.put(applicationName + 'user/' + fromId + '/', {
         ...fromUser.data,
-        useraccount: (parseFloat(fromUser.data.useraccount) - amount).toFixed(2)
+        useraccount: parseFloat((parseFloat(fromUser.data.useraccount) - amount).toFixed(2))
     });
     const toUser = await axios.get(applicationName + 'user/' + toId + '/');
     await axios.put(applicationName + 'user/' + toId + '/', {
         ...toUser.data,
-        useraccount: (parseFloat(toUser.data.useraccount) + amount).toFixed(2)
+        useraccount: parseFloat((parseFloat(toUser.data.useraccount) + amount).toFixed(2))
     });
     return true;
 }

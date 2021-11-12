@@ -48,12 +48,14 @@ function App() {
             }}>
             </Box>
 
-            {!userId ? <Login /> :
-                <>
-                    <PermissionsPractice />
-                    <Container>
-                        <HashRouter>
+
+            <Container>
+                <HashRouter>
+                    {!userId ? <Login /> :
+                        <>
                             <div className="App">
+                                <PermissionsPractice />
+
                                 <Switch >
 
                                     <Route exact path="/" style="margin:20px;">
@@ -122,13 +124,14 @@ function App() {
                                     <BottomNavigationBar paths={playerPath} role={role} ></BottomNavigationBar>
                                 </Paper>
                             </div>
-                        </HashRouter>
-                    </Container>
+                        </>
+                    }
+                </HashRouter>
+            </Container>
 
 
-                    {/* <Home/> */}
-                </>
-            }
+            {/* <Home/> */}
+
         </div>
     );
 }

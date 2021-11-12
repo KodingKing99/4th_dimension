@@ -16,6 +16,7 @@ import OwnerManageUsersPage from "./Pages/OwnerManageUsersPage";
 import MoneyPage from "./Pages/MoneyPage";
 import ManageSponsorshipPage from "./Pages/manage-sponsorshipPage";
 import Menu from "./Menu/Menu";
+import Money from "./Money/Money"
 
 import AddTournamentPage from "./Pages/Tournament/AddTournamentPage";
 
@@ -47,19 +48,21 @@ function App() {
             }}>
             </Box>
 
-            {!userId ? <Login /> :
-                <>
-                    <PermissionsPractice />
-                    <Container>
-                        <HashRouter>
+
+            <Container>
+                <HashRouter>
+                    {!userId ? <Login /> :
+                        <>
                             <div className="App">
+                                <PermissionsPractice />
+
                                 <Switch >
 
                                     <Route exact path="/" style="margin:20px;">
                                         {role == "player" &&
                                             <GamePage />
                                         }
-                                        {role == "drinkMiester" &&
+                                        {role == "drinkMeister" &&
                                             <Orders />
                                         }
                                         {role == "manager" &&
@@ -103,7 +106,7 @@ function App() {
                                             <OwnerManageUsersPage />
                                         </Route>
                                         <Route path="/money">
-                                            <MoneyPage />
+                                            <Money />
                                         </Route>
 
 
@@ -121,13 +124,14 @@ function App() {
                                     <BottomNavigationBar paths={playerPath} role={role} ></BottomNavigationBar>
                                 </Paper>
                             </div>
-                        </HashRouter>
-                    </Container>
+                        </>
+                    }
+                </HashRouter>
+            </Container>
 
 
-                    {/* <Home/> */}
-                </>
-            }
+            {/* <Home/> */}
+
         </div>
     );
 }

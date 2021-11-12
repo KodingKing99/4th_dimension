@@ -36,6 +36,16 @@
      const [openDialog, setOpenDialog] = React.useState(false);
      const [selectedTournamentId, setSelectedTournamentId] = React.useState("NONE");
      const [gameFinsihed, setGameFinsihed] = React.useState(false);
+     const [selectedTournament, setSelectTournament] = React.useState(undefined);
+
+
+
+     if(localStorage.getItem('selectedTournamentId') && localStorage.getItem('selectedTournamentId') !== selectedTournamentId){
+       setSelectedTournamentId(localStorage.getItem('selectedTournamentId'));
+       setSelectTournament(JSON.parse(localStorage.getItem('selectedTournament')));
+     }
+
+
 
 
     let [openQuickBuyDrinks, setOpenQuickBuyDrinks] = React.useState(false);
@@ -55,11 +65,14 @@
       console.log("open dialogue func",openDialog)
       setOpenDialog(true);
     };
+
+    const resetSelectedTournament = () => {
+      setSelectedTournamentId(selectedTournament = "NONE");
+    }
     
     const handleOpenDrinkFab = (button) => {
       console.log(button)
       if(button.name =='all drinks'){
-        console.log("in here")
           //openDrinksPage();
            history.push('/drinks')
       }
@@ -70,10 +83,19 @@
             }
     }
 
-    const tournamentSelectHandleClose = (value) => {
-      console.log("handle close value",value)
-      setSelectedTournamentId(value)
-      setOpenDialog(false);
+    const tournamentSelectHandleClose = (tournament) => {
+      if(tournament=="NONE" || tournament==undefined){
+        setSelectedTournamentId("NONE")
+        //setSelectTournament(tournament)
+        setOpenDialog(false);
+      } else{
+        setSelectedTournamentId(tournament.tournamentid);
+        setSelectTournament(tournament);
+        localStorage.setItem('selectedTournamentId', tournament.tournamentid);
+        localStorage.setItem('selectedTournament', JSON.stringify(tournament));
+        setOpenDialog(false);
+      }
+
       //setSelectedValue(value);
     };
 
@@ -83,9 +105,9 @@
       return ( 
           <div className="homeTop" style={{marginTop: '100px'}}>
             {selectedTournamentId!="NONE" &&
-            <GameComponent></GameComponent>
+            <GameComponent selectedTournament = {selectedTournament} resetSelectedTournament = {resetSelectedTournament}></GameComponent>
   }
-  {selectedTournamentId=="NONE" && 
+  {(selectedTournamentId=="NONE" || selectedTournamentId==undefined) && 
   <div>
     <Box sx={{margin:'10px',
   display:'flex',

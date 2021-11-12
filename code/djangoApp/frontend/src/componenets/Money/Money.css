@@ -1,0 +1,17 @@
+.money-title {
+  font-size: 600%;
+  font-weight: bold;
+  color: #000;
+  margin: auto;
+  max-width: 50%;
+  text-align: center;
+  margin-top: 5%;
+}
+.money-total {
+  font-size: 500%;
+  font-weight: bold;
+  color: rgb(0, 255, 0);
+  margin: auto;
+  max-width: 50%;
+  text-align: center;
+}

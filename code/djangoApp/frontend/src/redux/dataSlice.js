@@ -5,6 +5,7 @@ const initialState = {
   tournaments : [],
   transactions: [],
   users: [],
+  menu: [],
 }
 
 export const dataSlice = createSlice({
@@ -32,6 +33,9 @@ export const dataSlice = createSlice({
     setTransactions : (state, action) => {
         state.transactions = action.payload;
     },
+    setMenu : (state, action) => {
+        state.menu = action.payload;
+    },
     resetData: (state) => {
       state = {...initialState};
     },
@@ -42,6 +46,6 @@ export const dataSlice = createSlice({
 })
 
 // Action creators are generated for each case reducer function
-export const { setTournaments, setTransactions, resetData, addTournament, editStoreTournament, deleteStoreTournament, setUserList } = dataSlice.actions
+export const { setTournaments, setTransactions, resetData, addTournament, editStoreTournament, deleteStoreTournament, setMenu, setUserList } = dataSlice.actions
 
 export default dataSlice.reducer

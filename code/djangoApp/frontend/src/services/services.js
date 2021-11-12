@@ -91,15 +91,15 @@ export const completeTransaction = async (item) => {
     let response = await axios.put(applicationName + 'transactionHistory/' + item.transactionid + '/', {...item, transactionactiveflag: false});
     return response.data;
 }
-export const createNewTransaction = async (buyerId, drinkMiesterId, price, date, active=true) => {
+export const createNewTransaction = async (buyerId, drinkMeisterId, price, date=Date.now(), active=true) => {
+    date = new Date(date)
     const response = await axios.post(applicationName + 'transactionHistory/', {
-        buyer: buyerId,
-        drinkMiester: drinkMiesterId,
-        price: price,
-        date: date,
-        active: active
+        transactionbuyer: buyerId,
+        transactiondrinkmeister: drinkMeisterId,
+        transactionprice: price,
+        transactiondate: date,
+        transactionactiveflag: active
     });
-    console.log(response);
 }
 
 export const transferMoney = async (fromId, toId, amount) => {
@@ -110,12 +110,12 @@ export const transferMoney = async (fromId, toId, amount) => {
     }
     await axios.put(applicationName + 'user/' + fromId + '/', {
         ...fromUser.data,
-        useraccount: (parseFloat(fromUser.data.useraccount) - amount).toFixed(2)
+        useraccount: parseFloat((parseFloat(fromUser.data.useraccount) - amount).toFixed(2))
     });
     const toUser = await axios.get(applicationName + 'user/' + toId + '/');
     await axios.put(applicationName + 'user/' + toId + '/', {
         ...toUser.data,
-        useraccount: (parseFloat(toUser.data.useraccount) + amount).toFixed(2)
+        useraccount: parseFloat((parseFloat(toUser.data.useraccount) + amount).toFixed(2))
     });
     return true;
 }
@@ -132,7 +132,7 @@ export const getUserById = async (id) => {
             role = "player"
             break;
         case 2:
-            role = "drinkMiester"
+            role = "drinkMeister"
             break;
         case 3:
             role = "manager"
@@ -182,7 +182,7 @@ export const login = async (email, password) => {
                 role = "player"
                 break;
             case 2:
-                role = "drinkMiester"
+                role = "drinkMeister"
                 break;
             case 3:
                 role = "manager"
@@ -260,3 +260,56 @@ export const changeName = async (uid, firstName, lastName) => {
 ////////////
 // 
     
+export const changeMenuItem = async (id, name, price, description, image) => {
+    console.log(id, name, price, description, image)  
+    try {
+        const currentMenuItem = await axios.get(applicationName + 'menu/' + id + '/');
+        await axios.put(applicationName + 'menu/' + id + '/', {
+            ...currentMenuItem.data,
+            itemname: name,
+            itemprice: price,
+            itemdescription: description,
+            itemimage: image,
+        });
+        return true;
+    }
+    catch (error) {
+        return { error: error };
+    }
+}
+
+export const deleteMenuItem = async (id) => {
+    try {
+        await axios.delete(applicationName + 'menu/' + id + '/');
+        return true;
+    }
+    catch (error) {
+        return { error: error };
+    }
+}
+
+export const addMenuItem = async (name, price, description, image) => {
+    console.log(image, name, price, description);
+    try {
+        await axios.post(applicationName + 'menu/', {
+            itemname: name,
+            itemprice: price,
+            itemdescription: description,
+            itemimage: image,
+        });
+        return true;
+    }
+    catch (error) {
+        return { error: error };
+    }
+}
+
+export const getAllMenuItems = async () => {
+    try {
+        const response = await axios.get(applicationName + 'menu/');
+        return response.data;
+    }
+    catch (error) {
+        return { error: error };
+    }
+}

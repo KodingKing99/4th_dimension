@@ -54,7 +54,7 @@ const Refund = () => {
               <div className="date" >Date: {transaction.transactiondate}</div>
               <div className="price" >Cost: ${transaction.transactionprice}</div>
               <div className="buyer" >Buyer: {transaction.transactionbuyer}</div>
-              <div className="miester" >Drink Miester: {transaction.transactiondrinkmeister}</div>
+              <div className="meister" >Drink Meister: {transaction.transactiondrinkmeister}</div>
               <div className="card-buttons">
                 <button className="complete-button" onClick={() => { handleRefundClick(transaction.transactionbuyer, transaction.transactionprice, transaction.transactionid) }}>Refund</button>
                 <button className="delete-button" onClick={() => { handleDeleteClick(transaction.transactionid) }}>Delete</button>

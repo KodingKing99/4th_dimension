@@ -225,3 +225,53 @@ export const changeName = async (uid, firstName, lastName) => {
     }
 }
     
+export const changeMenuItem = async (id, name, price, description) => {
+    try {
+        const currentMenuItem = await axios.get(applicationName + 'menu/' + id + '/');
+        await axios.put(applicationName + 'menu/' + itemId + '/', {
+            ...currentMenuItem.data,
+            itemname: name,
+            itemprice: price,
+            itemdescription: description,
+        });
+        return true;
+    }
+    catch (error) {
+        return { error: error };
+    }
+}
+
+export const deleteMenuItem = async (id) => {
+    try {
+        await axios.delete(applicationName + 'menu/' + id + '/');
+        return true;
+    }
+    catch (error) {
+        return { error: error };
+    }
+}
+
+export const addMenuItem = async (name, price, description, image) => {
+    try {
+        await axios.post(applicationName + 'menu/', {
+            itemname: name,
+            itemprice: price,
+            itemdescription: description,
+            itemimage: image,
+        });
+        return true;
+    }
+    catch (error) {
+        return { error: error };
+    }
+}
+
+export const getAllMenuItems = async () => {
+    try {
+        const response = await axios.get(applicationName + 'menu/');
+        return response.data;
+    }
+    catch (error) {
+        return { error: error };
+    }
+}

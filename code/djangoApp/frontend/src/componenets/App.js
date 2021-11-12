@@ -16,6 +16,7 @@ import OwnerManageUsersPage from "./Pages/OwnerManageUsersPage";
 import MoneyPage from "./Pages/MoneyPage";
 import ManageSponsorshipPage from "./Pages/manage-sponsorshipPage";
 import Menu from "./Menu/Menu";
+import Money from "./Money/Money"
 
 import AddTournamentPage from "./Pages/Tournament/AddTournamentPage";
 
@@ -103,7 +104,7 @@ function App() {
                                             <OwnerManageUsersPage />
                                         </Route>
                                         <Route path="/money">
-                                            <MoneyPage />
+                                            <Money />
                                         </Route>
 
 

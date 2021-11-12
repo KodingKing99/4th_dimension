@@ -62,7 +62,7 @@ function App() {
                                         {role == "player" &&
                                             <GamePage />
                                         }
-                                        {role == "drinkMiester" &&
+                                        {role == "drinkMeister" &&
                                             <Orders />
                                         }
                                         {role == "manager" &&

@@ -59,7 +59,6 @@
     const handleOpenDrinkFab = (button) => {
       console.log(button)
       if(button.name =='all drinks'){
-        console.log("in here")
           //openDrinksPage();
            history.push('/drinks')
       }

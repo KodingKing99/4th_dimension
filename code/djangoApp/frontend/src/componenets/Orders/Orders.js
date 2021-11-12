@@ -49,8 +49,8 @@ const Orders = () => {
     return (
         <div className="orders">
             <h1>Orders</h1>
-            {(user.role === "drinkMiester") &&
-                <div className="drink-miester-view">
+            {(user.role === "drinkMeister") &&
+                <div className="drink-meister-view">
                     {transactions.map((item) => {
                         return (
                             <div className="transaction-container" key={item.transactionid}>
@@ -59,7 +59,7 @@ const Orders = () => {
                                 </div>
                                 <div className="transaction-body">
                                 <div className="item-name">Buyer: {item.transactionbuyer}</div>
-                                <div className="item-price">Drink Miester: {item.transactiondrinkmeister}</div>
+                                <div className="item-price">Drink Meister: {item.transactiondrinkmeister}</div>
                                 <div className="item-quantity">Date: {item.transactiondate}</div>
                                 <div className="item-quantity">Cost: ${item.transactionprice}</div>
                                 </div>

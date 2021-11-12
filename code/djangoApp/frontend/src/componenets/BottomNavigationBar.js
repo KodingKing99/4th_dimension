@@ -32,7 +32,7 @@ export default function BottomNavigationBar(props) {
         
         </BottomNavigation>
     );
-  } else if(role=="drinkMiester"){
+  } else if(role=="drinkMeister"){
     return (
       <BottomNavigation
         showLabels

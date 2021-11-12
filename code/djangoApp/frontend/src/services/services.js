@@ -68,16 +68,15 @@ export const completeTransaction = async (item) => {
     let response = await axios.put(applicationName + 'transactionHistory/' + item.transactionid + '/', {...item, transactionactiveflag: false});
     return response.data;
 }
-export const createNewTransaction = async (buyerId, drinkMiesterId, price, date=Date.now(), active=true) => {
+export const createNewTransaction = async (buyerId, drinkMeisterId, price, date=Date.now(), active=true) => {
     date = new Date(date)
     const response = await axios.post(applicationName + 'transactionHistory/', {
         transactionbuyer: buyerId,
-        transactiondrinkmeister: drinkMiesterId,
+        transactiondrinkmeister: drinkMeisterId,
         transactionprice: price,
         transactiondate: date,
         transactionactiveflag: active
     });
-    console.log('here', response);
 }
 
 export const transferMoney = async (fromId, toId, amount) => {
@@ -108,7 +107,7 @@ export const getUserById = async (id) => {
             role = "player"
             break;
         case 2:
-            role = "drinkMiester"
+            role = "drinkMeister"
             break;
         case 3:
             role = "manager"
@@ -150,7 +149,7 @@ export const login = async (email, password) => {
                 role = "player"
                 break;
             case 2:
-                role = "drinkMiester"
+                role = "drinkMeister"
                 break;
             case 3:
                 role = "manager"

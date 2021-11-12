@@ -1,12 +1,14 @@
 import React, { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { getAllActiveTransactions, completeTransaction, deleteTrancaction, getUserById, transferMoney } from "../../services/services";
+import { setUser } from "../../redux/userSlice";
 import './Orders.css'
 
 
 const Orders = () => {
-    const role = useSelector((state) => state.user.role);
+    const user = useSelector((state) => state.user);
     const [transactions, setTransactions] = useState([]);
+    const dispatch = useDispatch();
 
 
     const updateTransactions = async () => {
@@ -34,9 +36,10 @@ const Orders = () => {
             }
             getAllActiveTransactions().then((resGetAll) => {
               setTransactions(resGetAll)
-              getUserById(user.id).then((res) => {
-                dispatch(setUser(res))
-              })
+            //   getUserById(user.id).then((res) => {
+            //       console.log(res);
+            //     dispatch(setUser(res))
+            //   })
             })
           })
         })
@@ -46,7 +49,7 @@ const Orders = () => {
     return (
         <div className="orders">
             <h1>Orders</h1>
-            {(role === "drinkMiester") &&
+            {(user.role === "drinkMiester") &&
                 <div className="drink-miester-view">
                     {transactions.map((item) => {
                         return (
@@ -62,7 +65,7 @@ const Orders = () => {
                                 </div>
                                 <div className="item-buttons">
                                     <button className="complete-button" onClick={() => { handleCompleteClick(item) }}>Complete</button>
-                                    <button className="delete-button" onClick={() => { handleRefundClick(item.transactionid) }}>Refund</button>
+                                    <button className="delete-button" onClick={() => { handleRefundClick(item.transactionbuyer, item.transactionprice, item.transactionid) }}>Refund</button>
                                 </div>
                             </div>
                         )

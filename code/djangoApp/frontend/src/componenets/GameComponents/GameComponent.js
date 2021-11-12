@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import {Link} from 'react-router-dom';
 // import './Home.css'
 import { useTheme } from '@mui/material/styles';
   import MobileStepper from '@mui/material/MobileStepper';
@@ -17,27 +16,45 @@ import { useTheme } from '@mui/material/styles';
 
   import useMediaQuery from '@mui/material/useMediaQuery';
 
+  import {  Link ,useHistory } from "react-router-dom";
 
 
 
 const GameComponent = (props) => {
+  const {selectedTournament} = props;
+  const history = useHistory();
+
+  let tempArray = [];
+  let tempActiveStep = 0;
+  let tempScoreTotal = 0;
+    if(JSON.parse(localStorage.getItem('currentGameScore'))){
+      tempArray = JSON.parse(localStorage.getItem('currentGameScore'))
+      for(let i=0;i<tempArray.length;i++){
+        tempScoreTotal = tempScoreTotal + tempArray[i];
+      }
+      if(localStorage.getItem('activeStep')){tempActiveStep = parseInt(localStorage.getItem('activeStep'))}
+    } else {
+      for(let i=0;i<selectedTournament.tournamentholecount;i++){
+        tempArray.push(0);
+      }
+    }
+
 
   const theme = useTheme();
   const fullScreen = useMediaQuery(theme.breakpoints.down('md'));
-  const {selectedTournament} = props;
   selectedTournament.tournamentholecount
-  let tempArray = [];
-  for(let i=0;i<selectedTournament.tournamentholecount;i++){
-    tempArray.push(0);
-  }
-    let [scoreTotal,setScoreTotal] = useState(0);
+
+    let [scoreTotal,setScoreTotal] = useState(tempScoreTotal);
     let [steps,setScore] = useState(tempArray);
 
-    const [activeStep, setActiveStep] = React.useState(0);
+    const [activeStep, setActiveStep] = React.useState(tempActiveStep);
     const [confirmNextHole, setConfirmNextHole] = React.useState(false);
     const [confirmLeaveGame, setConfirmLeaveGame] = React.useState(false);
     const [confirmFinishGame, setConfirmFinishGame] = React.useState(false);
     const [gameFinished, setGameFinished] = React.useState(false);
+
+
+
 
     const maxSteps = steps.length;
 
@@ -56,8 +73,23 @@ const GameComponent = (props) => {
       setConfirmLeaveGame(true);
     }
 
+    const onCloseResults = () =>{
+      localStorage.removeItem('currentGameScore')
+      localStorage.removeItem('activeStep')
+      localStorage.removeItem('selectedTournament')
+      localStorage.removeItem('selectedTournamentId')
+      // history.push('/leaderboard')
+      history.push('/')
+
+      setGameFinished(false);
+    }
+
     const onCloseConfirmLeaveGame = () => {
-      setConfirmLeaveGame(false);
+      localStorage.remove('currentGameScore')
+      localStorage.remove('activeStep')
+      localStorage.remove('selectedTournament')
+      localStorage.remove('selectedTournamentId')
+      resetSelectedTournament();
     }
 
     const handleLeaveGame = () => {
@@ -75,6 +107,7 @@ const GameComponent = (props) => {
 
     const incrementActiveStep = () => {
         setActiveStep((prevActiveStep) => prevActiveStep + 1);
+        localStorage.setItem('activeStep',activeStep+1)
         setConfirmNextHole(false);
     };
 
@@ -87,11 +120,13 @@ const GameComponent = (props) => {
       steps[index] = steps[index] + 1
       setScore([...steps]);
       setScoreTotal(scoreTotal + 1);
+      localStorage.setItem('currentGameScore', JSON.stringify(steps));
     }
     const handleDecrimentScore = (index) =>{
       steps[index] = steps[index] - 1;
       setScore([...steps]);
       setScoreTotal(scoreTotal - 1);
+      localStorage.setItem('currentGameScore', JSON.stringify(steps));
     }
     return ( 
         <div>
@@ -259,7 +294,7 @@ Results</Typography>
             </DialogContentText>
         </DialogContent>
         <DialogActions>
-          <Button href='/?#/' autoFocus>Close</Button>
+          <Button onClick={onCloseResults} autoFocus>Close</Button>
           </DialogActions>
 </Dialog>
     </div>

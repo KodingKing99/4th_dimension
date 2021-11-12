@@ -39,6 +39,15 @@
      const [selectedTournament, setSelectTournament] = React.useState(undefined);
 
 
+
+     if(localStorage.getItem('selectedTournamentId') && localStorage.getItem('selectedTournamentId') !== selectedTournamentId){
+       setSelectedTournamentId(localStorage.getItem('selectedTournamentId'));
+       setSelectTournament(JSON.parse(localStorage.getItem('selectedTournament')));
+     }
+
+
+
+
     let [openQuickBuyDrinks, setOpenQuickBuyDrinks] = React.useState(false);
 
     const openQuickBuyDrinksHandler = () => {
@@ -56,6 +65,10 @@
       console.log("open dialogue func",openDialog)
       setOpenDialog(true);
     };
+
+    const resetSelectedTournament = () => {
+      setSelectedTournamentId(selectedTournament = "NONE");
+    }
     
     const handleOpenDrinkFab = (button) => {
       console.log(button)
@@ -72,14 +85,15 @@
     }
 
     const tournamentSelectHandleClose = (tournament) => {
-      if(tournament=="NONE"){
+      if(tournament=="NONE" || tournament==undefined){
         setSelectedTournamentId("NONE")
         //setSelectTournament(tournament)
         setOpenDialog(false);
       } else{
-        setSelectedTournamentId(tournament.id);
-        console.log("test view tournament",tournament)
+        setSelectedTournamentId(tournament.tournamentid);
         setSelectTournament(tournament);
+        localStorage.setItem('selectedTournamentId', tournament.tournamentid);
+        localStorage.setItem('selectedTournament', JSON.stringify(tournament));
         setOpenDialog(false);
       }
 
@@ -92,9 +106,9 @@
       return ( 
           <div className="homeTop" style={{marginTop: '100px'}}>
             {selectedTournamentId!="NONE" &&
-            <GameComponent selectedTournament = {selectedTournament}></GameComponent>
+            <GameComponent selectedTournament = {selectedTournament} resetSelectedTournament = {resetSelectedTournament}></GameComponent>
   }
-  {selectedTournamentId=="NONE" && 
+  {(selectedTournamentId=="NONE" || selectedTournamentId==undefined) && 
   <div>
     <Box sx={{margin:'10px',
   display:'flex',

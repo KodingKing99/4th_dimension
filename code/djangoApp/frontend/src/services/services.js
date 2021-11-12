@@ -1,13 +1,16 @@
 import useFetch from "react-fetch-hook"
 import {store} from '../redux/store'
 // import { useDispatch } from "react-redux";
-import { setTournaments, addTournament, editStoreTournament, resetData, deleteStoreTournament } from "../redux/dataSlice";
+import { setTournaments, addTournament, editStoreTournament, resetData, deleteStoreTournament, setUserList } from "../redux/dataSlice";
 import axios from "axios";
 const applicationName = 'http://127.0.0.1:8000/api/'
 let requestOptions = {
     method : 'POST',
     headers: { 'Content-Type': 'application/json' },
 }
+//////////
+// Tournaments
+//////////
 export const getAllTournaments = () => {
     console.log("fetching tournaments...")
     axios.get(applicationName + 'tournament/').then((response) => {
@@ -68,6 +71,9 @@ export const activateTournament = async (tourney) => {
         return res;
     }).catch((err) => {console.log(err)})
 }
+////////////
+// Transactions
+////////////
 export const getAllTransactions = async () => {
     const response = await axios.get(applicationName + 'transactionHistory/');
     return response.data;
@@ -113,7 +119,9 @@ export const transferMoney = async (fromId, toId, amount) => {
     });
     return true;
 }
-
+//////////
+// Login/User
+/////////
 export const getUserById = async (id) => {
     const user = await axios.get(applicationName + 'user/' + id);
     // Translate the response into a user object
@@ -146,6 +154,14 @@ export const getUserById = async (id) => {
         // permissions: response.data.permissions
     }
     return data;
+}
+export const getAllUsers = () => {
+    axios.get(applicationName + 'user/').then((res) => {
+        console.log(res)
+        store.dispatch(setUserList(res.data))
+    }).catch((err) => {
+        console.log(err)
+    })
 }
 
 export const login = async (email, password) => {
@@ -241,4 +257,6 @@ export const changeName = async (uid, firstName, lastName) => {
         return { error: error };
     }
 }
+////////////
+// 
     

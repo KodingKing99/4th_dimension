@@ -4,6 +4,7 @@ import { getAllTournaments } from '../services/services';
 const initialState = {
   tournaments : [],
   transactions: [],
+  users: [],
 }
 
 export const dataSlice = createSlice({
@@ -34,10 +35,13 @@ export const dataSlice = createSlice({
     resetData: (state) => {
       state = {...initialState};
     },
+    setUserList: (state, action) => {
+      state.users = action.payload;
+    },
   },
 })
 
 // Action creators are generated for each case reducer function
-export const { setTournaments, setTransactions, resetData, addTournament, editStoreTournament, deleteStoreTournament } = dataSlice.actions
+export const { setTournaments, setTransactions, resetData, addTournament, editStoreTournament, deleteStoreTournament, setUserList } = dataSlice.actions
 
 export default dataSlice.reducer

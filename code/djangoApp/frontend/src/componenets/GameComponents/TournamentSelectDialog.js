@@ -50,7 +50,7 @@ const TournamentSelectDialog = (props) => {
                     <Typography variant="h5">
                       {`${tournament.tournamentholecount} holes`}
                     </Typography>
-                    <Button variant="outlined" onClick={() => handleListItemClick(tournament.tournamentid)} sx={{margin: "3px"}} >Select</Button>
+                    <Button variant="outlined" onClick={() => handleListItemClick(tournament)} sx={{margin: "3px"}} >Select</Button>
                   </CardContent>
                 </Card>
                 </Box>

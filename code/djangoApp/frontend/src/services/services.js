@@ -28,6 +28,19 @@ export const createTournament = (date, sponsorId, prize, holeCount) => {
     }).catch(err => {console.log(err)});
 }
 
+
+export const addTournamentParticipant = (tournamentId, participantId,userscore) => {
+    let data = {
+        tournamentid: tournamentId,
+        userid: participantId,
+        userscore: userscore
+    }
+    axios.post(applicationName + 'tournamentParticipant/',data).then((response) => {
+        console.log(response)
+        
+    }).catch(err => console.log(err));
+}
+
 export const getAllTransactions = async () => {
     const response = await axios.get(applicationName + 'transactionHistory/');
     return response.data;

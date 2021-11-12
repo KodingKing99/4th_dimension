@@ -34,10 +34,27 @@ const Menu = () => {
             getUserById(user.id).then((user) => {
                 dispatch(setUser(user));
             });
+
         });
         setToggleDrawer(false);
         setQuantity(0);
 
+    }
+
+
+    const setRecentPurchaseItems = (drinkId) => {
+        if(localStorage.getItem('recentDrinkPurchases')){
+            let recentDrinkPurchases = JSON.parse(localStorage.getItem('recentDrinkPurchases'));
+            if(recentDrinkPurchases.length > 3){
+                recentDrinkPurchases.shift();
+            }
+            recentDrinkPurchases.push(drinkId);
+            localStorage.setItem('recentDrinkPurchases', JSON.stringify(recentDrinkPurchases));
+        } else {
+            let recentDrinkPurchases = [];
+            recentDrinkPurchases.push(drinkId);
+            localStorage.setItem('recentDrinkPurchases', JSON.stringify(recentDrinkPurchases));
+        }
     }
 
     const handleAddMenuItemClick = () => {

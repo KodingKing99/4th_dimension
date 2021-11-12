@@ -1,5 +1,6 @@
   import React, {useCallback} from "react";
   // import './Home.css'
+  import { useSelector, useDispatch } from "react-redux";
 
   import Box from '@mui/material/Box';
   
@@ -20,13 +21,9 @@
 
   import {  Link ,useHistory } from "react-router-dom";
 
+  import { transferMoney, getUserById } from "../../services/services";
 
 
-  const actions = [
-    { icon: <Icon path={mdiBeerOutline} title="Drink" size={1} />, name: 'All Drinks', },
-    { icon: <Icon path={mdiBeerOutline} title="Drink" size={1} />, name: 'Root Beer', },
-
-  ];
 
 
 
@@ -38,6 +35,22 @@
      const [gameFinsihed, setGameFinsihed] = React.useState(false);
      const [selectedTournament, setSelectTournament] = React.useState(undefined);
 
+     const user = useSelector((state) => state.user);
+
+
+     let actions = [
+      { icon: <Icon path={mdiBeerOutline} title="Drink" size={1} />, name: 'All Drinks', },
+      { icon: <Icon path={mdiBeerOutline} title="Drink" size={1} />, name: 'Root Beer', },
+  
+    ];
+
+    if(localStorage.getItem("recentDrinkPurchases")){
+      const recentDrinkPurchases = JSON.parse(localStorage.getItem("recentDrinkPurchases"));
+      for(let i = 0; i < recentDrinkPurchases.length; i++){
+        actions.push({ icon: <Icon path={mdiBeerOutline} title="Drink" size={1} />, name: recentDrinkPurchases[i].drinkName, });
+      }
+    }
+  
 
 
      if(localStorage.getItem('selectedTournamentId') && localStorage.getItem('selectedTournamentId') !== selectedTournamentId){
@@ -52,8 +65,21 @@
 
     const openQuickBuyDrinksHandler = () => {
       setOpenQuickBuyDrinks(openQuickBuyDrinks=true)
+
+
     }
     const purchaseQuickDrinkHandler = () => {
+      transferMoney(user.id, 8, 0).then((isSuccess) => {
+        if (!isSuccess) {
+            //setPaymentError(true);
+            //setQuantity(0);
+            return
+        }
+        getUserById(user.id).then((user) => {
+            //dispatch(setUser(user));
+        });
+
+    });
       setOpenQuickBuyDrinks(openQuickBuyDrinks=false)
     }
 
@@ -193,7 +219,7 @@ Are you sure you want to buy this drink?
           <Button autoFocus onClick={closeQuickBuyDrinksHandler}>
             Cancel
           </Button>
-          <Button onClick={tournamentSelectHandleClose} autoFocus>
+          <Button onClick={purchaseQuickDrinkHandler} autoFocus>
             Purchase
           </Button>
         </DialogActions>

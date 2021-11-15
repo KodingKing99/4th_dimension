@@ -32,34 +32,42 @@ const ManageUsersPage = (props) => {
     return ( 
         <div className="homeTop" style={{marginTop: '100px'}}>
             <p>In Game View</p>
-    <Box sx={{ minWidth: 120 }}>
-      <h2>Select a User</h2>
-      <FormControl fullWidth>
-        <InputLabel id="select-label">User</InputLabel>
-        <Select
-          labelId="demo-simple-select-label"
-          id="demo-simple-select"
-          value={user}
-          label="User"
-          onChange={handleChange}
-        >
-            {userList && userList.map((user) => {
-                return (<MenuItem value={user} key={user.userfirstname + ' ' + user.userlastname}>{user.userfirstname + ' ' + user.userlastname}</MenuItem>)
-            })}
-        </Select>
-      </FormControl>
-    </Box>
+    <div className="selectBox">
+        <Box sx={{ minWidth: 120 }}>
+          <h2>Select a User</h2>
+          <FormControl fullWidth>
+            <InputLabel id="select-label">User</InputLabel>
+            <Select
+              labelId="demo-simple-select-label"
+              id="demo-simple-select"
+              value={user}
+              label="User"
+              onChange={handleChange}
+            >
+                {userList && userList.map((user) => {
+                    return (<MenuItem value={user} key={user.userfirstname + ' ' + user.userlastname}>{user.userfirstname + ' ' + user.userlastname}</MenuItem>)
+                })}
+            </Select>
+          </FormControl>
+        </Box>
+    </div>
     {user && 
         <Box sx={{ minWidth: 120}} className="formbox">
             <FormControl>
                 <div className="itembox">
                     <h2>{user.userfirstname + ' ' + user.userlastname}</h2>
-                    <label>User Role</label>
+                    {/* <label>User Role</label> */}
+                    <h3>User Role</h3>
+                    <div id="buttonBox">
+                        <Button variant="outlined">Edit User Role</Button>
+                        <Button variant="contained" id="deleteButt" onClick={handleDelete}>Delete User</Button>
+                    </div>
                     <Select
                         labelId="demo-simple-select-label"
                         id="roleSelect"
                         value={userRole}
-                        label="User role"
+                        label="Role"
+                        style={{marginBottom: '100px', marginTop: '30px'}}
                         onChange={handleChangeUserRole}
                     >
                         <MenuItem value={1}>Player</MenuItem>
@@ -69,9 +77,7 @@ const ManageUsersPage = (props) => {
                         <MenuItem value={5}>Owner</MenuItem>
                     </Select>
                     {/* <input value={user.userrole} type="number"/> */}
-                    <Button variant="outlined">Edit User Role</Button>
-                    <Button variant="outlined" onClick={handleDelete}>Delete User</Button>
-                    </div>
+                </div>
                 {/* <input value={user.userfirstname}/>
                 <input value={user.userlastname}/>
                 <input value={user.useremail}/> */}

@@ -34,6 +34,7 @@ import { Container } from "@mui/material";
 import { Box, display } from "@mui/system";
 import Orders from "./Orders/Orders";
 import Refunds from "./Refunds/Refunds";
+import "./App.css"
 // import BottomAppBar from './BottomAppBar';
 function App() {
     const playerPath = ["Game", "Drinks", "Leaderboards", "Account"]
@@ -41,7 +42,7 @@ function App() {
     const role = useSelector((state) => state.user.role)
 
     return (
-        <div>
+        <div id="root">
             <Box sx={{
                 margin: '20px',
                 display: 'flex',

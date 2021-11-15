@@ -30,6 +30,12 @@ export const dataSlice = createSlice({
         return tourney.tournamentid !== action.payload
       });
     },
+    editStoreUser: (state, action) => {
+      let index = state.users.findIndex((user) => {
+        return user.userid === action.payload.userid;
+      });
+      state.users[index] = action.payload;
+    },
     deleteStoreUser: (state, action) => {
       state.users = state.users.filter((user) => {
         return user.userid != action.payload;
@@ -51,6 +57,6 @@ export const dataSlice = createSlice({
 })
 
 // Action creators are generated for each case reducer function
-export const { setTournaments, setTransactions, resetData, addTournament, editStoreTournament, deleteStoreTournament, setMenu, setUserList, deleteStoreUser } = dataSlice.actions
+export const { setTournaments, setTransactions, resetData, addTournament, editStoreTournament, deleteStoreTournament, setMenu, setUserList, deleteStoreUser, editStoreUser } = dataSlice.actions
 
 export default dataSlice.reducer

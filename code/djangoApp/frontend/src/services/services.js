@@ -1,7 +1,7 @@
 import useFetch from "react-fetch-hook"
 import {store} from '../redux/store'
 // import { useDispatch } from "react-redux";
-import { setTournaments, addTournament, editStoreTournament, resetData, deleteStoreTournament, setUserList, deleteStoreUser } from "../redux/dataSlice";
+import { setTournaments, addTournament, editStoreTournament, resetData, deleteStoreTournament, setUserList, deleteStoreUser, editStoreUser} from "../redux/dataSlice";
 import axios from "axios";
 const applicationName = 'http://127.0.0.1:8000/api/'
 let requestOptions = {
@@ -167,6 +167,15 @@ export const deleteUserById = (id) => {
     axios.delete(applicationName + 'user/' + id + '/').then((res) => {
         console.log(res);
         store.dispatch(deleteStoreUser(id));
+    }).catch((err) => {
+        console.log(err);
+    })
+}
+export const editUser = (user) => {
+    console.log(user);
+    axios.put(applicationName + 'user/' + user.userid + '/', {...user}).then((res) => {
+        console.log(res);
+        store.dispatch(editStoreUser(res.data))
     }).catch((err) => {
         console.log(err);
     })

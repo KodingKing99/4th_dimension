@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
-import { deleteUserById, getAllUsers } from "../../../services/services";
+import { deleteUserById, getAllUsers, editUser } from "../../../services/services";
 import Box from '@mui/material/Box';
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
@@ -13,10 +13,8 @@ const ManageUsersPage = (props) => {
         getAllUsers();
     }, [userList]);
     let userList = useSelector((state) => state.data.users)
-    // console.log("In manage user")
-    console.log(userList)
-    let [user, setUser] = useState();
-    let [userRole, setUserRole] = useState();
+    let [user, setUser] = useState('');
+    let [userRole, setUserRole] = useState('');
     let handleChange = (e) => {
         setUser(e.target.value);
         // Set the role when a user is selected
@@ -28,6 +26,11 @@ const ManageUsersPage = (props) => {
     let handleDelete = () => {
         deleteUserById(user.userid)
         setUser();
+    }
+    let handleEdit = () => {
+        let myUser = {...user};
+        myUser.userrole = userRole;
+        editUser(myUser);
     }
     return ( 
         <div className="homeTop" style={{marginTop: '100px'}}>
@@ -59,7 +62,7 @@ const ManageUsersPage = (props) => {
                     {/* <label>User Role</label> */}
                     <h3>User Role</h3>
                     <div id="buttonBox">
-                        <Button variant="outlined">Edit User Role</Button>
+                        <Button variant="outlined" onClick={handleEdit}>Edit User Role</Button>
                         <Button variant="contained" id="deleteButt" onClick={handleDelete}>Delete User</Button>
                     </div>
                     <Select

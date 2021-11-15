@@ -7,7 +7,6 @@ class Migration(migrations.Migration):
 
     dependencies = [
         ('backend', '0004_tournament_tournamentactiveflag'),
-        ('backend', '0005_tournament_tournamentactiveflag'),
     ]
 
     operations = [

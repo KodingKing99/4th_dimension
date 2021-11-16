@@ -35,6 +35,9 @@ const useStyles = makeStyles((theme) => ({
       borderBottom: "1px solid white",
     },
   },
+  bar: {
+    backgroundColor : "#7ea75f"
+  },
   fab: {
     // margin: theme.spacing.unit, // You might not need this now
     // position: "absolute",
@@ -66,7 +69,7 @@ function Navbar() {
 
   return (
       <div>
-        <AppBar color="primary" sx={{ top: 'auto', bottom: 0 }} >
+        <AppBar className={classes.bar} sx={{ top: 'auto', bottom: 0}} >
         <CssBaseline />
         <Toolbar>
             <Typography style={{textAlign:'center'}} variant="h4" className={classes.logo}>

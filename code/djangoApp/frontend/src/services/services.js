@@ -250,10 +250,11 @@ export const depositMoney = async (uid, amount) => {
     try {
         amount = parseFloat(amount);
         const user = await axios.get(applicationName + 'user/' + uid + '/');
-        await axios.put(applicationName + 'user/' + uid + '/', {
+        const res = await axios.put(applicationName + 'user/' + uid + '/', {
             ...user.data,
             useraccount: (parseFloat(user.data.useraccount) + amount).toFixed(2)
         });
+        store.dispatch(setAccount(res.data.useraccount));
         return true;
     } catch (error) {
         return { error: error };

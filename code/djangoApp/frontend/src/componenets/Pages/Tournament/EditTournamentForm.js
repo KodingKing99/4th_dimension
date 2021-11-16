@@ -5,6 +5,7 @@ import Box from '@mui/material/Box';
 import { Button, Container, Stack } from "@mui/material";
 import { editTournament, deleteTourament, activateTournament} from '../../../services/services';
 import "./EditTournamentForm.css";
+import { useSelector } from 'react-redux';
 // import { Table } from '@material-ui/core';
 
 const EditTournamentForm = (props) => {
@@ -26,6 +27,8 @@ const EditTournamentForm = (props) => {
         p: 4,
       };
     const {tourney, handleClose, show} = props;
+    const role = useSelector((state) => state.user.role);
+    console.log(role);
     console.log(tourney)
     const [value, setValue] = useState("1");
     const handleChange = (e, value) => {
@@ -74,12 +77,29 @@ const EditTournamentForm = (props) => {
                 <Box sx={style}>
                 <TabContext value={value}>
                 <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
+                    {/* We could do this if we want more security */}
+                    {/* {role === "Manager" && 
+                   <>
+                        <TabList onChange={handleChange} aria-label="lab API tabs example">
+                            <Tab label="Edit" value="1" />
+                            <Tab label="Delete" value="2" />
+                            <Tab label="Set Active" value="3"/>
+                        </TabList>
+                   </> 
+                    }
+                    {role !== "Manager" && 
+                        <>
+                            <TabList onChange={handleChange} aria-label="lab API tabs example">
+                                <Tab label="Edit" value="1" />
+                            </TabList>
+                        </>
+                    } */}
                     <TabList onChange={handleChange} aria-label="lab API tabs example">
-                        <Tab label="Edit" value="1" />
-                        <Tab label="Delete" value="2" />
-                        <Tab label="Set Active" value="3"/>
+                            <Tab label="Edit" value="1" />
+                            <Tab label="Delete" value="2" />
+                            <Tab label="Set Active" value="3"/>
                     </TabList>
-                    </Box>
+                </Box>
                     <TabPanel value="1">
                         <Stack sx={{
                             alignItems: 'center',marginBottom:'10px'}}>
@@ -103,13 +123,24 @@ const EditTournamentForm = (props) => {
                             <Button variant="outlined" onClick={() => handleSubmit()}>Submit</Button>
                         </Stack>
                     </TabPanel>
+                    {/* If they are a manger display these... */}
+                    {/* {role === "Manager" &&
+                    <>
+                        <TabPanel value="2">
+                                <Button variant="outlined" onClick={() => handleDelete()} className="deleteButt">Delete</Button>
+                        </TabPanel>
+                        <TabPanel value="3">
+                            <Button variant="outlined" onClick={() => handleSetActive()}>Set Active</Button>
+                        </TabPanel>
+                    </>
+                    } */}
                     <TabPanel value="2">
                             <Button variant="outlined" onClick={() => handleDelete()} className="deleteButt">Delete</Button>
                     </TabPanel>
                     <TabPanel value="3">
                         <Button variant="outlined" onClick={() => handleSetActive()}>Set Active</Button>
                     </TabPanel>
-                </TabContext>
+                 </    TabContext>
                 </Box>
             
             </Modal> 

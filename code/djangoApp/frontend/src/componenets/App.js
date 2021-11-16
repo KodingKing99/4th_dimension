@@ -116,7 +116,8 @@ function App() {
                                         </Route>
 
                                         <Route path="/manage-sponsorship">
-                                            <ManageSponsorshipPage />
+                                            {/* <ManageSponsorshipPage /> */}
+                                            <ManageTournamentsPage isSponsor={true}/>
                                         </Route>
                                     </Box>
                                 </Switch>

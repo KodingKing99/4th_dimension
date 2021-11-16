@@ -20,7 +20,7 @@
 
   import {  Link ,useHistory } from "react-router-dom";
 
-
+  import {useStyles} from '../../styleUtils/styleUtils';
 
   const actions = [
     { icon: <Icon path={mdiBeerOutline} title="Drink" size={1} />, name: 'All Drinks', },
@@ -37,7 +37,7 @@
      const [selectedTournamentId, setSelectedTournamentId] = React.useState("NONE");
      const [gameFinsihed, setGameFinsihed] = React.useState(false);
      const [selectedTournament, setSelectTournament] = React.useState(undefined);
-
+     const classes = useStyles();
 
 
      if(localStorage.getItem('selectedTournamentId') && localStorage.getItem('selectedTournamentId') !== selectedTournamentId){
@@ -125,7 +125,7 @@ Looks like you don't have an active Tournament to Play</Typography>
 Hit the + button to start a tournament</Typography>
   </Box>
               <Box sx={{ position: 'fixed', bottom: 100, right: 50 }} elevation={3}>
-      <Fab color="primary" aria-label="add" onClick={handleClickOpen}>
+      <Fab color="primary" aria-label="add" onClick={handleClickOpen} className={classes.fab}>
       <AddIcon />
     </Fab>
     

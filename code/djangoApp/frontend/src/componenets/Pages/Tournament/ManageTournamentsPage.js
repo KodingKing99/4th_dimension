@@ -8,10 +8,12 @@ import Tab from '@mui/material/Tab'
 import { getAllTournaments } from "../../../services/services";
 import { useSelector } from "react-redux";
 import { Button, Card, CardContent, Typography } from "@mui/material";
+import {useStyles} from '../../../styleUtils/styleUtils';
 import "./ManageTournamentsPage.css"
 import EditTournamentForm from "./EditTournamentForm";
 // import './Home.css'
 const ManageTournamentsPage = (props) => {
+  const classes = useStyles();
   const [value, setValue] = useState(0);
   useEffect(() => {
     getAllTournaments();
@@ -82,7 +84,7 @@ const ManageTournamentsPage = (props) => {
             </div>
             <Box sx={{ position: 'fixed', bottom: 100, right: 50 }} elevation={3}>
             
-            <Fab to='/add-tournament' component={Link} color="primary" aria-label="add">
+            <Fab to='/add-tournament' component={Link} color="primary" aria-label="add" className={classes.fab}>
   <AddIcon />
 </Fab>
 </Box>

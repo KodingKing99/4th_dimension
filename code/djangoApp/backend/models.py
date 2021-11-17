@@ -34,7 +34,7 @@ class Menu(models.Model):
 
 class Tournamentparticipant(models.Model):
     userid = models.IntegerField(db_column='userId')  # Field name made lowercase.
-    tournamentid = models.IntegerField(db_column='tournamentId', unique=True, blank=True, null=True)  # Field name made lowercase.
+    tournamentid = models.IntegerField(db_column='tournamentId', blank=True, null=True)  # Field name made lowercase.
     userscore = models.IntegerField(db_column='userScore', blank=True, null=True)  # Field name made lowercase.
 
     class Meta:

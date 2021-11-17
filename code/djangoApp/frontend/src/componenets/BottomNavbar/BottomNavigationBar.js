@@ -10,27 +10,46 @@ import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import PeopleIcon from '@mui/icons-material/People';
 import AccountBalanceWalletIcon from '@mui/icons-material/AccountBalanceWallet';
 import Icon from "@mdi/react";
+import { useStyles } from '../../styleUtils/styleUtils';
 import { mdiBeerOutline , mdiCash , mdiGoogleAds , mdiFamilyTree , mdiViewListOutline } from '@mdi/js';
 import { useSelector } from "react-redux";
+import './BottomNavigationBar.css'
 export default function BottomNavigationBar(props) {
+  const classes = useStyles();
   const [value, setValue] = React.useState(0);
   const role = useSelector((state) => state.user.role);
   console.log(role);
   if(role == 'player'){
     return (
+      <div className={classes.bottomNavbar}>
         <BottomNavigation
           showLabels
           value={value}
+          className={classes.bottomNavbar}
           onChange={(event, newValue) => {
             setValue(newValue);
           }}
         >
-          <BottomNavigationAction  to='/game' component={Link}  label="Game" icon={<SportsGolfIcon />} />
+          <BottomNavigationAction to='/game' component={Link}  label="Game" icon={<SportsGolfIcon />} />
           <BottomNavigationAction to='/drinks'  component={Link} label="Drinks" icon={<Icon path={mdiBeerOutline} title="Drink" size={1} />}/>
           <BottomNavigationAction to='/leaderboard' component={Link} label="Leaderboards" icon={<BarChartIcon />} />
           <BottomNavigationAction to='/account' component={Link} label="Account" icon={<AccountCircleIcon />}></BottomNavigationAction>
         
         </BottomNavigation>
+      </div>
+        // <BottomNavigation
+        //   showLabels
+        //   value={value}
+        //   onChange={(event, newValue) => {
+        //     setValue(newValue);
+        //   }}
+        // >
+        //   <BottomNavigationAction to='/game' component={Link}  label="Game" icon={<SportsGolfIcon />} />
+        //   <BottomNavigationAction to='/drinks'  component={Link} label="Drinks" icon={<Icon path={mdiBeerOutline} title="Drink" size={1} />}/>
+        //   <BottomNavigationAction to='/leaderboard' component={Link} label="Leaderboards" icon={<BarChartIcon />} />
+        //   <BottomNavigationAction to='/account' component={Link} label="Account" icon={<AccountCircleIcon />}></BottomNavigationAction>
+        
+        // </BottomNavigation>
     );
   } else if(role=="drinkMeister"){
     return (

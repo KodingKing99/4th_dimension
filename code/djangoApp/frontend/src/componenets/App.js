@@ -28,7 +28,7 @@ import Login from './Login/Login'
 
 import { store } from '../redux/store';
 import { Provider, useSelector } from 'react-redux'
-import BottomNavigationBar from "./BottomNavigationBar";
+import BottomNavigationBar from "./BottomNavbar/BottomNavigationBar"
 import PermissionsPractice from "./PermissionsPractice";
 import { Container } from "@mui/material";
 import { Box, display } from "@mui/system";

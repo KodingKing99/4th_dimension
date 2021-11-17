@@ -1,4 +1,7 @@
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@300&display=swap');
+/* @import '../../styleUtils/styleUtils.js'; */
 .LoginPage{
+    font-family: 'Nunito';
     background-color: #7ea75f;
     font-weight: bold;
     margin: auto;
@@ -33,7 +36,7 @@
     justify-content: center;
 }
 .LoginPage button {
-    color: #171807;
+    color: #202d14;
     margin: 10px;
     background-color: #fff;
     /* background-color: #3f51b5; */
@@ -47,7 +50,7 @@
     cursor: pointer;
 }
 .LoginPage button:hover {
-    color:#fff;
+    /* color:#fff; */
     filter: brightness(75%);
 }
 .Title {
@@ -65,7 +68,7 @@
 }
 .input-message {
     text-align: center;
-    color: red;
+    color: #4d1212;
     font-size: 15px;
     padding: 5px;
 }
@@ -75,7 +78,7 @@
 }
 
 .required {
-    color: red;
+color: crimson;
     font-size: 15px;
     padding: 5px;
 }

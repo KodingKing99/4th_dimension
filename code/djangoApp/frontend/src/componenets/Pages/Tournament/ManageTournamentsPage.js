@@ -19,7 +19,7 @@ const ManageTournamentsPage = (props) => {
     getAllTournaments();
   }, []);
   const tournaments = useSelector((state) => state.data.tournaments);
-  console.log(tournaments);
+  // console.log(tournaments);
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };

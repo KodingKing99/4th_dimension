@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
 // import './Home.css'
 import { useTheme } from '@mui/material/styles';
   import MobileStepper from '@mui/material/MobileStepper';
@@ -14,6 +15,8 @@ import { useTheme } from '@mui/material/styles';
   import Icon from "@mdi/react";
   import { mdiBeerOutline } from '@mdi/js';
 
+  import {addTournamentParticipant} from '../../services/services'
+
   import useMediaQuery from '@mui/material/useMediaQuery';
 
   import {  Link ,useHistory } from "react-router-dom";
@@ -23,6 +26,7 @@ import { useTheme } from '@mui/material/styles';
 const GameComponent = (props) => {
   const {selectedTournament} = props;
   const history = useHistory();
+  const user = useSelector((state) => state.user);
 
   let tempArray = [];
   let tempActiveStep = 0;
@@ -74,22 +78,18 @@ const GameComponent = (props) => {
     }
 
     const onCloseResults = () =>{
+      addTournamentParticipant(selectedTournament.id,user.id,scoreTotal);
       localStorage.removeItem('currentGameScore')
       localStorage.removeItem('activeStep')
       localStorage.removeItem('selectedTournament')
       localStorage.removeItem('selectedTournamentId')
       // history.push('/leaderboard')
       history.push('/')
-
       setGameFinished(false);
     }
 
     const onCloseConfirmLeaveGame = () => {
-      localStorage.remove('currentGameScore')
-      localStorage.remove('activeStep')
-      localStorage.remove('selectedTournament')
-      localStorage.remove('selectedTournamentId')
-      resetSelectedTournament();
+      setConfirmLeaveGame(false);
     }
 
     const handleLeaveGame = () => {

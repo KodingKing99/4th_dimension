@@ -1,0 +1,10 @@
+# 10 - 20 #
+Current Issues:
+    Login authentication
+    Create build script for easy testing
+    Start main pages
+        Game page
+        User page
+
+Research needed:
+    Password hashing and salting

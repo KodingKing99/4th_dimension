@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState , useEffect} from "react";
 import { useSelector, useDispatch } from "react-redux";
 // import './Home.css'
 import { useTheme } from '@mui/material/styles';
@@ -14,8 +14,9 @@ import { useTheme } from '@mui/material/styles';
   import { DialogTitle , DialogContent, DialogActions , DialogContentText } from "@mui/material";
   import Icon from "@mdi/react";
   import { mdiBeerOutline } from '@mdi/js';
+  import Grid from '@mui/material/Grid';
 
-  import {addTournamentParticipant} from '../../services/services'
+  import { editTournamentParticipant , getTournamentParticipants , getUserById} from '../../services/services'
 
   import useMediaQuery from '@mui/material/useMediaQuery';
 
@@ -27,6 +28,8 @@ const GameComponent = (props) => {
   const {selectedTournament} = props;
   const history = useHistory();
   const user = useSelector((state) => state.user);
+
+
 
   let tempArray = [];
   let tempActiveStep = 0;
@@ -56,9 +59,27 @@ const GameComponent = (props) => {
     const [confirmLeaveGame, setConfirmLeaveGame] = React.useState(false);
     const [confirmFinishGame, setConfirmFinishGame] = React.useState(false);
     const [gameFinished, setGameFinished] = React.useState(false);
+    
+    const [participants,setParticipants] = React.useState([]);
+    
 
 
+    useEffect(() => {
+      callGetTournamentParticipants();
+    },[]);
 
+    const callGetTournamentParticipants = () => {
+      getTournamentParticipants(selectedTournament.tournamentid).then(res => {
+        let participants = res;
+        participants.forEach(function(item, index, theArray){
+          getUserById(item.userid).then(userRes=>{
+            theArray[index].name=userRes.firstName
+            setParticipants(theArray)
+          })
+        })
+      })
+    }
+    
 
     const maxSteps = steps.length;
 
@@ -78,7 +99,8 @@ const GameComponent = (props) => {
     }
 
     const onCloseResults = () =>{
-      addTournamentParticipant(selectedTournament.id,user.id,scoreTotal);
+      editTournamentParticipant(selectedTournament.tournamentid,user.id,scoreTotal);
+      callGetTournamentParticipants();
       localStorage.removeItem('currentGameScore')
       localStorage.removeItem('activeStep')
       localStorage.removeItem('selectedTournament')
@@ -109,12 +131,15 @@ const GameComponent = (props) => {
         setActiveStep((prevActiveStep) => prevActiveStep + 1);
         localStorage.setItem('activeStep',activeStep+1)
         setConfirmNextHole(false);
+        editTournamentParticipant(selectedTournament.tournamentid,user.id,scoreTotal);
+        callGetTournamentParticipants();
     };
 
   
-    // const handleBack = () => {
-    //   setActiveStep((prevActiveStep) => prevActiveStep - 1);
-    // };
+    const handleBack = () => {
+      setActiveStep((prevActiveStep) => prevActiveStep - 1);
+      localStorage.setItem('activeStep',activeStep-1)
+    };
 
     const handleIncrementScore = (index) =>{
       steps[index] = steps[index] + 1
@@ -158,7 +183,7 @@ const GameComponent = (props) => {
            
             <Button
               size="small"
-              onClick={onOpenConfirmNextHole}
+              onClick={incrementActiveStep}
               disabled={activeStep === maxSteps - 1}
             >
               Next
@@ -169,16 +194,16 @@ const GameComponent = (props) => {
               )}
             </Button>
           }
-          // backButton={
-          //   <Button size="small" onClick={handleBack} disabled={activeStep === 0}>
-          //     {theme.direction === 'rtl' ? (
-          //       <KeyboardArrowRight />
-          //     ) : (
-          //       <KeyboardArrowLeft />
-          //     )}
-          //     Back
-          //   </Button>
-          // }
+          backButton={
+            <Button size="small" onClick={handleBack} disabled={activeStep === 0}>
+              {theme.direction === 'rtl' ? (
+                <KeyboardArrowRight />
+              ) : (
+                <KeyboardArrowLeft />
+              )}
+              Back
+            </Button>
+          }
         />
       </Box>
       {activeStep===(maxSteps-1) &&
@@ -194,6 +219,12 @@ const GameComponent = (props) => {
         <Box>
           <h2>Leaderboard</h2>
           </Box>
+          {participants.map((item)=>{
+            return (<Box><p>{item.name}:{item.userscore}</p></Box>)
+            }
+          )}
+        
+          <Divider sx={{margin:1}} variant="middle" />
           <div>
       <Dialog
         open={confirmNextHole}
@@ -266,10 +297,12 @@ Are you sure you want to Finish the game?
           Results
           </DialogTitle>
         <DialogContent>
-          <DialogContentText id="alert-dialog-description">
+          {/* <DialogContentText id="alert-dialog-description"> */}
+<Box>
+          <Grid container spacing={2}>
+          <Grid item xs={6}>
+
           <Box >
-    <Typography sx={{textAlign:'center'}} variant="h2">
-Results</Typography>
   </Box>
   <Divider />
   <Box sx={{margin:1}}>
@@ -283,15 +316,35 @@ Results</Typography>
   { steps.map((hole, index) => (
                 
   <Box>
+
+
 <Typography sx={{textAlign:'center'}} >
   <strong>Hole {index+1} : {hole}</strong>
 </Typography>
   </Box>
               ))}
+</Grid>
 
+<Grid item xs={6}>
+<Box>
+<Divider />
+  <Box sx={{margin:1}}>
 
+  <Typography sx={{textAlign:'center'}} variant="h4">
+  <strong>Leader Board</strong>
+  </Typography>
+  </Box>
+  <Divider />
+{participants.map((item)=>{
+            return (<Box><Typography sx={{textAlign:'center'}} ><strong>{item.name}:{item.userscore}</strong></Typography></Box>)
+            }
+          )}
+</Box>
+          </Grid>
 
-            </DialogContentText>
+</Grid>
+</Box>
+            {/* </DialogContentText> */}
         </DialogContent>
         <DialogActions>
           <Button onClick={onCloseResults} autoFocus>Close</Button>

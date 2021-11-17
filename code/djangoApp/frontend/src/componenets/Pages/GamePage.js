@@ -22,7 +22,7 @@
 
   import {  Link ,useHistory } from "react-router-dom";
 
-  import { transferMoney, getUserById , getAllMenuItems , createNewTransaction} from "../../services/services";
+  import { transferMoney, getUserById , getAllMenuItems , createNewTransaction , addTournamentParticipant} from "../../services/services";
 
 
 
@@ -148,6 +148,7 @@
       } else{
         setSelectedTournamentId(tournament.tournamentid);
         setSelectTournament(tournament);
+        addTournamentParticipant(tournament.tournamentid, user.id,0);
         localStorage.setItem('selectedTournamentId', tournament.tournamentid);
         localStorage.setItem('selectedTournament', JSON.stringify(tournament));
         setOpenDialog(false);

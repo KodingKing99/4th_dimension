@@ -61,8 +61,39 @@ export const addTournamentParticipant = (tournamentId, participantId,userscore) 
     }
     axios.post(applicationName + 'tournamentParticipant/',data).then((response) => {
         console.log(response)
-        
+        return response;
     }).catch(err => console.log(err));
+}
+
+
+export const editTournamentParticipant = async (tournamentId, participantId,userscore) => {
+    const response = await axios.get(applicationName + 'tournamentParticipant/');
+    response.data.forEach(element => { 
+        if(element.tournamentid === tournamentId && element.userid === participantId){
+            axios.put(applicationName + 'tournamentParticipant/' + element.id + '/', {
+                tournamentid: tournamentId,
+                userid: participantId,
+                userscore: userscore
+            }).then((res) => {
+                console.log(res);
+                return res;
+            }).catch((err) => {
+                console.log(err);
+            })
+        }
+    });
+}
+
+export const getTournamentParticipants = async (tournamentId) => {
+    const response = await axios.get(applicationName + 'tournamentParticipant/');
+    let participants = [];
+    response.data.forEach(element => { 
+        if(element.tournamentid === tournamentId){
+            participants.push(element);
+        }
+    });
+    participants.sort((a,b) => (a.userscore > b.userscore) ? -1 : ((b.userscore > a.userscore) ? 1 : 0));
+    return participants;
 }
 
 
@@ -95,6 +126,7 @@ export const createNewTransaction = async (buyerId, drinkMeisterId, price, date=
         transactionactiveflag: active
     });
 }
+
 
 export const transferMoney = async (fromId, toId, amount) => {
     amount = parseFloat(amount);

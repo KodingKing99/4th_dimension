@@ -8,15 +8,23 @@ let requestOptions = {
     method : 'POST',
     headers: { 'Content-Type': 'application/json' },
 }
-export const getAllTournaments = async () => {
+export const getAllTournaments = () => {
     console.log("fetching tournaments...")
-    const response = await axios.get(applicationName + 'tournament/').then((response) => {
+    const response = axios.get(applicationName + 'tournament/').then((response) => {
         console.log("Fetched tourneys")
-        return response.data
         store.dispatch(setTournaments(response.data));
+        //return response.data
     }).catch(err => console.log(err));
     return response;
 }
+
+export const getAllTournamentsAsync= async () => {
+    const response = await axios.get(applicationName + 'tournament/');
+    return response.data;
+}
+
+
+
 export const createTournament = (date, sponsorId, prize, holeCount) => {  
     let data = {
         tournamentdate: date,

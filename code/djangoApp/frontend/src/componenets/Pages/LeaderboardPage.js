@@ -1,6 +1,6 @@
 import React , {useState , useEffect} from "react";
 import { Divider } from '@material-ui/core';
-import { getAllTournamentParticipants , getUserById , getAllTournaments} from '../../services/services';
+import { getAllTournamentParticipants , getUserById , getAllTournamentsAsync} from '../../services/services';
 import Box from '@material-ui/core/Box';
 import { useDispatch, useSelector } from 'react-redux';
 
@@ -17,7 +17,7 @@ const LeaderBoardPage = (props) => {
     const [tournamentParticipants, setTournamentParticipants] = useState([]);
 
     useEffect(() => {
-        getAllTournamentParticipants().then(res => {
+        getAllTournamentsAsync().then(res => {
             let tempUsers = [];
             let tempTournamentParticipants = res;
             res.forEach(element => {
@@ -44,7 +44,7 @@ const LeaderBoardPage = (props) => {
         });
         
 
-            getAllTournaments().then(res => {
+        getAllTournamentsAsync().then(res => {
             let tempTournaments = [];
             console.log("result",res);
             res.forEach(element => {

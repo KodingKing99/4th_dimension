@@ -21,7 +21,7 @@ Django database - Using Django database system to store and save data. Django is
 Django backend - Host the web app
 
 ## Build Instructions
-You must have npm (use the node.js install for easy windows install https://nodejs.org/en/download/ or your linux package manager) and python with pip installed
+You must have npm (use the node.js install for easy windows install https://nodejs.org/en/download/ or your linux package manager) and python with pip installed and in your system path.
 ### Windows
 clone repository ` $ git clone https://github.com/KodingKing99/4th_dimension.git` 
 
@@ -37,12 +37,41 @@ run `sh code/build.sh`
 
 open browser at `127.0.0.1:8000/`
 
+### Manual Commands
+Only use this method if the build script fails.
 
+clone repository ` $ git clone https://github.com/KodingKing99/4th_dimension.git` 
+
+run `npm install`
+
+`npm run dev`
+
+then open a new console and navagate to
+
+`4th_dimension/code/djangoApp`
+
+You must have django and djangorestframework installed.
+
+run `python manage.py makemigrations`
+
+`python manage.py migrate`
+
+`python manage.py runserver`
+
+open browser at `127.0.0.1:8000/`
+
+## Login options
+
+A testing account as available with email: Test password: Test
+
+User roles can for now be changed while in the application to help you explore and test
 
 Deploy to website
 ## Unit testing instructions
 
 Using the use case diagrams we will test each of those use cases. Unit tests can be found in ```unitTest.js```
+
+To run test cases run `4th_dimension/code/djangoApp manage.py test`
 
 ## System testing Instructions
 Navigate to the folder you have the repository stored and start a local server of your choice. Go to ```localhost:8000``` to test if it is running. Login using SystemTest, Password:systest

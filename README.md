@@ -11,11 +11,16 @@ The folder src will contain all the source files for this web app. Inside src we
     └── Requirements
 ```
 ## Version-control Procedures
+
 Player: Jim@mail.com Password: Jim 
-Player: Jim@mail.com Password: Jim 
-Player: Jim@mail.com Password: Jim 
-Player: Jim@mail.com Password: Jim 
-Player: Jim@mail.com Password: Jim 
+
+Owner: Bossman@mail.com Password: Bossman 
+
+Drink Meister: Batman@mail.com Password: Batman 
+
+Sponsor: Picard@mail.com Password: Picard 
+
+Manager: Worf@mail.com Password: Worf 
 
 
 Using github collaborators fork from Nicks github. Collaborators should fork and clone repo and then creat a merge request.
@@ -80,6 +85,7 @@ Deploy to website
 Using the use case diagrams we will test each of those use cases. Unit tests can be found in ```unitTest.js```
 
 To run backend test cases run `4th_dimension/code/djangoApp manage.py test`
+
 To run front end test cases run 'npm test' while in 'path_to_repo/4th_dimension/code/' 
 
 ## System testing Instructions

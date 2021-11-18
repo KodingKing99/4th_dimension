@@ -16,4 +16,7 @@ export const useStyles = makeStyles((theme) => ({
       color: APPGREEN
     },
   },
+  drinkIcon: {
+    backgroundColor : APPGREEN,
+  },
 }));

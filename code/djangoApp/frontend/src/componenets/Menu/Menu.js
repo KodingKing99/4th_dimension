@@ -143,7 +143,7 @@ const Menu = () => {
                     <div className="menu-items">
                         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
                         {/*  icon onclick should open a drawer to edit name, price, and icon */}
-                        <div className="menuDiv">
+                        <div>
                             {menu.map((item) => {
                                 return (
                                     <span className="icon-span" onClick={() => { handleIconClick(setId(item.itemid), true); setMenuItem(item) }} key={item.itemid}><div className="inner-icon"><div><Icon>{item?.itemimage}</Icon></div><span>{item.itemname}</span></div></span>

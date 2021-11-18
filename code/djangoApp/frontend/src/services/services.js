@@ -13,11 +13,21 @@ let requestOptions = {
 //////////
 export const getAllTournaments = () => {
     console.log("fetching tournaments...")
-    axios.get(applicationName + 'tournament/').then((response) => {
+    const response = axios.get(applicationName + 'tournament/').then((response) => {
         console.log("Fetched tourneys")
         store.dispatch(setTournaments(response.data));
+        //return response.data
     }).catch(err => console.log(err));
+    return response;
 }
+
+export const getAllTournamentsAsync= async () => {
+    const response = await axios.get(applicationName + 'tournament/');
+    return response.data;
+}
+
+
+
 export const createTournament = (date, sponsorId, prize, holeCount) => {  
     let data = {
         tournamentdate: date,
@@ -74,6 +84,73 @@ export const activateTournament = async (tourney) => {
 ////////////
 // Transactions
 ////////////
+
+
+
+
+
+export const addTournamentParticipant = (tournamentId, participantId,userscore) => {
+    let data = {
+        tournamentid: tournamentId,
+        userid: participantId,
+        userscore: userscore
+    }
+    axios.post(applicationName + 'tournamentParticipant/',data).then((response) => {
+        console.log(response)
+        return response;
+    }).catch(err => console.log(err));
+}
+
+
+export const editTournamentParticipant = async (tournamentId, participantId,userscore) => {
+    const response = await axios.get(applicationName + 'tournamentParticipant/');
+    response.data.forEach(element => { 
+        if(element.tournamentid === tournamentId && element.userid === participantId){
+            axios.put(applicationName + 'tournamentParticipant/' + element.id + '/', {
+                tournamentid: tournamentId,
+                userid: participantId,
+                userscore: userscore
+            }).then((res) => {
+                console.log(res);
+                return res;
+            }).catch((err) => {
+                console.log(err);
+            })
+        }
+    });
+}
+
+export const getTournamentParticipants = async (tournamentId) => {
+    const response = await axios.get(applicationName + 'tournamentParticipant/');
+    let participants = [];
+    response.data.forEach(element => { 
+        if(element.tournamentid === tournamentId){
+            participants.push(element);
+        }
+    });
+    participants.sort((a,b) => (a.userscore > b.userscore) ? -1 : ((b.userscore > a.userscore) ? 1 : 0));
+    return participants;
+}
+
+export const getTournamentParticipantsByUserId = async (userId) => {
+    const response = await axios.get(applicationName + 'tournamentParticipant/');
+    let participant = [];
+    response.data.forEach(element => {
+        if(element.userid === userId){
+            participant.push(element);
+        }
+    });
+    return participant;
+}
+
+export const getAllTournamentParticipants = async () => {
+    const response = await axios.get(applicationName + 'tournamentParticipant/');
+    return response.data;
+}
+
+
+// export const getAllActiveTournaments = () => {
+// }
 export const getAllTransactions = async () => {
     const response = await axios.get(applicationName + 'transactionHistory/');
     return response.data;
@@ -101,6 +178,7 @@ export const createNewTransaction = async (buyerId, drinkMeisterId, price, date=
         transactionactiveflag: active
     });
 }
+
 
 export const transferMoney = async (fromId, toId, amount) => {
     amount = parseFloat(amount);

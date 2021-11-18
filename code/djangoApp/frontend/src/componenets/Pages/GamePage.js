@@ -1,5 +1,6 @@
-  import React, {useCallback} from "react";
+  import React, { useEffect , useCallback , useState} from "react";
   // import './Home.css'
+  import { useSelector, useDispatch } from "react-redux";
 
   import Box from '@mui/material/Box';
   
@@ -8,6 +9,7 @@
   import TournamentSelectDialog from "../GameComponents/TournamentSelectDialog";
   import Icon from "@mdi/react";
   import { mdiBeerOutline } from '@mdi/js';
+  import { coffee } from '@mui/icons-material';
   import SpeedDial from '@mui/material/SpeedDial';
   import SpeedDialAction from '@mui/material/SpeedDialAction';
 
@@ -21,12 +23,9 @@
   import {  Link ,useHistory } from "react-router-dom";
 
   import {useStyles} from '../../styleUtils/styleUtils';
+  import { transferMoney, getUserById , getAllMenuItems , createNewTransaction , addTournamentParticipant} from "../../services/services";
 
-  const actions = [
-    { icon: <Icon path={mdiBeerOutline} title="Drink" size={1} />, name: 'All Drinks', },
-    { icon: <Icon path={mdiBeerOutline} title="Drink" size={1} />, name: 'Root Beer', },
 
-  ];
 
 
 
@@ -38,6 +37,52 @@
      const [gameFinsihed, setGameFinsihed] = React.useState(false);
      const [selectedTournament, setSelectTournament] = React.useState(undefined);
      const classes = useStyles();
+     const [menu, setMenu] = useState([]);
+
+     const user = useSelector((state) => state.user);
+
+
+
+
+     let tempActions = [
+      { icon: <Icon path={mdiBeerOutline} title="Drink" size={1} />, name: 'All Drinks', },
+      { icon: <Icon path={mdiBeerOutline} title="Drink" size={1} />, name: 'Root Beer', },
+  
+    ];
+
+    const [actions,setActions] = React.useState(tempActions);
+
+    console.log("menu",menu)
+
+    const loadActionsIntoSpeedDial = (menu) => {
+      console.log("menu test",menu)
+      if(localStorage.getItem("recentDrinkPurchases")!=null  && localStorage.getItem("recentDrinkPurchases")!=undefined){
+        if(JSON.parse(localStorage.getItem("recentDrinkPurchases"))!=[])
+        {
+        const recentDrinkPurchases = JSON.parse(localStorage.getItem("recentDrinkPurchases"));
+
+        for(let i = 0; i < recentDrinkPurchases.length; i++){
+          console.log("menulength",menu.length)
+          for(let j = 0; j < menu.length; j++){
+            console.log(menu[j].itemid == recentDrinkPurchases[i])
+            if(menu[j].itemid == recentDrinkPurchases[i]){
+              console.log("in here in the for loop")
+              actions.push({ icon: <Icon>{menu[j].itemimage}</Icon>, name: menu[j].itemname, });
+              setActions([...actions]);
+            }
+          }
+        }
+      }
+      }
+    }
+
+
+    useEffect(() => {
+      getAllMenuItems().then(res => {
+          setMenu(res);
+          loadActionsIntoSpeedDial(res)
+      })
+  }, [])
 
 
      if(localStorage.getItem('selectedTournamentId') && localStorage.getItem('selectedTournamentId') !== selectedTournamentId){
@@ -52,8 +97,22 @@
 
     const openQuickBuyDrinksHandler = () => {
       setOpenQuickBuyDrinks(openQuickBuyDrinks=true)
+
+
     }
     const purchaseQuickDrinkHandler = () => {
+      transferMoney(user.id, 8, 0).then((isSuccess) => {
+        if (!isSuccess) {
+            //setPaymentError(true);
+            //setQuantity(0);
+            return
+        }
+        createNewTransaction(user.id, 4, price * quantity);
+        getUserById(user.id).then((user) => {
+            //dispatch(setUser(user));
+        });
+
+    });
       setOpenQuickBuyDrinks(openQuickBuyDrinks=false)
     }
 
@@ -91,6 +150,7 @@
       } else{
         setSelectedTournamentId(tournament.tournamentid);
         setSelectTournament(tournament);
+        addTournamentParticipant(tournament.tournamentid, user.id,0);
         localStorage.setItem('selectedTournamentId', tournament.tournamentid);
         localStorage.setItem('selectedTournament', JSON.stringify(tournament));
         setOpenDialog(false);
@@ -192,7 +252,7 @@ Are you sure you want to buy this drink?
           <Button autoFocus onClick={closeQuickBuyDrinksHandler}>
             Cancel
           </Button>
-          <Button onClick={tournamentSelectHandleClose} autoFocus>
+          <Button onClick={purchaseQuickDrinkHandler} autoFocus>
             Purchase
           </Button>
         </DialogActions>

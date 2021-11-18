@@ -48,4 +48,5 @@ Using the use case diagrams we will test each of those use cases. Unit tests can
 Navigate to the folder you have the repository stored and start a local server of your choice. Go to ```localhost:8000``` to test if it is running. Login using SystemTest, Password:systest
 
 
-## Other developments notes as needed
+## Sprint Reports Location
+Docs/Planning/

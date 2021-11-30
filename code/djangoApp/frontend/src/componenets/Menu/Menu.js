@@ -6,7 +6,6 @@ import { Drawer } from "@material-ui/core";
 import Icon from '@mui/material/Icon';
 import './Menu.css'
 import { setUser } from "../../redux/userSlice";
-import { setMenu } from "../../redux/dataSlice";
 
 
 const Menu = () => {

@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "dev": "webpack --mode development --watch ./djangoApp/frontend/src/index.js --output-path ./djangoApp/frontend/static/frontend/",
-    "build": "webpack --mode production ./djangoApp/frontend/src/index.js --output-path ./djangoApp/frontend/static/frontend/"
+    "build": "webpack --mode production ./djangoApp/frontend/src/index.js --output-path ./djangoApp/frontend/static/frontend/",
+    "test": "jest"
   },
   "keywords": [],
   "author": "",
@@ -14,9 +15,13 @@
     "@babel/core": "^7.15.8",
     "@babel/preset-env": "^7.15.8",
     "@babel/preset-react": "^7.14.5",
+    "@testing-library/jest-dom": "^5.15.0",
+    "@testing-library/react": "^12.1.2",
+    "babel-jest": "^27.3.1",
     "babel-loader": "^8.2.2",
     "babel-plugin-transform-class-properties": "^6.24.1",
     "css-loader": "^6.5.0",
+    "jest": "^27.3.1",
     "style-loader": "^3.3.1",
     "webpack": "^5.58.2",
     "webpack-cli": "^4.9.1"

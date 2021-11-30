@@ -25,7 +25,7 @@
   import {useStyles} from '../../styleUtils/styleUtils';
   import { transferMoney, getUserById , getAllMenuItems , createNewTransaction , addTournamentParticipant} from "../../services/services";
 
-
+  import './GamePage.css';
 
 
 

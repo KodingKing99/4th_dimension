@@ -12,7 +12,20 @@ The folder src will contain all the source files for this web app. Inside src we
 ```
 ## Version-control Procedures
 
+Player: Jim@mail.com Password: Jim 
+
+Owner: Bossman@mail.com Password: Bossman 
+
+Drink Meister: Batman@mail.com Password: Batman 
+
+Sponsor: Picard@mail.com Password: Picard 
+
+Manager: Worf@mail.com Password: Worf 
+
+
 Using github collaborators fork from Nicks github. Collaborators should fork and clone repo and then creat a merge request.
+## User List for testing roles
+
 
 ## Tool stack description and setup procedure
 
@@ -71,7 +84,9 @@ Deploy to website
 
 Using the use case diagrams we will test each of those use cases. Unit tests can be found in ```unitTest.js```
 
-To run test cases run `4th_dimension/code/djangoApp manage.py test`
+To run backend test cases run `4th_dimension/code/djangoApp manage.py test`
+
+To run front end test cases run 'npm test' while in 'path_to_repo/4th_dimension/code/' 
 
 ## System testing Instructions
 Navigate to the folder you have the repository stored and start a local server of your choice. Go to ```localhost:8000``` to test if it is running. Login using SystemTest, Password:systest

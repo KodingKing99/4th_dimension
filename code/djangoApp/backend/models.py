@@ -23,7 +23,6 @@ class Menu(models.Model):
     itemname = models.CharField(db_column='itemName', unique=True, max_length=45)  # Field name made lowercase.
     itemdescription = models.CharField(db_column='itemDescription', max_length=500, blank=True, null=True)  # Field name made lowercase.
     itemprice = models.DecimalField(db_column='itemPrice', max_digits=5, decimal_places=2, blank=True, null=True)  # Field name made lowercase.
-    itemimage = models.CharField(blank=True, db_column='itemimage', max_length=500, null=True)  # Field name made lowercase.
 
     class Meta:
         db_table = 'Menu'
@@ -34,7 +33,7 @@ class Menu(models.Model):
 
 class Tournamentparticipant(models.Model):
     userid = models.IntegerField(db_column='userId')  # Field name made lowercase.
-    tournamentid = models.IntegerField(db_column='tournamentId', blank=True, null=True)  # Field name made lowercase.
+    tournamentid = models.IntegerField(db_column='tournamentId', unique=True, blank=True, null=True)  # Field name made lowercase.
     userscore = models.IntegerField(db_column='userScore', blank=True, null=True)  # Field name made lowercase.
 
     class Meta:
@@ -47,7 +46,8 @@ class Tournament(models.Model):
     tournamentsponsor = models.IntegerField(db_column='tournamentsponsor')  # Field name made lowercase.
     tournamentprize = models.DecimalField(db_column='tournamentPrize', max_digits=6, decimal_places=2, blank=True, null=True)  # Field name made lowercase.
     tournamentholecount = models.IntegerField(db_column='tournamentHoleCount', blank=True, null=True)  # Field name made lowercase.
-    tournamentactiveflag = models.BooleanField(db_column='tournamentActiveFlag', default=False) # Field name made lowercase 
+    tournamentactiveflag = models.BooleanField(db_column='tournamentActiveFlag', default=True)
+
     class Meta:
         db_table = 'Tournaments'
 
@@ -62,6 +62,7 @@ class Transactionhistory(models.Model):
     transactiondrinkmeister = models.IntegerField(db_column='transactionDrinkMeister', blank=True, null=True)  # Field name made lowercase.
     transactiondate = models.DateTimeField(db_column='TransactionDate')
     transactionactiveflag = models.BooleanField(db_column='transactionActiveFlag', default=True)  # Field name made lowercase.
+    transactiondrink = models.IntegerField(db_column='transactionDrink', default=0)
 
     class Meta:
         db_table = 'TransactionHistory'

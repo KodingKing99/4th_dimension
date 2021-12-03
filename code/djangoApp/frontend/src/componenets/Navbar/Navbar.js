@@ -14,7 +14,7 @@ import { useDispatch } from "react-redux";
 import { resetData } from "../../redux/dataSlice";
 import { resetUser } from "../../redux/userSlice";
 import './Navbar.css'
-
+import flaglogo from '../../static/flag_logo.png'
 const useStyles = makeStyles((theme) => ({
   navlinks: {
     marginLeft: theme.spacing(10),
@@ -72,9 +72,12 @@ function Navbar() {
         <AppBar className={classes.bar} sx={{ top: 'auto', bottom: 0}} >
         <CssBaseline />
         <Toolbar>
-            <Typography style={{textAlign:'center'}} variant="h4" className={classes.logo}>
-            Putt Putt Golf
-            </Typography>
+            <div className="logos">
+              <Typography style={{textAlign:'center'}} variant="h4" className={classes.logo}>
+              4th Dimension Putt Putt Golf
+              </Typography>
+              <img src={flaglogo} width="40" height="40"/>
+            </div>
             <div className={classes.navlinks}>
               <span className="logout"><LogoutIcon onClick={() => {handleLogout()}}/></span>
             </div>

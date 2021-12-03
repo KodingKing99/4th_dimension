@@ -3,7 +3,7 @@ import { useDispatch } from 'react-redux';
 import { setUser } from '../../redux/userSlice';
 import { login, signup } from '../../services/services.js'
 import './Login.css';
-
+import flaglogo from '../../static/flag_logo.png'
 const Login = () => {
 
     const [userEmail, setUserEmail] = useState("");
@@ -61,9 +61,14 @@ const Login = () => {
         <div className="LoginPage">
             {loading ? <div className="loading">Loading...</div> :
                 <>
-                    <div className="Title">
-                        Login
+                    <div className="titleSurroundingDiv">
+                        <div className="Title">
+                            Login
+                        </div>
+                    <img src={flaglogo} width="40" height="40" className="flaglogo"/>
                     </div>
+                        
+
                     {error && <div className="input-message">Error: {error}</div>}
                     {success && <div className="input-message">Success! {success}</div>}
                     {!signUpToggle ?

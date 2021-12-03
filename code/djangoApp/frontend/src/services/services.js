@@ -64,6 +64,7 @@ export const deleteTourament = (tournamentid) => {
 export const getAllActiveTournaments = () => {
     axios.get(applicationName + 'tournamentGetAllActive/').then((res) => {
         console.log(res);
+        store.dispatch(setTournaments(res.data));
         return res.data;
     }).catch((err) => {
         console.log(err);
@@ -168,14 +169,15 @@ export const completeTransaction = async (item) => {
     let response = await axios.put(applicationName + 'transactionHistory/' + item.transactionid + '/', {...item, transactionactiveflag: false});
     return response.data;
 }
-export const createNewTransaction = async (buyerId, drinkMeisterId, price, date=Date.now(), active=true) => {
+export const createNewTransaction = async (buyerId, drinkMeisterId, price,drinkId,date=Date.now(), active=true) => {
     date = new Date(date)
     const response = await axios.post(applicationName + 'transactionHistory/', {
         transactionbuyer: buyerId,
         transactiondrinkmeister: drinkMeisterId,
         transactionprice: price,
         transactiondate: date,
-        transactionactiveflag: active
+        transactionactiveflag: active,
+        transactionid: drinkId
     });
 }
 

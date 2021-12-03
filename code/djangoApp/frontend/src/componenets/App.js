@@ -22,7 +22,6 @@ import AddTournamentPage from "./Pages/Tournament/AddTournamentPage";
 
 import Paper from '@mui/material/Paper';
 
-
 import Navbar from './Navbar/Navbar';
 import Login from './Login/Login'
 
@@ -48,7 +47,7 @@ function App() {
                 display: 'flex',
             }}>
             </Box>
-
+            <h1 style={{marginTop: '100px', textAlign: 'center'}}> 4th Dimension Putt Putt Golf </h1>
 
             <Container>
                 <HashRouter>

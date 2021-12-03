@@ -55,7 +55,7 @@ function App() {
                     {!userId ? <Login /> :
                         <>
                             <div className="App">
-                                {/* <PermissionsPractice /> */}
+                                <PermissionsPractice />
 
                                 <Switch >
 

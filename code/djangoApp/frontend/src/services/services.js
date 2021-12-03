@@ -169,7 +169,7 @@ export const completeTransaction = async (item) => {
     let response = await axios.put(applicationName + 'transactionHistory/' + item.transactionid + '/', {...item, transactionactiveflag: false});
     return response.data;
 }
-export const createNewTransaction = async (buyerId, drinkMeisterId, price,date=Date.now(), active=true) => {
+export const createNewTransaction = async (buyerId, drinkMeisterId, price,drinkId,date=Date.now(), active=true) => {
     date = new Date(date)
     const response = await axios.post(applicationName + 'transactionHistory/', {
         transactionbuyer: buyerId,
@@ -177,6 +177,7 @@ export const createNewTransaction = async (buyerId, drinkMeisterId, price,date=D
         transactionprice: price,
         transactiondate: date,
         transactionactiveflag: active,
+        transactionid: drinkId
     });
 }
 

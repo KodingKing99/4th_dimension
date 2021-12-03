@@ -124,12 +124,12 @@ def create_menu(apps, schema_editor):
     """
     menu_list = []
 
-    menu_list.append( menu_obj("Coffee", 2.50, "coffee", "Piping hot coffee"))
-    menu_list.append( menu_obj("Root Beer", 2, "rootbeer", "Ice cold root beer"))
-    menu_list.append( menu_obj("Tea", 5, "tea", "Soothing Tea"))
-    menu_list.append( menu_obj("Coca-Cola", 3.75, "cola", "Classic coca-cola"))
-    menu_list.append( menu_obj("Water", 0, "water", "Plain water with ice"))
-    menu_list.append( menu_obj("Mountain Dew", 1, "mountaindew", "Liquid citric acid"))
+    menu_list.append( menu_obj("Coffee", 2.50, "local_cafe", "Piping hot coffee"))
+    menu_list.append( menu_obj("Root Beer", 2, "emoji_food_beverage", "Ice cold root beer"))
+    menu_list.append( menu_obj("Tea", 5, "sports_bar", "Soothing Tea"))
+    menu_list.append( menu_obj("Coca-Cola", 3.75, "coffee_maker", "Classic coca-cola"))
+    menu_list.append( menu_obj("Water", 0, "local_cafe", "Plain water with ice"))
+    menu_list.append( menu_obj("Mountain Dew", 1, "local_cafe", "Liquid citric acid"))
     menu_list.append( menu_obj("Seltzer", 5.50, "seltzer", "Bubbly water"))
 
     Menu = apps.get_model('backend', 'Menu')

@@ -6,8 +6,9 @@ import { Drawer } from "@material-ui/core";
 import Icon from '@mui/material/Icon';
 import './Menu.css'
 import { setUser } from "../../redux/userSlice";
-import { setMenu } from "../../redux/dataSlice";
 
+import ButtonGroup from '@mui/material/ButtonGroup';
+import Button from '@mui/material/Button';
 
 const Menu = () => {
     const user = useSelector((state) => state.user);
@@ -21,9 +22,13 @@ const Menu = () => {
 
     const [name, setName] = useState();
     const [price, setPrice] = useState();
-    const [image, setImage] = useState();
+    const [imageToSave, setImageToSave] = useState();
     const [description, setDescription] = useState();
     const [id, setId] = useState();
+
+    const[imageButtonsSelected, setImageButtonsSelected] = useState([]);
+
+
     const dispatch = useDispatch();
 
     useEffect(() => {
@@ -32,14 +37,19 @@ const Menu = () => {
         })
     }, [])
 
-    const handleIconClick = (itemId, edit = false) => {
+    const handleIconClick = (item, update = false,edit=false) => {
+        if(update){
+            setName(item.itemname)
+            setPrice(item.itemprice)
+            setImageToSave(item.itemimage)
+            setDescription(item.itemdescription)
+        }
         setToggleDrawer(true);
         setPaymentError(false);
         setEditable(edit);
     }
     const handlePurchaseClick = (price,itemId) => {
         // Add item to purchase history
-        console.log(itemId);
         setRecentPurchaseItems(itemId);
         transferMoney(user.id, 8, price * quantity).then((isSuccess) => {
             if (!isSuccess) {
@@ -47,7 +57,7 @@ const Menu = () => {
                 setQuantity(0);
                 return
             }
-            createNewTransaction(user.id, 4, price * quantity);
+            createNewTransaction(user.id, 4, price * quantity,itemId);
 
             getUserById(user.id).then((user) => {
                 dispatch(setUser(user));
@@ -77,37 +87,54 @@ const Menu = () => {
     const handleAddMenuItemClick = () => {
         // Add menu item
         setMenuItem(null);
-        handleIconClick(null, true);
+        handleIconClick(null,false, true);
     }
     const handleEditMenuItem = (id) => {
         // Add menu
-        changeMenuItem(id, name, price, description, image)
-        getAllMenuItems().then(res => {
-            setMenu(res);
-        })
-        setToggleDrawer(false);
+        changeMenuItem(id, name, price, description, imageToSave).then((res) => {
+            getAllMenuItems().then(res => {
+                setMenu(res);
+            })
+            setToggleDrawer(false);
+        });
+       
     }
     const handleDeleteMenuItem = (id) => {
         // Delete menu item
-        deleteMenuItem(id)
-        getAllMenuItems().then(res => {
-            setMenu(res);
-        })
+        deleteMenuItem(id).then(res => {
+            getAllMenuItems().then(res => {
+                setMenu(res);
+            })
+        });
+
         setToggleDrawer(false);
     }
     const handleSaveNewItem = () => {
         // Add menu item
-        addMenuItem(name, price, description, image)
-        handleCancel();
-        getAllMenuItems().then(res => {
-            setMenu(res);
-        })
+        addMenuItem(name, price, description, imageToSave).then((res) => {
+            handleCancel();
+            getAllMenuItems().then(res => {
+                setMenu(res);
+            })
+        });
+
     }
     const handleCancel = () => {
         // Cancel
         setToggleDrawer(false);
         setEditable(false);
     }
+
+    const handleSelectImageChange = (imageSelected,indexToDisable) => {
+        setImageToSave(imageSelected);
+        let tempArray = [0,0,0,0,0,0,0,0]
+        tempArray[indexToDisable] = 1;
+        setImageButtonsSelected(tempArray);
+    }
+
+
+
+
     const item = { id: 1 }
     return (
         <div className="menu-main">
@@ -146,7 +173,7 @@ const Menu = () => {
                         <div>
                             {menu.map((item) => {
                                 return (
-                                    <span className="icon-span" onClick={() => { handleIconClick(setId(item.itemid), true); setMenuItem(item) }} key={item.itemid}><div className="inner-icon"><div><Icon>{item?.itemimage}</Icon></div><span>{item.itemname}</span></div></span>
+                                    <span className="icon-span" onClick={() => { handleIconClick(item, true,true); setMenuItem(item); setId(item.itemid);}} key={item.itemid}><div className="inner-icon"><div><Icon>{item?.itemimage}</Icon></div><span>{item.itemname}</span></div></span>
                                 )
                             })}
                         </div>
@@ -166,9 +193,40 @@ const Menu = () => {
                         <div className="edit-menu-item">
                             <Icon>{menuItem?.itemimage}</Icon>
                             <form>
+                                <div >                                    <label htmlFor="image-input">Select Image for Drink</label>
+
+
+                                </div>
                                 <div>
-                                    <label htmlFor="image-input">Image</label>
-                                    <input id="image-input" type="text" placeholder={menuItem?.itemimage} onChange={(e) => { setImage(e.target.value) }} />
+                                
+
+                                    <ButtonGroup aria-label="outlined button group">
+                                    <Button disabled={imageButtonsSelected[0]} variant="contained" color="success" onClick={() =>{handleSelectImageChange("local_cafe",0)}} >
+                                        <Icon>local_cafe</Icon>
+                                    </Button>
+                                    <Button disabled={imageButtonsSelected[1]} variant="contained" color="success" onClick={() =>{handleSelectImageChange("coffee",1)}}>
+                                        <Icon>coffee</Icon>
+                                    </Button>
+                                    <Button disabled={imageButtonsSelected[2]} variant="contained" color="success" onClick={() =>{handleSelectImageChange("local_drink",2)}}>
+                                        <Icon>local_drink</Icon>
+                                    </Button>
+                                    <Button disabled={imageButtonsSelected[3]} variant="contained" color="success" onClick={() =>{handleSelectImageChange("local_bar",3)}}>
+                                        <Icon>local_bar</Icon>
+                                    </Button>
+                                    <Button disabled={imageButtonsSelected[4]} variant="contained" color="success" onClick={() =>{handleSelectImageChange("sports_bar",4)}}>
+                                        <Icon>sports_bar</Icon>
+                                    </Button>
+                                    <Button disabled={imageButtonsSelected[5]} variant="contained" color="success" onClick={() =>{handleSelectImageChange("emoji_food_beverage",5)}}>
+                                        <Icon>emoji_food_beverage</Icon>
+                                    </Button>
+                                    <Button disabled={imageButtonsSelected[6]} variant="contained" color="success" onClick={() =>{handleSelectImageChange("wine_bar",6)}}>
+                                        <Icon>wine_bar</Icon>
+                                    </Button>
+                                    <Button disabled={imageButtonsSelected[7]} variant="contained" color="success" onClick={() =>{handleSelectImageChange("coffee_maker",7)}}>
+                                        <Icon>coffee_maker</Icon>
+                                    </Button>
+                            </ButtonGroup>
+
                                 </div>
                                 <div>
                                     <label htmlFor="name-input">Name</label>

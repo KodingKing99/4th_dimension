@@ -54,11 +54,15 @@
     filter: brightness(75%);
 }
 .Title {
-    margin: auto;
-    width: 50%;
-    padding: 10px;
+    /* margin: auto 3px auto; */
+    margin-top: auto;
+    margin-bottom: auto;
+    margin-left: 110px;
+    font-family: 'Nunito';
+    /* width: 50%; */
+    /* padding: 10px; */
     font-size: 20px;
-    text-align: center;
+    /* text-align: center; */
 }
 
 .SignupBox {
@@ -81,4 +85,16 @@
 color: crimson;
     font-size: 15px;
     padding: 5px;
+}
+.flaglogo{
+    /* margin-right: auto; */
+}
+.titleSurroundingDiv{
+    display: flex;
+    width: 50%;
+    padding: 10px;
+    margin: auto;
+    align-items: center;
+    text-align: center;
+    /* padding: ; */
 }

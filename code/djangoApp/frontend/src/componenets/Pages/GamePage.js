@@ -7,9 +7,9 @@
   import {Divider, Fab , Typography } from '@mui/material';
   import AddIcon from '@mui/icons-material/Add';
   import TournamentSelectDialog from "../GameComponents/TournamentSelectDialog";
-  import Icon from "@mdi/react";
+  import Icon from '@mui/material/Icon';
   import { mdiBeerOutline } from '@mdi/js';
-  import { coffee } from '@mui/icons-material';
+  import {Icon as IconMdi} from "@mdi/react";
   import SpeedDial from '@mui/material/SpeedDial';
   import SpeedDialAction from '@mui/material/SpeedDialAction';
 
@@ -38,6 +38,9 @@
      const [selectedTournament, setSelectTournament] = React.useState(undefined);
      const classes = useStyles();
      const [menu, setMenu] = useState([]);
+     const [selectedQuickByMenuIdPrice, setSelectedQuickByMenuIdPrice] = useState({});
+
+     const [confirmBuyDrinkPayload, setConfirmBuyDrinkPayload] = React.useState({});
 
      const user = useSelector((state) => state.user);
 
@@ -45,30 +48,25 @@
 
 
      let tempActions = [
-      { icon: <Icon path={mdiBeerOutline} title="Drink" size={1} />, name: 'All Drinks', },
-      { icon: <Icon path={mdiBeerOutline} title="Drink" size={1} />, name: 'Root Beer', },
+      { icon: <IconMdi title="Drink" size={1} path={mdiBeerOutline}/>, name: 'All Drinks', },
   
     ];
 
     const [actions,setActions] = React.useState(tempActions);
 
-    console.log("menu",menu)
 
     const loadActionsIntoSpeedDial = (menu) => {
-      console.log("menu test",menu)
       if(localStorage.getItem("recentDrinkPurchases")!=null  && localStorage.getItem("recentDrinkPurchases")!=undefined){
         if(JSON.parse(localStorage.getItem("recentDrinkPurchases"))!=[])
         {
         const recentDrinkPurchases = JSON.parse(localStorage.getItem("recentDrinkPurchases"));
 
         for(let i = 0; i < recentDrinkPurchases.length; i++){
-          console.log("menulength",menu.length)
           for(let j = 0; j < menu.length; j++){
-            console.log(menu[j].itemid == recentDrinkPurchases[i])
             if(menu[j].itemid == recentDrinkPurchases[i]){
-              console.log("in here in the for loop")
-              actions.push({ icon: <Icon>{menu[j].itemimage}</Icon>, name: menu[j].itemname, });
+              actions.push({ icon: menu[j].itemimage, name: menu[j].itemname, menuId: menu[j].itemid,price:menu[j].itemprice });
               setActions([...actions]);
+              console.log(actions);
             }
           }
         }
@@ -95,23 +93,21 @@
 
     let [openQuickBuyDrinks, setOpenQuickBuyDrinks] = React.useState(false);
 
-    const openQuickBuyDrinksHandler = () => {
+    const openQuickBuyDrinksHandler = (menuItem) => {
+      setSelectedQuickByMenuIdPrice({menuId:menuItem.id,price:menuItem.price});
+      setConfirmBuyDrinkPayload(menuItem);
       setOpenQuickBuyDrinks(openQuickBuyDrinks=true)
-
 
     }
     const purchaseQuickDrinkHandler = () => {
-      transferMoney(user.id, 8, 0).then((isSuccess) => {
+      transferMoney(user.id, 8, 1).then((isSuccess) => {
         if (!isSuccess) {
             //setPaymentError(true);
             //setQuantity(0);
             return
         }
-        createNewTransaction(user.id, 4, price * quantity);
-        getUserById(user.id).then((user) => {
-            //dispatch(setUser(user));
-        });
-
+        createNewTransaction(user.id, 4, selectedQuickByMenuIdPrice.price * 1,selectedQuickByMenuIdPrice.menuId);
+        setSelectedQuickByMenuIdPrice({});
     });
       setOpenQuickBuyDrinks(openQuickBuyDrinks=false)
     }
@@ -164,6 +160,7 @@
 
       return ( 
           <div className="homeTop" style={{marginTop: '100px'}}>
+
             {selectedTournamentId!="NONE" &&
             <GameComponent selectedTournament = {selectedTournament} resetSelectedTournament = {resetSelectedTournament}></GameComponent>
   }
@@ -206,13 +203,15 @@ Hit the + button to start a tournament</Typography>
         ariaLabel="SpeedDial basic example"
         sx={{ position: 'absolute', bottom: 16, right: 16 }}
         // icon={<Icon path={mdiBeerOutline} title="Drink" size={1} openIcon={<EditIcon />}/>}
-        icon={<SpeedDialIcon icon={<Icon path={mdiBeerOutline} title="Drink" size={1}/>} />}
+        icon={<SpeedDialIcon icon={<IconMdi title="Drink" path={mdiBeerOutline} size={1}/>} />}
 
       >
+                                                    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+
         {actions.map((action) => (
           <SpeedDialAction
             key={action.name}
-            icon={action.icon}
+            icon={<Icon>{action.icon}</Icon>}
             tooltipTitle={action.name}
             tooltipOpen
             tooltipTitle={action.name}
@@ -222,7 +221,7 @@ Hit the + button to start a tournament</Typography>
               }
               else{
                 if(openQuickBuyDrinks!=true){
-                  openQuickBuyDrinksHandler();
+                  openQuickBuyDrinksHandler({id:action.menuId,price:action.price,icon:action.icon,name:action.name});
                 } 
                     }
             }}
@@ -243,9 +242,11 @@ Hit the + button to start a tournament</Typography>
           {"Confirm Purchase"}
         </DialogTitle>
         <DialogContent>
-        <Icon path={mdiBeerOutline} title="Drink" size={1}/>
+        <Icon title="Drink" size={1}>{confirmBuyDrinkPayload.icon}</Icon>
+          <Typography>{confirmBuyDrinkPayload.name}</Typography>
           <DialogContentText>
-Are you sure you want to buy this drink?
+Are you sure you want to buy this drink for {confirmBuyDrinkPayload.price}?
+
           </DialogContentText>
         </DialogContent>
         <DialogActions>

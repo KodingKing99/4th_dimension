@@ -4,3 +4,9 @@
 #appbar{
     background-color: #7ea75f;
 }
+.logos{
+    display: flex;
+    margin-left: auto;
+    margin-right: auto;
+    
+}

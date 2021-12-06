@@ -3,7 +3,7 @@ import { Divider } from '@material-ui/core';
 import { getAllTournamentParticipants , getUserById , getAllTournamentsAsync} from '../../services/services';
 import Box from '@material-ui/core/Box';
 import { useDispatch, useSelector } from 'react-redux';
-
+import Alert from '@mui/material/Alert';
 // import './Home.css'
 
 
@@ -17,7 +17,7 @@ const LeaderBoardPage = (props) => {
     const [tournamentParticipants, setTournamentParticipants] = useState([]);
 
     useEffect(() => {
-        getAllTournamentsAsync().then(res => {
+        getAllTournamentParticipants().then(res => {
             let tempUsers = [];
             let tempTournamentParticipants = res;
             res.forEach(element => {
@@ -46,10 +46,10 @@ const LeaderBoardPage = (props) => {
 
         getAllTournamentsAsync().then(res => {
             let tempTournaments = [];
-            console.log("result",res);
             res.forEach(element => {
+                let date = new Date(element.tournamentdate);
                 let tempTournament = {
-                    date : element.tournamentdate,
+                    date : date.toDateString(),
                     tournamentHoleCount :element.tournamentholecount,
                     tournamentPrize :element.tournamentprize,
                     tournamentSponsor: element.tournamentsponsor,
@@ -101,18 +101,31 @@ const LeaderBoardPage = (props) => {
     return ( 
         <div className="homeTop" style={{marginTop: '100px'}}>
             <h2>All Time</h2>
+{/* 
+            {(()=>{
+                if(users.length!=0){ */}
             {users.map((item)=>{
+                
             return (<Box><p>{item.name}:{item.userscore}</p></Box>)
             }
           )}
+        {/* } else {return(<Alert severity="info"> {users.length}No Tournament Scores, Play some tournaments to see Total score</Alert>)
+    }
+    })()} */}
+
+
 
             <Divider sx={{margin:1}} variant="middle" />
 <h2>Per Tournament</h2>
 {tournaments.map((item)=>{
             return (<Box><h2>{item.date}</h2>
+
+
             {item.participants.map((item2)=>{
                 return (<Box><p>{item2.name}:{item2.userscore}</p></Box>)
             })}
+        {/* } else {return (<Alert severity="info">No Participants yet!</Alert>)    } */}
+
             </Box>)
             }
           )}

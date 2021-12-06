@@ -2,7 +2,7 @@ import React, {useEffect, useState} from "react";
 import { Dialog, DialogTitle,DialogActions, DialogContent } from "@mui/material";
 import { Button , Card ,CardContent,Typography  } from "@mui/material";
 import { Box } from "@mui/system";
-import { getAllTournaments } from "../../services/services";
+import { getAllActiveTournaments } from "../../services/services";
 import { useSelector } from "react-redux";
 
 
@@ -10,7 +10,7 @@ import { useSelector } from "react-redux";
 const TournamentSelectDialog = (props) => {
     const { onClose, open } = props;
     useEffect(() => {
-      getAllTournaments();
+      getAllActiveTournaments();
     }, []);
     const tournaments = useSelector((state) => state.data.tournaments);
 

@@ -55,6 +55,9 @@ else
     printf "\ndjangorestframework found! version $django\n"
 fi
 
+#install cors headers
+python -m pip install django-cors-headers
+
 # Migrate seems to be needed to run twice
 python manage.py makemigrations
 python manage.py migrate
